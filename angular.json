@@ -25,7 +25,34 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "public/css/bootstrap.min.css",
+              "public/css/font-awesome-pro.min.css",
+              "public/css/animate.min.css",
+              "public/css/bexon-icons.css",
+              "public/css/nice-select.css",
+              "public/css/swiper.min.css",
+              "public/css/venobox.min.css",
+              "public/css/odometer-theme-default.css",
+              "public/css/meanmenu.css",
+              "public/css/main.css"
+            ],
+            "scripts": [
+              "public/js/jquery.min.js",
+              "public/js/bootstrap.bundle.min.js",
+              "public/js/gsap.min.js",
+              "public/js/ScrollSmoother.js",
+              "public/js/gsap-scroll-to-plugin.min.js",
+              "public/js/gsap-scroll-trigger.min.js",
+              "public/js/gsap-split-text.min.js",
+              "public/js/jquery.nice-select.min.js",
+              "public/js/swiper.min.js",
+              "public/js/odometer.min.js",
+              "public/js/venobox.min.js",
+              "public/js/appear.min.js",
+              "public/js/wow.min.js",
+              "public/js/meanmenu.js",
+              "public/js/main.js"
             ]
           },
           "configurations": {

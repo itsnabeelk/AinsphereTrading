@@ -1,0 +1,115 @@
+/* ================================
+   SERVICE CARD BASE
+================================ */
+
+.service-item.style-4 {
+    position: relative;
+    height: 360px;
+    padding: 32px 28px;
+    border-radius: 14px;
+    background: #ffffff;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    transition: transform 0.35s ease;
+}
+
+/* ================================
+   BACKGROUND IMAGE (HTML IMG)
+================================ */
+
+.service-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.service-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 0.4s ease, transform 0.6s ease;
+}
+
+/* Overlay on image */
+.service-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgb(3 27 55 / 47%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* ================================
+   CONTENT
+================================ */
+
+.service-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    color: #222;
+}
+
+/* ================================
+   HOVER EFFECTS
+================================ */
+
+.service-item.style-4:hover {
+    transform: translateY(-6px);
+}
+
+.service-item.style-4:hover .service-bg img {
+    opacity: 0.25;
+    /* VERY LIGHT IMAGE */
+    transform: scale(1);
+}
+
+.service-item.style-4:hover .service-bg::after {
+    opacity: 1;
+}
+
+/* Text visibility */
+.service-item.style-4:hover .title a,
+.service-item.style-4:hover .desc,
+.service-item.style-4:hover .text-btn,
+.service-item.style-4:hover .btn-icon i {
+    color: #ffffff;
+}
+
+/* ================================
+   TITLE (MAX 3 LINES)
+================================ */
+
+.service-item .title a {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* ✅ MAX 3 LINES */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* Description clamp (optional) */
+.service-item .desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    opacity: 0.85;
+    margin-bottom: 18px;
+}
+
+/* Button stays aligned */
+.service-item .text-btn {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+}

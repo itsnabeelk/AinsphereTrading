@@ -23,26 +23,23 @@
                 </div>
                 <div class="col-xl-3 col-lg-4 col-md-6">
                     <div class="footer-widget widget-nav-menu wow fadeInUp" data-wow-delay=".3s">
-                        <h5 class="title">Services</h5>
+                        <h5 class="title">Categories</h5>
                         <ul>
-                            <li><a href="#">Lighting Fixtures </a></li>
-                            <li><a href="#">Industrial & Construction Supplies</a></li>
-                            <li><a href="#">Motors & Pumps</a></li>
-                            <li><a href="#">MEP Tools</a></li>
-                            <li><a href="#">Safety Equipment</a></li>
-                            <li><a href="#">Building Materials</a></li>
+                            <li><a [routerLink]="['/general-trading']">General Trading</a></li>
+                            <li><a [routerLink]="['/fmcg-home']">FMCG Trading</a></li>
+                            <li><a href="#">MEP Trading</a></li>
+                            <li><a href="#">Uniforms Trading</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-xl-2 col-lg-4 col-md-6">
                     <div class="footer-widget widget-nav-menu wow fadeInUp" data-wow-delay=".5s">
-                        <h5 class="title">Resources</h5>
+                        <h5 class="title">Main Pages</h5>
                         <ul>
-                            <li><a href="#">Main Page</a></li>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Organizational Chart</a></li>
-                            <li><a href="#">Career</a></li>
-                            <li><a href="#">Contact Us</a></li>
+                            <li><a [routerLink]="['/general-about']">About Us</a></li>
+                            <li><a [routerLink]="['/general-services']">Services</a></li>
+                            <li><a [routerLink]="['/career']">Career</a></li>
+                            <li><a routerLink="['/contact-us']">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>

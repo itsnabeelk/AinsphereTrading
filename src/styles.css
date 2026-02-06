@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+.service-item.style-4 .title {
+    color: #000;
+}
+
+.text-btn .btn-icon:hover {
+    background-color: #000 !important;
+}
+
+.text-btn .btn-icon {
+    background-color: #000000 !important;
+}
+
+.text-btn .btn-text {
+    color: #000 !important;
+    overflow: hidden;
+}
+
+.post-details-wrapper .title {
+    font-size: 45px;
+}

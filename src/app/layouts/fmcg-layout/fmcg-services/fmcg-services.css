@@ -116,3 +116,11 @@
 .service-item.style-4:hover .text-btn .btn-text {
     color: #000;
 }
+
+.tj-page-header {
+    background-color: #1e421f;
+}
+
+.tj-page-link span i {
+    color: #74a371;
+}

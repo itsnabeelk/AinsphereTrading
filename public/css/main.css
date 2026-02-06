@@ -98,7 +98,7 @@ h4,
 h5,
 h6 {
   font-family: var(--tj-ff-heading);
-  color: var(--tj-color-heading-primary);
+  color: #000;
   margin-top: 0px;
   font-weight: var(--tj-fw-medium);
   line-height: 1.2;

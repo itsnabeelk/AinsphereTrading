@@ -6,6 +6,10 @@ import { Career } from './career/career';
 import { GeneralAbout } from './layouts/general-layout/general-about/general-about';
 import { GeneralServices } from './layouts/general-layout/general-services/general-services';
 import { GeneralServiceDetails } from './layouts/general-layout/general-service-details/general-service-details';
+import { FmcgLayout } from './layouts/fmcg-layout/fmcg-layout';
+import { FmcgHome } from './layouts/fmcg-layout/fmcg-home/fmcg-home';
+import { FmcgServices } from './layouts/fmcg-layout/fmcg-services/fmcg-services';
+import { FmcgServiceDetails } from './layouts/fmcg-layout/fmcg-service-details/fmcg-service-details';
 
 export const routes: Routes = [
     {
@@ -27,5 +31,15 @@ export const routes: Routes = [
             { path: 'general-details', component: GeneralServiceDetails }
         ]
     },
+    {
+        path: '',
+        component: FmcgLayout,
+        children: [
+            { path: '', component: FmcgHome },
+            { path: 'fmcg-home', component: FmcgHome },
+            { path: 'fmcg-services', component: FmcgServices },
+            { path: 'fmcg-service-details', component: FmcgServiceDetails },
+        ]
+    }
 ];
 

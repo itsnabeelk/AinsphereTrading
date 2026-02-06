@@ -1,0 +1,67 @@
+.banner-bg img {
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    position: relative;
+    z-index: 999;
+}
+
+.h5-banner-section .banner-bg::before {
+    background: #59915c17 !important;
+    z-index: 9999;
+}
+
+.h5-banner-section::after,
+.h5-banner-section::before {
+    background: #000 !important;
+    backdrop-filter: none;
+}
+
+.tj-primary-btn {
+    background-color: #224c20 !important;
+}
+
+.tj-primary-btn .btn-icon {
+    background-color: #699b68 !important
+}
+
+.tj-primary-btn {
+    background-color: #699b68 !important;
+}
+
+.h5-maquee-inner {
+    background: #699b68;
+}
+
+.h5-maquee-inner-rtl {
+    background: #fff !important;
+}
+
+.h10-about-content .desc {
+    max-width: 100%;
+}
+
+.project-item .title a:hover {
+    color: #699b68;
+}
+
+.categories a:hover {
+    background-color: #1e421d;
+    border-color: #1e421d;
+}
+
+.tji-icon-btn:hover {
+    background-color: #1e421d;
+}
+
+.tji-icon-btn {
+    border: 1px solid #59915c;
+}
+
+.tji-icon-btn i {
+    color: #699b68;
+}
+
+.tj-client-section-2 {
+    background-color: #1e421d;
+}

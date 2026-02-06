@@ -65,3 +65,11 @@
 .tj-client-section-2 {
     background-color: #1e421d;
 }
+
+.sec-heading.style-3 .sub-title {
+    color: #1e421d;
+}
+
+.sec-heading .sub-title i {
+    color: #1e421d;
+}

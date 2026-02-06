@@ -20,23 +20,38 @@ export class FmcgHome implements AfterViewInit, OnDestroy {
   private heroSwiper: any;
   private routerSub: any;
 
+  // 🔒 IMPORTANT: prevent GSAP / ScrollSmoother re-init
+  private manJsInitialized = false;
+
   constructor(private router: Router) { }
 
   ngAfterViewInit(): void {
-    const init = () => {
-      manJs();
 
+    const initOnce = () => {
+      // ✅ Run heavy global JS ONLY ONCE
+      if (!this.manJsInitialized) {
+        manJs();
+        this.manJsInitialized = true;
+      }
+
+      // ✅ Safe Swiper init after DOM settles
       requestAnimationFrame(() => {
         this.initMarquee();
         this.initHeroSlider();
       });
     };
 
-    init();
+    // First load
+    initOnce();
 
+    // Router navigation
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        init();
+        // ❌ DO NOT call manJs again
+        requestAnimationFrame(() => {
+          this.initMarquee();
+          this.initHeroSlider();
+        });
       }
     });
   }
@@ -75,9 +90,12 @@ export class FmcgHome implements AfterViewInit, OnDestroy {
      HERO SLIDER
   ========================= */
   initHeroSlider(): void {
-    this.heroSwiper?.destroy?.(true, true);
+    if (this.heroSwiper) {
+      this.heroSwiper.destroy(true, true);
+      this.heroSwiper = null;
+    }
 
-    const el = document.querySelector('.h5-banner-slider');
+    const el = document.querySelector('.h5-banner-slider') as HTMLElement;
     if (!el || typeof Swiper === 'undefined') return;
 
     this.heroSwiper = new Swiper(el, {

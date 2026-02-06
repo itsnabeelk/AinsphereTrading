@@ -1,6 +1,6 @@
 <!-- start: Search Popup -->
-<div class="search-popup-overlay" (click)="closeSearch()"></div>
-<div class="body-overlay" (click)="closeHamburger()"></div>
+<div class="search-popup-overlay"></div>
+<div class="body-overlay"></div>
 <!-- end: Search Popup -->
 
 <!-- start: Hamburger Menu -->
@@ -15,7 +15,7 @@
                     </a>
                 </div>
                 <div class="hamburger_close">
-                    <button class="hamburger_close_btn" (click)="closeHamburger()">
+                    <button class="hamburger_close_btn">
                         <i class="fa-thin fa-times"></i></button>
                 </div>
             </div>
@@ -88,8 +88,8 @@
                                 <li class="urrent-menu-ancestor"><a [routerLink]="['/general-services']">Services</a>
                                 </li>
                                 <li class="urrent-menu-ancestor"><a [routerLink]="['/fmcg-home']">FMCG</a></li>
-                                <li class="urrent-menu-ancestor"><a href="#">MEP</a></li>
-                                <li class="urrent-menu-ancestor"><a href="#">Uniforms</a></li>
+                                <li class="urrent-menu-ancestor"><a [routerLink]="['/mep-home']">MEP</a></li>
+                                <li class="urrent-menu-ancestor"><a [routerLink]="['/uniform-home']">Uniforms</a></li>
                                 <li><a [routerLink]="['/career']">Career</a></li>
                                 <li><a [routerLink]="['/contact-us']">Contact Us</a></li>
                             </ul>
@@ -99,11 +99,10 @@
                     <!-- header right info -->
                     <div class="header-right-item d-none d-lg-inline-flex">
                         <div class="header-search">
-                            <button class="search" (click)="openSearch()">
-
+                            <button class="search">
                                 <i class="tji-search"></i>
                             </button>
-                            <button type="button" class="search_close_btn" (click)="closeSearch()">
+                            <button type="button" class="search_close_btn">
 
                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -123,8 +122,7 @@
                     </div>
 
                     <!-- menu bar -->
-                    <div class="menu_bar mobile_menu_bar d-lg-none" (click)="openHamburger()">
-
+                    <div class="menu_bar mobile_menu_bar d-lg-none">
                         <span></span>
                         <span></span>
                         <span></span>

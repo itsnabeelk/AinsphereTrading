@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 declare function manJs(): void;
 @Component({
-  selector: 'app-mep-home',
+  selector: 'app-uniform-home',
   imports: [RouterLink],
-  templateUrl: './mep-home.html',
-  styleUrl: './mep-home.css',
+  templateUrl: './uniform-home.html',
+  styleUrl: './uniform-home.css',
 })
-export class MepHome {
-  ngOnInit(): void {
+export class UniformHome {
+  ngOnInit() {
     manJs();
   }
 }

@@ -1,3 +1,15 @@
 .header-2.header-absolute .mainmenu>ul>li>a:hover {
     color: #669966 !important;
 }
+
+.tj-primary-btn {
+    background-color: #669966;
+}
+
+.hamburger_bg {
+    background-color: #1e421f;
+}
+
+.hamburger_wrapper::before {
+    background: #669966;
+}

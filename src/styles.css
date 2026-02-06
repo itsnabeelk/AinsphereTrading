@@ -19,3 +19,23 @@
 .post-details-wrapper .title {
     font-size: 45px;
 }
+
+a {
+    cursor: pointer !important;
+}
+
+button {
+    cursor: pointer !important;
+}
+
+.swiper-pagination-bullet {
+    background-color: #ffffff !important;
+}
+
+.hamburger_menu .mean-nav ul li a:hover {
+    color: #d3d2d2 !important;
+}
+
+.menu_bar.mobile_menu_bar {
+    background: #000000 !important;
+}

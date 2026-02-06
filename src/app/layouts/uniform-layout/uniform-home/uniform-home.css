@@ -1,0 +1,38 @@
+.h6-hero .banner-left-box {
+    background-color: #2085981f;
+}
+
+.tj-primary-btn .btn-icon {
+    background-color: #218396;
+}
+
+.tj-primary-btn {
+    background-color: #e19b8c;
+}
+
+.h10-about-content .desc {
+    max-width: 100%;
+}
+
+@media (max-wdith:980px) {
+    .h6-hero .banner-left-box {
+        width: auto !important;
+    }
+
+}
+
+.tj-client-section-2 {
+    background-color: #218396;
+}
+
+.h8-funfact {
+    background: #f6f6f6 !important;
+}
+
+.tj-working-process {
+    background-color: #e19b8c24;
+}
+
+.banner-area {
+    height: 1020px;
+}

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
+declare function manJs(): void;
 @Component({
   selector: 'app-uniform-service-details',
   imports: [RouterLink],
@@ -8,5 +8,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './uniform-service-details.css',
 })
 export class UniformServiceDetails {
-
+  ngOnInit() {
+    manJs();
+  }
 }

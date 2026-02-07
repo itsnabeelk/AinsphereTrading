@@ -7,4 +7,9 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header-fmcg.css',
 })
 export class HeaderFMCG {
+  closeHamburger() {
+    document.querySelector('.hamburger-area')?.classList.remove('opened');
+    document.querySelector('.body-overlay')?.classList.remove('opened');
+    document.body.classList.remove('overflow-hidden');
+  }
 }

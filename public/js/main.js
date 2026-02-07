@@ -94,11 +94,7 @@ function manJs() {
 		});
 
 		// Mobile Menu Js
-		$("#mobile-menu").meanmenu({
-			meanMenuContainer: ".mobile_menu",
-			meanScreenWidth: "991",
-			meanExpand: ['<i class="tji-arrow-down"></i>'],
-		});
+
 
 		// Hamburger Menu Js
 		$(".mobile_menu_bar").on("click", function () {

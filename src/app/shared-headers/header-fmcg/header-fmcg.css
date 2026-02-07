@@ -13,3 +13,16 @@
 .hamburger_wrapper::before {
     background: #669966;
 }
+
+.mobile_menu ul li a {
+    color: #fff;
+}
+
+.mobile_menu ul {
+    list-style: none;
+    padding: 0 0 35px;
+}
+
+.mobile_menu ul li {
+    padding-bottom: 12px;
+}

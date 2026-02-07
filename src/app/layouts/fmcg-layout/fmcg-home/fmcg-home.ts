@@ -20,7 +20,7 @@ export class FmcgHome implements AfterViewInit, OnDestroy {
   private heroSwiper: any;
   private routerSub: any;
 
-  // 🔒 IMPORTANT: prevent GSAP / ScrollSmoother re-init
+
   private manJsInitialized = false;
 
   constructor(private router: Router) { }
@@ -28,26 +28,21 @@ export class FmcgHome implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
 
     const initOnce = () => {
-      // ✅ Run heavy global JS ONLY ONCE
       if (!this.manJsInitialized) {
         manJs();
         this.manJsInitialized = true;
       }
 
-      // ✅ Safe Swiper init after DOM settles
       requestAnimationFrame(() => {
         this.initMarquee();
         this.initHeroSlider();
       });
     };
 
-    // First load
     initOnce();
 
-    // Router navigation
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // ❌ DO NOT call manJs again
         requestAnimationFrame(() => {
           this.initMarquee();
           this.initHeroSlider();
@@ -56,9 +51,7 @@ export class FmcgHome implements AfterViewInit, OnDestroy {
     });
   }
 
-  /* =========================
-     MARQUEE
-  ========================= */
+
   initMarquee(): void {
     this.marqueeSwipers.forEach(s => s?.destroy?.(true, true));
     this.marqueeSwipers = [];
@@ -86,9 +79,7 @@ export class FmcgHome implements AfterViewInit, OnDestroy {
     });
   }
 
-  /* =========================
-     HERO SLIDER
-  ========================= */
+
   initHeroSlider(): void {
     if (this.heroSwiper) {
       this.heroSwiper.destroy(true, true);

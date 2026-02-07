@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
+declare function manJs(): void;
 @Component({
   selector: 'app-general-about',
   imports: [RouterLink],
@@ -8,5 +8,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './general-about.css',
 })
 export class GeneralAbout {
-
+  ngOnInit() {
+    manJs();
+  }
 }

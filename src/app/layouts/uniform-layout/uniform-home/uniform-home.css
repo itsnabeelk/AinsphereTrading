@@ -36,3 +36,13 @@
 .banner-area {
     height: 1020px;
 }
+
+@media (max-width: 992px) {
+    .banner-right-box {
+        display: none !important;
+    }
+
+    .banner-area {
+        height: auto;
+    }
+}

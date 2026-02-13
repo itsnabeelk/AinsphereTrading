@@ -1,0 +1,160 @@
+<form autocomplete="off" class="container-fluid">
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <h4 class="mb-4 fw-semibold">Profile Settings</h4>
+
+            <div class="row g-4 align-items-center">
+
+                <!-- ================= AVATAR ================= -->
+                <div class="col-md-4 text-center">
+
+                    <div class="position-relative d-inline-block">
+
+                        <img [src]="avatarPreview || 'assets/dashboard/images/users/default.jpg'"
+                            class="rounded-circle border shadow-sm" width="160" height="160" style="object-fit: cover;">
+
+                        <!-- Edit Icon -->
+                        <label
+                            class="position-absolute bottom-0 end-0 bg-primary text-white rounded-circle d-flex align-items-center justify-content-center shadow"
+                            style="width:40px;height:40px;cursor:pointer;">
+
+                            <i class="bi bi-pencil"></i>
+
+                            <input type="file" hidden accept="image/png, image/jpeg" (change)="onFileChange($event)">
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <!-- ================= PROFILE INFO ================= -->
+                <div class="col-md-8">
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Full Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="name" name="name" autocomplete="off">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email Address</label>
+                        <input type="email" class="form-control" [(ngModel)]="email" name="email" autocomplete="off">
+                    </div>
+
+                    <button type="button" class="btn btn-primary px-4" [disabled]="loadingProfile"
+                        (click)="updateProfile()">
+
+                        <span *ngIf="!loadingProfile">Save Changes</span>
+
+                        <span *ngIf="loadingProfile">
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                            Saving...
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <hr class="my-5">
+
+            <!-- ================= PASSWORD ================= -->
+            <h5 class="mb-3 fw-semibold">Change Password</h5>
+
+            <div class="row">
+                <div class="col-md-6">
+
+                    <!-- ================= CURRENT PASSWORD ================= -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Current Password</label>
+
+                        <div class="password-group">
+
+                            <input [type]="showCurrentPassword ? 'text' : 'password'" class="form-control"
+                                [(ngModel)]="currentPassword" name="currentPassword" autocomplete="current-password">
+
+                            <span class="password-toggle" (click)="showCurrentPassword = !showCurrentPassword">
+
+                                <i [class]="showCurrentPassword ? 'iconoir-eye-closed' : 'iconoir-eye'">
+                                </i>
+
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <!-- ================= NEW PASSWORD ================= -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">New Password</label>
+
+                        <div class="password-group">
+
+                            <input [type]="showNewPassword ? 'text' : 'password'" class="form-control"
+                                [(ngModel)]="newPassword" name="newPassword" autocomplete="new-password">
+
+                            <span class="password-toggle" (click)="showNewPassword = !showNewPassword">
+
+                                <i [class]="showNewPassword ? 'iconoir-eye-closed' : 'iconoir-eye'">
+                                </i>
+
+                            </span>
+
+                        </div>
+
+                        <small class="text-muted">
+                            8+ chars, uppercase, number & special character.
+                        </small>
+                    </div>
+
+                    <!-- ================= CONFIRM PASSWORD ================= -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Confirm Password</label>
+
+                        <div class="password-group">
+
+                            <input [type]="showConfirmPassword ? 'text' : 'password'" class="form-control"
+                                [(ngModel)]="confirmPassword" name="confirmPassword" autocomplete="new-password">
+
+                            <span class="password-toggle" (click)="showConfirmPassword = !showConfirmPassword">
+
+                                <i [class]="showConfirmPassword ? 'iconoir-eye-closed' : 'iconoir-eye'">
+                                </i>
+
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-warning px-4" [disabled]="loadingPassword"
+                        (click)="changePassword()">
+
+                        <span *ngIf="!loadingPassword">Update Password</span>
+
+                        <span *ngIf="loadingPassword">
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                            Updating...
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+
+<!-- ================= TOAST ================= -->
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index:1100;">
+    <div id="profileToast" class="toast text-white" role="alert">
+        <div class="d-flex">
+            <div class="toast-body" id="profileToastBody"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>

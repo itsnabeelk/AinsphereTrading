@@ -1,0 +1,27 @@
+.password-group {
+    position: relative;
+}
+
+.password-group input {
+    padding-right: 45px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    font-size: 18px;
+    transition: 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: #0d6efd;
+}
+
+.form-control {
+
+    font-size: .812rem;
+}

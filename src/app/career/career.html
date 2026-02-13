@@ -1,0 +1,79 @@
+<app-header-general></app-header-general>
+
+
+
+<!-- start: Breadcrumb Section -->
+<section class="tj-page-header section-gap-x" data-bg-image="assets/images/bg/pheader-bg.webp">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tj-page-header-content text-center">
+                    <h1 class="tj-page-title">Careers</h1>
+                    <div class="tj-page-link">
+                        <span><i class="tji-home"></i></span>
+                        <span>
+                            <a href="index.html">Home</a>
+                        </span>
+                        <span><i class="tji-arrow-right"></i></span>
+                        <span>
+                            <span>Careers</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page-header-overlay" data-bg-image="assets/images/shape/pheader-overlay.webp"></div>
+</section>
+<!-- end: Breadcrumb Section -->
+
+<!-- start: Careers Section -->
+<section class="tj-careers-section section-gap">
+    <div class="container">
+        <div class="row rg-30">
+            <div class="col-xl-4 col-md-6">
+                <div class="tj-careers wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="tj-careers-tag">
+                        <span>Full time job</span>
+                    </div>
+                    <h4 class="tj-careers-title">
+                        <a [routerLink]="['/']">Business Strategy Consultant</a>
+                    </h4>
+                    <div class="tj-careers-salary">
+                        <p>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                        </p>
+                    </div>
+                    <div class="tj-careers-bottom">
+                        <span class="location"><i class="tji-location"></i>Saudi Arabia</span>
+                        <a href="javascript:void(0)" class="tj-careers-btn" (click)="openApplyModal()">
+                            <div class="btn-text">
+                                <span>Apply Now</span>
+                            </div>
+                            <span class="btn-icon">
+                                <i class="tji-arrow-right"></i>
+                                <i class="tji-arrow-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- post pagination -->
+        <div class="tj-pagination d-flex justify-content-center">
+            <ul>
+                <li>
+                    <span aria-current="page" class="page-numbers current">01</span>
+                </li>
+                <li>
+                    <a class="page-numbers" href="#">02</a>
+                </li>
+                <li>
+                    <a class="next page-numbers" href="#"><i class="tji-arrow-right-long"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- end: Careers Section -->
+<app-general-footer></app-general-footer>

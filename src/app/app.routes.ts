@@ -4,7 +4,6 @@ import { GeneralLayout } from './layouts/general-layout/general-layout';
 import { GeneralHome } from './layouts/general-layout/general-home/general-home';
 import { ContactUs } from './contact-us/contact-us';
 import { Career } from './career/career';
-import { GeneralAbout } from './layouts/general-layout/general-about/general-about';
 import { GeneralServices } from './layouts/general-layout/general-services/general-services';
 import { GeneralServiceDetails } from './layouts/general-layout/general-service-details/general-service-details';
 import { FmcgLayout } from './layouts/fmcg-layout/fmcg-layout';
@@ -66,8 +65,13 @@ export const routes: Routes = [
                         loadComponent: () =>
                             import('./dashboard-layout/pages/general-home/general-home')
                                 .then(m => m.GeneralHome)
+                    },
+                    {
+                        path: 'general-service-detail/:id',
+                        loadComponent: () =>
+                            import('./dashboard-layout/pages/general-home/general-service-detail/general-service-detail')
+                                .then(m => m.GeneralServiceDetail)
                     }
-
                 ]
             }
         ]
@@ -88,9 +92,12 @@ export const routes: Routes = [
         children: [
             { path: '', component: GeneralHome },
             { path: 'general-trading', component: GeneralHome },
-            { path: 'general-about', component: GeneralAbout },
+
+            // LIST PAGE
             { path: 'general-services', component: GeneralServices },
-            { path: 'general-details', component: GeneralServiceDetails }
+
+            // DETAIL PAGE (SLUG BASED)
+            { path: 'general-services/:slug', component: GeneralServiceDetails },
         ]
     },
     {

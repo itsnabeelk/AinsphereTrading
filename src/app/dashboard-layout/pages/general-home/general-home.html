@@ -19,21 +19,35 @@
             <!-- ================= TABS ================= -->
             <ul class="nav nav-tabs mb-4" id="generalHomeTabs">
                 <li class="nav-item">
-                    <button class="nav-link active" data-bs-target="#heroTab">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#heroTab">
                         Hero Section
                     </button>
                 </li>
-
                 <li class="nav-item">
-                    <button class="nav-link" data-bs-target="#aboutTab">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#clientTab">
+                        Client Section
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#aboutTab">
                         About Section
                     </button>
                 </li>
-
                 <li class="nav-item">
-                    <button class="nav-link" data-bs-target="#servicesTab">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#whychoose">
+                        Why Choose Section
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#teamTab">
+                        Our Team Section
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#servicesTab">
                         Services Section
                     </button>
+
                 </li>
             </ul>
 
@@ -52,7 +66,7 @@
 
                     <div class="row g-3">
 
-                        <div class="col-md-3 col-sm-6" *ngFor="let hero of heroes">
+                        <div class="col-md-2 col-sm-6" *ngFor="let hero of heroes">
 
                             <div class="card h-100 shadow-sm">
 
@@ -91,14 +105,354 @@
 
                 </div>
 
-                <!-- About Tab Placeholder -->
-                <div class="tab-pane fade" id="aboutTab">
-                    <p>About CMS will be added here.</p>
+
+                <!-- ================= CLIENT TAB ================= -->
+                <div class="tab-pane fade" id="clientTab">
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5>Client Logos</h5>
+                        <button class="btn btn-primary btn-sm" (click)="openClientModal()">
+                            + Add Client
+                        </button>
+                    </div>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-2 col-sm-4 col-6" *ngFor="let client of clients">
+
+                            <div class="card shadow-sm text-center p-2">
+
+                                <img [src]="getImage(client.logo)" class="img-fluid mb-2"
+                                    style="height:60px; object-fit:contain;">
+
+                                <div class="d-flex justify-content-between">
+
+                                    <button class="btn btn-sm btn-outline-primary" (click)="editClient(client)">
+                                        Edit
+                                    </button>
+
+                                    <button class="btn btn-sm btn-outline-danger"
+                                        (click)="openClientDeleteModal(client.id)">
+                                        Delete
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
+
+                <!-- About Tab Placeholder -->
+                <!-- ================= ABOUT TAB ================= -->
+                <div class="tab-pane fade" id="aboutTab">
+
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+
+                            <h5 class="mb-4">About Section (Bilingual)</h5>
+
+                            <!-- ================= TITLE ================= -->
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Title (English)</label>
+                                    <input class="form-control" [(ngModel)]="aboutForm.title_en">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Title (Arabic)</label>
+                                    <input class="form-control" dir="rtl" [(ngModel)]="aboutForm.title_ar">
+                                </div>
+                            </div>
+
+                            <!-- ================= DESCRIPTION 1 ================= -->
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Description 1 (English)</label>
+                                    <textarea class="form-control" rows="3"
+                                        [(ngModel)]="aboutForm.description_1_en"></textarea>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Description 1 (Arabic)</label>
+                                    <textarea class="form-control" rows="3" dir="rtl"
+                                        [(ngModel)]="aboutForm.description_1_ar"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- ================= DESCRIPTION 2 ================= -->
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Description 2 (English)</label>
+                                    <textarea class="form-control" rows="3"
+                                        [(ngModel)]="aboutForm.description_2_en"></textarea>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Description 2 (Arabic)</label>
+                                    <textarea class="form-control" rows="3" dir="rtl"
+                                        [(ngModel)]="aboutForm.description_2_ar"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- ================= BROCHURE ================= -->
+                            <!-- ================= BROCHURE EN ================= -->
+                            <div class="mb-3">
+                                <label class="form-label">Brochure PDF (English)</label>
+                                <input type="file" class="form-control" accept="application/pdf"
+                                    (change)="onBrochureEnChange($event)">
+                            </div>
+
+                            <div *ngIf="brochureEnPreview" class="mb-3 p-2 border rounded bg-light">
+
+                                <div class="d-flex align-items-center justify-content-between">
+
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-file-earmark-pdf text-danger me-2" style="font-size:20px;"></i>
+                                        <span>English Brochure.pdf</span>
+                                    </div>
+
+                                    <a [href]="brochureEnPreview" target="_blank"
+                                        class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                            <!-- ================= BROCHURE AR ================= -->
+                            <div class="mb-3">
+                                <label class="form-label">Brochure PDF (Arabic)</label>
+                                <input type="file" class="form-control" accept="application/pdf"
+                                    (change)="onBrochureArChange($event)">
+                            </div>
+
+                            <div *ngIf="brochureArPreview" class="mb-3 p-2 border rounded bg-light">
+
+                                <div class="d-flex align-items-center justify-content-between">
+
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-file-earmark-pdf text-danger me-2" style="font-size:20px;"></i>
+                                        <span>Arabic Brochure.pdf</span>
+                                    </div>
+
+                                    <a [href]="brochureArPreview" target="_blank"
+                                        class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ================= IMAGE ================= -->
+
+                            <div class="mb-3">
+                                <label class="form-label">About Image</label>
+                                <input type="file" class="form-control" (change)="onAboutFileChange($event)">
+                            </div>
+
+                            <div *ngIf="aboutPreview" class="mb-3">
+                                <img [src]="aboutPreview" class="img-fluid rounded shadow-sm"
+                                    style="max-height:120px; object-fit:cover;">
+                            </div>
+
+                            <!-- ================= ACTIVE TOGGLE ================= -->
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" [(ngModel)]="aboutForm.is_active">
+                                <label class="form-check-label">
+                                    Active
+                                </label>
+                            </div>
+
+                            <!-- ================= SAVE ================= -->
+
+                            <button class="btn btn-primary" (click)="saveAbout()">
+                                Save About Section
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ================= WHY CHOOSE TAB ================= -->
+                <div class="tab-pane fade" id="whychoose">
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5>Why Choose Us Items</h5>
+                        <button class="btn btn-primary btn-sm" (click)="openWorkingModal()">
+                            + Add Item
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title (EN)</th>
+                                    <th>Sort</th>
+                                    <th>Status</th>
+                                    <th width="180">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of workingItems; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ item.title_en }}</td>
+                                    <td>{{ item.sort_order }}</td>
+                                    <td>
+                                        <span class="badge" [ngClass]="item.is_active ? 'bg-success' : 'bg-secondary'">
+                                            {{ item.is_active ? 'Active' : 'Inactive' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1" (click)="editWorking(item)">
+                                            Edit
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger me-1"
+                                            (click)="openWorkingDeleteModal(item.id)">
+                                            Delete
+                                        </button>
+                                        <button class="btn btn-sm"
+                                            [ngClass]="item.is_active ? 'btn-success' : 'btn-secondary'"
+                                            (click)="toggleWorking(item.id)">
+                                            Active
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <!-- ================= TEAM TAB ================= -->
+                <div class="tab-pane fade" id="teamTab">
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5>Team Members</h5>
+                        <button class="btn btn-primary btn-sm" (click)="openTeamModal()">
+                            + Add Member
+                        </button>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-2 col-sm-6" *ngFor="let member of teamMembers">
+
+                            <div class="card shadow-sm h-100">
+
+                                <img [src]="getImage(member.image)" class="card-img-top"
+                                    style="height:140px;object-fit:cover;">
+
+                                <div class="card-body">
+
+                                    <h6>{{ member.name_en }}</h6>
+                                    <small class="text-muted">{{ member.designation_en }}</small>
+
+                                    <div class="d-flex justify-content-between mt-3">
+
+                                        <button class="btn btn-sm btn-outline-primary" (click)="editTeam(member)">
+                                            Edit
+                                        </button>
+
+                                        <button class="btn btn-sm btn-outline-danger"
+                                            (click)="openTeamDeleteModal(member.id)">
+                                            Delete
+                                        </button>
+
+                                        <button class="btn btn-sm"
+                                            [ngClass]="member.is_active ? 'btn-success' : 'btn-secondary'"
+                                            (click)="toggleTeam(member.id)">
+                                            {{ member.is_active ? 'Active' : 'Inactive' }}
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
 
                 <!-- Services Tab Placeholder -->
                 <div class="tab-pane fade" id="servicesTab">
-                    <p>Services CMS will be added here.</p>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5>Services</h5>
+                        <button class="btn btn-primary btn-sm" (click)="openServiceModal()">
+                            + Add Service
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Image</th>
+                                    <th>Title (EN)</th>
+                                    <th>Sort</th>
+                                    <th>Status</th>
+                                    <th width="200">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let service of services; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>
+                                        <img [src]="getImage(service.image)" style="height:50px;object-fit:cover;">
+                                    </td>
+                                    <td>{{ service.title_en }}</td>
+                                    <td>{{ service.sort_order }}</td>
+                                    <td>
+                                        <span class="badge"
+                                            [ngClass]="service.is_active ? 'bg-success' : 'bg-secondary'">
+                                            {{ service.is_active ? 'Active' : 'Inactive' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary me-1"
+                                            (click)="editService(service)">
+                                            Edit
+                                        </button>
+
+                                        <button class="btn btn-sm btn-outline-info me-1"
+                                            (click)="goToServiceDetail(service)">
+                                            Details
+                                        </button>
+
+                                        <button class="btn btn-sm btn-outline-danger me-1"
+                                            (click)="openServiceDeleteModal(service.id)">
+                                            Delete
+                                        </button>
+
+                                        <button class="btn btn-sm"
+                                            [ngClass]="service.is_active ? 'btn-success' : 'btn-secondary'"
+                                            (click)="toggleService(service.id)">
+                                            Active
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
 
             </div>
@@ -184,6 +538,316 @@
                 </button>
             </div>
 
+        </div>
+    </div>
+</div>
+
+
+<!-- ================= CLIENT MODAL ================= -->
+<div class="modal fade" id="clientModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h6 class="modal-title">
+                    {{ isClientEditing ? 'Edit Client' : 'Add Client' }}
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label class="form-label">Client Name</label>
+                    <input class="form-control" [(ngModel)]="clientForm.name">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Logo</label>
+                    <input type="file" class="form-control" (change)="onClientFileChange($event)">
+                </div>
+
+                <div *ngIf="clientPreview" class="text-center mt-2">
+                    <img [src]="clientPreview" style="max-height:60px; object-fit:contain;">
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button class="btn btn-primary btn-sm" (click)="saveClient()">
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="clientDeleteModal">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h6 class="modal-title">Confirm Delete</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body text-center">
+                Delete this client logo?
+            </div>
+
+            <div class="modal-footer justify-content-center">
+                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="confirmClientDelete()">
+                    Delete
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ================= WORKING MODAL ================= -->
+<div class="modal fade" id="workingModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h6 class="modal-title">
+                    {{ isWorkingEditing ? 'Edit Item' : 'Add Item' }}
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label>Title (English)</label>
+                    <input class="form-control" [(ngModel)]="workingForm.title_en">
+                </div>
+
+                <div class="mb-3">
+                    <label>Title (Arabic)</label>
+                    <input class="form-control" dir="rtl" [(ngModel)]="workingForm.title_ar">
+                </div>
+
+                <div class="mb-3">
+                    <label>Description (English)</label>
+                    <textarea class="form-control" rows="3" [(ngModel)]="workingForm.description_en"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>Description (Arabic)</label>
+                    <textarea class="form-control" rows="3" dir="rtl"
+                        [(ngModel)]="workingForm.description_ar"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>Sort Order</label>
+                    <input type="number" class="form-control" [(ngModel)]="workingForm.sort_order">
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button class="btn btn-primary btn-sm" (click)="saveWorking()">
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="workingDeleteModal">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                Delete this item?
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="confirmWorkingDelete()">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ================= TEAM MODAL ================= -->
+<div class="modal fade" id="teamModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h6 class="modal-title">
+                    {{ isTeamEditing ? 'Edit Member' : 'Add Member' }}
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label>Name (English)</label>
+                    <input class="form-control" [(ngModel)]="teamForm.name_en">
+                </div>
+
+                <div class="mb-3">
+                    <label>Name (Arabic)</label>
+                    <input class="form-control" dir="rtl" [(ngModel)]="teamForm.name_ar">
+                </div>
+
+                <div class="mb-3">
+                    <label>Designation (English)</label>
+                    <input class="form-control" [(ngModel)]="teamForm.designation_en">
+                </div>
+
+                <div class="mb-3">
+                    <label>Designation (Arabic)</label>
+                    <input class="form-control" dir="rtl" [(ngModel)]="teamForm.designation_ar">
+                </div>
+
+                <div class="mb-3">
+                    <label>Image</label>
+                    <input type="file" class="form-control" (change)="onTeamFileChange($event)">
+                </div>
+
+                <div *ngIf="teamPreview" class="text-center mt-2">
+                    <img [src]="teamPreview" style="max-height:120px;object-fit:cover;">
+                </div>
+
+                <div class="mb-3">
+                    <label>Sort Order</label>
+                    <input type="number" class="form-control" [(ngModel)]="teamForm.sort_order">
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button class="btn btn-primary btn-sm" (click)="saveTeam()">
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="teamDeleteModal">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                Delete this team member?
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="confirmTeamDelete()">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="serviceModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h6 class="modal-title">
+                    {{ isServiceEditing ? 'Edit Service' : 'Add Service' }}
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label>Title (English)</label>
+                    <input class="form-control" [(ngModel)]="serviceForm.title_en">
+                </div>
+
+                <div class="mb-3">
+                    <label>Title (Arabic)</label>
+                    <input class="form-control" dir="rtl" [(ngModel)]="serviceForm.title_ar">
+                </div>
+
+                <div class="mb-3">
+                    <label>Description (English)</label>
+                    <textarea class="form-control" rows="3" [(ngModel)]="serviceForm.description_en"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>Description (Arabic)</label>
+                    <textarea class="form-control" rows="3" dir="rtl"
+                        [(ngModel)]="serviceForm.description_ar"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>Image (Max 2MB - PNG/JPG/WEBP)</label>
+                    <input type="file" class="form-control" (change)="onServiceFileChange($event)">
+                </div>
+
+                <div *ngIf="servicePreview" class="text-center">
+                    <img [src]="servicePreview" style="max-height:120px;object-fit:cover;">
+                </div>
+
+                <div class="mb-3">
+                    <label>Sort Order</label>
+                    <input type="number" class="form-control" [(ngModel)]="serviceForm.sort_order">
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button class="btn btn-primary btn-sm" (click)="saveService()">
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="serviceDeleteModal">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                Delete this service?
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="confirmServiceDelete()">
+                    Delete
+                </button>
+            </div>
         </div>
     </div>
 </div>

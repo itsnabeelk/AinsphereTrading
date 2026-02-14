@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GeneralAbout } from './general-about';
+import { GeneralServiceDetail } from './general-service-detail';
 
-describe('GeneralAbout', () => {
-  let component: GeneralAbout;
-  let fixture: ComponentFixture<GeneralAbout>;
+describe('GeneralServiceDetail', () => {
+  let component: GeneralServiceDetail;
+  let fixture: ComponentFixture<GeneralServiceDetail>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GeneralAbout]
+      imports: [GeneralServiceDetail]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GeneralAbout);
+    fixture = TestBed.createComponent(GeneralServiceDetail);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

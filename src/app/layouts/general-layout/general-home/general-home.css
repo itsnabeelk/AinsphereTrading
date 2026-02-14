@@ -1,0 +1,8 @@
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.rtl .h9-about-area {
+    flex-direction: row-reverse;
+}

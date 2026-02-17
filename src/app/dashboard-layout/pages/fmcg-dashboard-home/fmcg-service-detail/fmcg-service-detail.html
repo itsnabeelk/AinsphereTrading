@@ -1,0 +1,339 @@
+<div class="container-fluid py-4" *ngIf="!loading">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h4>FMCG Service Detail Management</h4>
+        <button class="btn btn-secondary btn-sm" (click)="goBack()">
+            ← Back
+        </button>
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- ================= MAIN DETAIL ======================= -->
+    <!-- ===================================================== -->
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+
+            <h5>Main Detail</h5>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Main Heading (EN)</label>
+                    <input class="form-control" [(ngModel)]="detailForm.main_heading_en">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Main Heading (AR)</label>
+                    <input class="form-control" dir="rtl" [(ngModel)]="detailForm.main_heading_ar">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label>Sub Heading (EN)</label>
+                    <input class="form-control" [(ngModel)]="detailForm.sub_heading_en">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Sub Heading (AR)</label>
+                    <input class="form-control" dir="rtl" [(ngModel)]="detailForm.sub_heading_ar">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label>Hero Image</label>
+                <input type="file" class="form-control" (change)="onHeroImageChange($event)">
+            </div>
+
+            <div *ngIf="heroPreview" class="mb-3">
+                <img [src]="heroPreview" style="max-height:150px;object-fit:cover;">
+            </div>
+
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" [(ngModel)]="detailForm.is_active">
+                <label class="form-check-label">
+                    Active
+                </label>
+            </div>
+
+            <button class="btn btn-primary" (click)="saveDetail()">
+                Save Detail
+            </button>
+
+        </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- ================= SECTIONS ========================== -->
+    <!-- ===================================================== -->
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between mb-3">
+                <h5>Sections</h5>
+                <button class="btn btn-primary btn-sm" (click)="resetSection()">
+                    + Add Section
+                </button>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <input class="form-control mb-2" placeholder="Heading EN" [(ngModel)]="sectionForm.heading_en">
+
+                    <textarea class="form-control" rows="2" placeholder="Paragraph EN"
+                        [(ngModel)]="sectionForm.paragraph_en"></textarea>
+                </div>
+
+                <div class="col-md-6">
+                    <input class="form-control mb-2" dir="rtl" placeholder="Heading AR"
+                        [(ngModel)]="sectionForm.heading_ar">
+
+                    <textarea class="form-control" rows="2" dir="rtl" placeholder="Paragraph AR"
+                        [(ngModel)]="sectionForm.paragraph_ar"></textarea>
+                </div>
+            </div>
+
+            <button class="btn btn-success btn-sm mb-3" (click)="saveSection()">
+                {{ isSectionEditing ? 'Update Section' : 'Save Section' }}
+            </button>
+
+            <table class="table table-bordered align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Heading EN</th>
+                        <th>Heading AR</th>
+                        <th>Preview</th>
+                        <th width="120">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngIf="sections.length === 0">
+                        <td colspan="5" class="text-center text-muted">
+                            No sections added yet.
+                        </td>
+                    </tr>
+
+                    <tr *ngFor="let s of sections; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ s.heading_en }}</td>
+                        <td dir="rtl">{{ s.heading_ar }}</td>
+                        <td>{{ s.paragraph_en | slice:0:50 }}...</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1" (click)="editSection(s)">
+                                Edit
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger" (click)="deleteSection(s.id)">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- ================= ACCORDION POINTS ================== -->
+    <!-- ===================================================== -->
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between mb-3">
+                <h5>Accordion Points</h5>
+                <button class="btn btn-primary btn-sm" (click)="resetPoint()">
+                    + Add Point Group
+                </button>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <input class="form-control mb-2" placeholder="Small Heading EN"
+                        [(ngModel)]="pointForm.small_heading_en">
+
+                    <textarea class="form-control" rows="4" placeholder="Points EN (one per line)"
+                        [(ngModel)]="pointForm.points_en"></textarea>
+                </div>
+
+                <div class="col-md-6">
+                    <input class="form-control mb-2" dir="rtl" placeholder="Small Heading AR"
+                        [(ngModel)]="pointForm.small_heading_ar">
+
+                    <textarea class="form-control" rows="4" dir="rtl" placeholder="Points AR (one per line)"
+                        [(ngModel)]="pointForm.points_ar"></textarea>
+                </div>
+            </div>
+
+            <button class="btn btn-success btn-sm mb-3" (click)="savePoint()">
+                {{ isPointEditing ? 'Update Point Group' : 'Save Point Group' }}
+            </button>
+
+            <table class="table table-bordered align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Small Heading EN</th>
+                        <th>Small Heading AR</th>
+                        <th>Points Count</th>
+                        <th width="120">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngIf="points.length === 0">
+                        <td colspan="5" class="text-center text-muted">
+                            No point groups added yet.
+                        </td>
+                    </tr>
+
+                    <tr *ngFor="let p of points; let i = index">
+                        <td>{{ i + 1 }}</td>
+
+                        <td>{{ p.small_heading_en }}</td>
+                        <td dir="rtl">{{ p.small_heading_ar }}</td>
+
+                        <td>
+                            {{ p.points_en?.length || 0 }} EN /
+                            {{ p.points_ar?.length || 0 }} AR
+                        </td>
+
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1" (click)="editPoint(p)">
+                                Edit
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger" (click)="deletePoint(p.id)">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- ================= PRODUCTS ========================== -->
+    <!-- ===================================================== -->
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between mb-3">
+                <h5>Products</h5>
+                <button class="btn btn-primary btn-sm" (click)="openProductModal()">
+                    + Add Product
+                </button>
+            </div>
+
+            <table class="table table-bordered align-middle">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Title (EN)</th>
+                        <th>Sort</th>
+                        <th width="150">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let product of products; let i = index">
+                        <td>{{ i + 1 }}</td>
+
+                        <td>
+                            <img [src]="getImage(product.image)" style="height:50px;object-fit:cover;">
+                        </td>
+
+                        <td>{{ product.title_en }}</td>
+                        <td>{{ product.sort_order }}</td>
+
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary me-1" (click)="editProduct(product)">
+                                Edit
+                            </button>
+
+                            <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(product.id)">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- ================= PRODUCT MODAL ================= -->
+<div class="modal fade" id="productModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {{ isProductEditing ? 'Edit Product' : 'Add Product' }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <label>Title (English)</label>
+                    <input class="form-control" [(ngModel)]="productForm.title_en">
+                </div>
+
+                <div class="mb-3">
+                    <label>Title (Arabic)</label>
+                    <input class="form-control" dir="rtl" [(ngModel)]="productForm.title_ar">
+                </div>
+
+                <div class="mb-3">
+                    <label>Description (English)</label>
+                    <textarea class="form-control" rows="3" [(ngModel)]="productForm.description_en"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>Description (Arabic)</label>
+                    <textarea class="form-control" rows="3" dir="rtl"
+                        [(ngModel)]="productForm.description_ar"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>Image</label>
+                    <input type="file" class="form-control" (change)="onProductImageChange($event)">
+                </div>
+
+                <div *ngIf="productPreview" class="mb-3 text-center">
+                    <img [src]="productPreview" style="max-height:120px; object-fit:cover;">
+                </div>
+
+                <div class="mb-3">
+                    <label>Sort Order</label>
+                    <input type="number" class="form-control" [(ngModel)]="productForm.sort_order">
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button class="btn btn-primary" (click)="saveProduct()">
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>

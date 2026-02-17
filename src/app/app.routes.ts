@@ -71,7 +71,20 @@ export const routes: Routes = [
                         loadComponent: () =>
                             import('./dashboard-layout/pages/general-home/general-service-detail/general-service-detail')
                                 .then(m => m.GeneralServiceDetail)
+                    },
+                    {
+                        path: 'fmcg-dashboard-home',
+                        loadComponent: () =>
+                            import('./dashboard-layout/pages/fmcg-dashboard-home/fmcg-dashboard-home')
+                                .then(m => m.FmcgDashboardHome)
+                    },
+                    {
+                        path: 'fmcg-service-detail/:id',
+                        loadComponent: () =>
+                            import('./dashboard-layout/pages/fmcg-dashboard-home/fmcg-service-detail/fmcg-service-detail')
+                                .then(m => m.FmcgServiceDetail)
                     }
+
                 ]
             }
         ]
@@ -105,9 +118,12 @@ export const routes: Routes = [
         component: FmcgLayout,
         children: [
             { path: '', component: FmcgHome },
+
             { path: 'fmcg-home', component: FmcgHome },
+
             { path: 'fmcg-services', component: FmcgServices },
-            { path: 'fmcg-service-details', component: FmcgServiceDetails },
+
+            { path: 'fmcg-services/:slug', component: FmcgServiceDetails }
         ]
     },
     {

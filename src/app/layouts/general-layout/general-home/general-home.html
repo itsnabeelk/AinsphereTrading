@@ -293,68 +293,38 @@
                     <div class="swiper project-slider">
                         <div class="swiper-wrapper">
 
-                            <div class="swiper-slide">
+                            <div class="swiper-slide" *ngFor="let service of services">
                                 <div class="project-item">
-                                    <div class="project-img" data-bg-image="../images/service/1.jpg"></div>
-                                    <div class="project-content">
-                                        <span class="categories"><a href="#">Services</a></span>
-                                        <div class="project-text">
-                                            <h3 class="title"><a href="#">Lighting Fixtures</a></h3>
-                                            <a class="project-btn" href="#">
-                                                <i class="tji-arrow-right-big"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="swiper-slide">
-                                <div class="project-item">
-                                    <div class="project-img" data-bg-image="../images/service/2.jpg"></div>
-                                    <div class="project-content">
-                                        <span class="categories"><a href="#">Services</a></span>
-                                        <div class="project-text">
-                                            <h3 class="title"><a href="#">Industrial & Construction Supplies</a></h3>
-                                            <a class="project-btn" href="#">
-                                                <i class="tji-arrow-right-big"></i>
-                                            </a>
-                                        </div>
+                                    <div class="project-img"
+                                        [style.backgroundImage]="'url(' + getImage(service.image) + ')'">
                                     </div>
-                                </div>
-                            </div>
 
-                            <div class="swiper-slide">
-                                <div class="project-item">
-                                    <div class="project-img" data-bg-image="../images/service/3.jpg"></div>
                                     <div class="project-content">
-                                        <span class="categories"><a href="#">Services</a></span>
-                                        <div class="project-text">
-                                            <h3 class="title"><a href="#">Motors & Pumps</a></h3>
-                                            <a class="project-btn" href="#">
-                                                <i class="tji-arrow-right-big"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                        <span class="categories">
+                                            <a href="#">Services</a>
+                                        </span>
 
-                            <div class="swiper-slide">
-                                <div class="project-item">
-                                    <div class="project-img" data-bg-image="../images/service/4.jpg"></div>
-                                    <div class="project-content">
-                                        <span class="categories"><a href="#">Services</a></span>
                                         <div class="project-text">
-                                            <h3 class="title"><a href="#">MEP Tools </a></h3>
-                                            <a class="project-btn" href="#">
+                                            <h3 class="title">
+                                                <a [routerLink]="['/general-services', service.slug]">
+                                                    {{ currentLang === 'ar'
+                                                    ? service.title_ar
+                                                    : service.title_en }}
+                                                </a>
+                                            </h3>
+
+                                            <a class="project-btn" [routerLink]="['/general-services', service.slug]">
                                                 <i class="tji-arrow-right-big"></i>
                                             </a>
+
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
 
                         </div>
-                        <div class="swiper-pagination-area"></div>
                     </div>
                 </div>
             </div>

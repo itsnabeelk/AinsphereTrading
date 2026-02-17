@@ -7,6 +7,8 @@ import { GeneralClientService, GeneralClient } from '../../../service/general-cl
 import { GeneralAboutService, GeneralAbout } from '../../../service/general-about.service';
 import { GeneralWorkingService, GeneralWorking } from '../../../service/general-working.service';
 import { GeneralTeamService, GeneralTeam } from '../../../service/general-team.service';
+import { GeneralServicesService, GeneralService }
+  from '../../../service/general-services.service';
 
 import { API_BASE_URL } from '../../../core/api.config';
 
@@ -28,13 +30,14 @@ export class GeneralHome implements OnInit, AfterViewInit {
   about: GeneralAbout | null = null;
   workingItems: GeneralWorking[] = [];
   teamMembers: GeneralTeam[] = [];
-
+  services: GeneralService[] = [];
   constructor(
     private generalService: GeneralHomeService,
     private clientService: GeneralClientService,
     private aboutService: GeneralAboutService,
     private workingService: GeneralWorkingService,
-    private teamService: GeneralTeamService
+    private teamService: GeneralTeamService,
+    private generalServicesApi: GeneralServicesService
   ) { }
 
   /* =====================================================
@@ -54,6 +57,7 @@ export class GeneralHome implements OnInit, AfterViewInit {
     this.loadAbout();
     this.loadWorking();
     this.loadTeam();
+    this.loadServices();
   }
 
   ngAfterViewInit(): void {
@@ -76,6 +80,20 @@ export class GeneralHome implements OnInit, AfterViewInit {
         });
       }
     }, 300);
+  }
+
+
+  loadServices() {
+    this.generalServicesApi.getListPage().subscribe({
+      next: (res) => {
+        this.services = (res?.services || [])
+          .filter(s => s.is_active === 1)
+          .sort((a, b) => a.sort_order - b.sort_order);
+
+        this.reInitScripts();
+      },
+      error: (err) => console.error('Services load error:', err)
+    });
   }
 
   /* =====================================================

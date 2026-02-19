@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MepHomeService } from '../../../service/mep-home.service';
+import { MepServicesService } from '../../../service/mep-services.service';
 
 declare var bootstrap: any;
 
@@ -78,8 +79,27 @@ export class MepDashboardHome implements OnInit {
   isClientEditing = false;
   deleteClientId: number | null = null;
 
+
+  services: any[] = [];
+
+  serviceForm: any = {
+    id: null,
+    title_en: '',
+    title_ar: '',
+    description_en: '',
+    description_ar: '',
+    slug: ''
+  };
+
+  selectedServiceFile: File | null = null;
+  servicePreview: string | null = null;
+  isServiceEditing = false;
+  deleteServiceId: number | null = null;
+
+
   constructor(
     private api: MepHomeService,
+    private serviceApi: MepServicesService,
     private router: Router
   ) { }
 
@@ -96,6 +116,8 @@ export class MepDashboardHome implements OnInit {
     this.loadAbout();
     this.loadWorking();
     this.loadClients();
+    this.loadServices();
+
   }
 
   getImage(path: string | null) {
@@ -130,7 +152,8 @@ export class MepDashboardHome implements OnInit {
         this.showToast(res?.message || 'Hero saved successfully', 'success');
         this.loadHero();
       },
-      error: (err) => {
+      error: (err: any) => {
+
         this.showToast(err?.error?.message || 'Failed to save hero', 'danger');
       }
     });
@@ -163,7 +186,8 @@ export class MepDashboardHome implements OnInit {
         this.showToast(res?.message || 'About saved successfully', 'success');
         this.loadAbout();
       },
-      error: (err) => {
+      error: (err: any) => {
+
         this.showToast(err?.error?.message || 'Failed to save about', 'danger');
       }
     });
@@ -203,7 +227,8 @@ export class MepDashboardHome implements OnInit {
         bootstrap.Modal.getInstance(document.getElementById('workingModal')!)?.hide();
         this.resetWorkingForm();
       },
-      error: (err) => {
+      error: (err: any) => {
+
         this.showToast(err?.error?.message || 'Failed to save step', 'danger');
       }
     });
@@ -281,7 +306,8 @@ export class MepDashboardHome implements OnInit {
         bootstrap.Modal.getInstance(document.getElementById('clientModal')!)?.hide();
         this.resetClientForm();
       },
-      error: (err) => {
+      error: (err: any) => {
+
         this.showToast(err?.error?.message || 'Upload failed', 'danger');
       }
     });
@@ -403,6 +429,142 @@ export class MepDashboardHome implements OnInit {
       this.clientPreview = reader.result as string;
     };
     reader.readAsDataURL(file);
+  }
+
+  /* ===================================================== */
+  /* ================= SERVICE CRUD ======================= */
+  /* ===================================================== */
+
+
+  loadServices() {
+    this.serviceApi.getAdmin()
+      .subscribe(res => {
+        this.services = res || [];
+      });
+  }
+
+  openServiceModal() {
+    this.resetServiceForm();
+    new bootstrap.Modal(document.getElementById('serviceModal')).show();
+  }
+
+  editService(service: any) {
+    this.isServiceEditing = true;
+    this.serviceForm = { ...service };
+    this.servicePreview = service.image ? this.getImage(service.image) : null;
+    new bootstrap.Modal(document.getElementById('serviceModal')).show();
+  }
+
+  saveService() {
+
+    const formData = new FormData();
+
+    Object.keys(this.serviceForm).forEach(key => {
+      formData.append(key, this.serviceForm[key] ?? '');
+    });
+
+    if (this.selectedServiceFile)
+      formData.append('image', this.selectedServiceFile);
+
+    const request = this.isServiceEditing
+      ? this.serviceApi.update(this.serviceForm.id, formData)
+      : this.serviceApi.create(formData);
+
+
+    request.subscribe({
+      next: () => {
+        this.showToast('Service saved successfully', 'success');
+        this.loadServices();
+        bootstrap.Modal.getInstance(document.getElementById('serviceModal')!)?.hide();
+        this.resetServiceForm();
+      },
+      error: (err: any) => {
+
+        this.showToast(err?.error?.message || 'Failed to save service', 'danger');
+      }
+    });
+  }
+
+  openServiceDeleteModal(id: number) {
+    this.deleteServiceId = id;
+    new bootstrap.Modal(document.getElementById('serviceDeleteModal')).show();
+  }
+
+  confirmServiceDelete() {
+    if (!this.deleteServiceId) return;
+
+    this.serviceApi.delete(this.deleteServiceId).subscribe(() => {
+
+      this.showToast('Service deleted successfully', 'success');
+      this.loadServices();
+      bootstrap.Modal.getInstance(document.getElementById('serviceDeleteModal')!)?.hide();
+    });
+  }
+
+  resetServiceForm() {
+    this.isServiceEditing = false;
+    this.serviceForm = {
+      id: null,
+      title_en: '',
+      title_ar: '',
+      description_en: '',
+      description_ar: ''
+    };
+    this.selectedServiceFile = null;
+    this.servicePreview = null;
+  }
+
+
+  onServiceFileChange(event: any) {
+
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const maxSize = 2 * 1024 * 1024;
+
+    if (!allowedTypes.includes(file.type)) {
+      this.showToast('Only JPG, PNG or WEBP allowed', 'danger');
+      event.target.value = '';
+      return;
+    }
+
+    if (file.size > maxSize) {
+      this.showToast('Image must be less than 2MB', 'danger');
+      event.target.value = '';
+      return;
+    }
+
+    this.selectedServiceFile = file;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.servicePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  goToServiceDetail(service: any) {
+    this.router.navigate([
+      '/dashboard/mep-service-detail',
+      service.id
+    ]);
+  }
+
+  toggleServiceStatus(service: any) {
+
+    const newStatus = service.is_active ? 0 : 1;
+
+    this.serviceApi.toggleStatus(service.id, newStatus)
+      .subscribe({
+        next: () => {
+          service.is_active = newStatus;
+          this.showToast('Status updated successfully', 'success');
+        },
+        error: (err: any) => {
+          this.showToast(err?.error?.message || 'Failed to update status', 'danger');
+        }
+      });
   }
 
 

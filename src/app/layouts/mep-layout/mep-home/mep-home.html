@@ -145,87 +145,26 @@
                 <div class="project-wrapper wow fadeInUp" data-wow-delay=".4s">
                     <div class="swiper project-slider-2">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide">
+                            <div class="swiper-slide" *ngFor="let service of services">
                                 <div class="project-item">
                                     <div class="project-img">
-                                        <img src="/images/project/project-6.webp" alt="">
+                                        <img [src]="getImage(service.image)" alt="">
                                     </div>
                                     <div class="project-content">
                                         <div class="project-text">
-                                            <h4 class="title"><a [routerLink]="['/mep-services']">Lighting fixtures
-                                                </a></h4>
-                                            <a class="project-btn" [routerLink]="['/mep-services']">
+                                            <h4 class="title">
+                                                <a [routerLink]="['/mep-service-detail', service.slug]">
+                                                    {{ currentLang === 'ar' ? service.title_ar : service.title_en }}
+                                                </a>
+                                            </h4>
+                                            <a class="project-btn" [routerLink]="['/mep-service-detail', service.slug]">
                                                 <i class="tji-arrow-right-big"></i>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="swiper-slide">
-                                <div class="project-item">
-                                    <div class="project-img">
-                                        <img src="/images/project/project-6.webp" alt="">
-                                    </div>
-                                    <div class="project-content">
-                                        <div class="project-text">
-                                            <h4 class="title"><a [routerLink]="['/mep-services']">Landscaping
-                                                </a></h4>
-                                            <a class="project-btn" [routerLink]="['/mep-services']">
-                                                <i class="tji-arrow-right-big"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="project-item">
-                                    <div class="project-img">
-                                        <img src="/images/project/project-6.webp" alt="">
-                                    </div>
-                                    <div class="project-content">
-                                        <div class="project-text">
-                                            <h4 class="title"><a [routerLink]="['/mep-services']">Safety Equipments
-                                                </a></h4>
-                                            <a class="project-btn" [routerLink]="['/mep-services']">
-                                                <i class="tji-arrow-right-big"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="project-item">
-                                    <div class="project-img">
-                                        <img src="/images/project/project-6.webp" alt="">
-                                    </div>
-                                    <div class="project-content">
-                                        <div class="project-text">
-                                            <h4 class="title"><a [routerLink]="['/mep-services']">MEP Products
-                                                </a></h4>
-                                            <a class="project-btn" [routerLink]="['/mep-services']">
-                                                <i class="tji-arrow-right-big"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="project-item">
-                                    <div class="project-img">
-                                        <img src="/images/project/project-6.webp" alt="">
-                                    </div>
-                                    <div class="project-content">
-                                        <div class="project-text">
-                                            <h4 class="title"><a [routerLink]="['/mep-services']">Building Materials
 
-                                                </a></h4>
-                                            <a class="project-btn" [routerLink]="['/mep-services']">
-                                                <i class="tji-arrow-right-big"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="swiper-pagination-area"></div>
                     </div>

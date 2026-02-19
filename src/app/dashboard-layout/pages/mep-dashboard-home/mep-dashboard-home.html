@@ -47,6 +47,12 @@
                         Client Section
                     </button>
                 </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#mepServiceTab">
+                        Services
+                    </button>
+                </li>
+
             </ul>
 
             <div class="tab-content">
@@ -252,6 +258,68 @@
                     </div>
 
                 </div>
+                <div class="tab-pane fade" id="mepServiceTab">
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5>Services</h5>
+                        <button class="btn btn-primary btn-sm" (click)="openServiceModal()">
+                            + Add Service
+                        </button>
+                    </div>
+
+                    <table class="table table-bordered align-middle" *ngIf="services.length > 0">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>Image</th>
+                                <th>Title EN</th>
+                                <th width="220">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let service of services">
+
+                                <td>
+                                    <img [src]="getImage(service.image)" style="height:40px;object-fit:contain;">
+                                </td>
+
+                                <td>{{ service.title_en }}</td>
+
+                                <td>
+
+                                    <button class="btn btn-sm btn-outline-info me-1"
+                                        (click)="goToServiceDetail(service)">
+                                        Details
+                                    </button>
+
+                                    <button class="btn btn-sm btn-outline-primary me-1" (click)="editService(service)">
+                                        Edit
+                                    </button>
+
+                                    <button class="btn btn-sm me-1"
+                                        [ngClass]="service.is_active ? 'btn-outline-success' : 'btn-outline-secondary'"
+                                        (click)="toggleServiceStatus(service)">
+                                        {{ service.is_active ? 'Active' : 'Inactive' }}
+                                    </button>
+
+                                    <button class="btn btn-sm btn-outline-danger"
+                                        (click)="openServiceDeleteModal(service.id)">
+                                        Delete
+                                    </button>
+
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div *ngIf="services.length === 0" class="text-center text-muted py-3">
+                        No services added yet.
+                    </div>
+
+                </div>
 
 
             </div>
@@ -424,6 +492,99 @@
                 </button>
 
                 <button class="btn btn-danger" (click)="confirmClientDelete()">
+                    Delete
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="serviceModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {{ isServiceEditing ? 'Edit Service' : 'Add Service' }}
+                </h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <label>Title EN</label>
+                        <input class="form-control" [(ngModel)]="serviceForm.title_en">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Title AR</label>
+                        <input class="form-control" dir="rtl" [(ngModel)]="serviceForm.title_ar">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Description EN</label>
+                        <textarea class="form-control" [(ngModel)]="serviceForm.description_en">
+                      </textarea>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Description AR</label>
+                        <textarea class="form-control" dir="rtl" [(ngModel)]="serviceForm.description_ar">
+                      </textarea>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Image</label>
+                        <input type="file" class="form-control" (change)="onServiceFileChange($event)">
+                    </div>
+
+                </div>
+
+                <div *ngIf="servicePreview" class="text-center mt-3">
+                    <img [src]="servicePreview" style="max-height:120px;">
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button class="btn btn-primary" (click)="saveService()">
+                    Save
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ================= SERVICE DELETE MODAL ================= -->
+<div class="modal fade" id="serviceDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Are you sure you want to delete this service?
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button class="btn btn-danger" (click)="confirmServiceDelete()">
                     Delete
                 </button>
             </div>

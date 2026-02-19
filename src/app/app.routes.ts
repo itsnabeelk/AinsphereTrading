@@ -90,6 +90,12 @@ export const routes: Routes = [
                             import('./dashboard-layout/pages/mep-dashboard-home/mep-dashboard-home')
                                 .then(m => m.MepDashboardHome)
                     },
+                    {
+                        path: 'mep-service-detail/:id',
+                        loadComponent: () =>
+                            import('./dashboard-layout/pages/mep-dashboard-home/mep-service-detail/mep-service-detail')
+                                .then(m => m.MepServiceDetail)
+                    }
 
                 ]
             }
@@ -139,7 +145,7 @@ export const routes: Routes = [
             { path: '', component: MepHome },
             { path: 'mep-home', component: MepHome },
             { path: 'mep-services', component: MepServices },
-            { path: 'mep-service-details', component: MepServiceDetails },
+            { path: 'mep-services/:slug', component: MepServiceDetails }
         ]
     },
     {

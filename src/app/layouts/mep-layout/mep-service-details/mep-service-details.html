@@ -1,168 +1,242 @@
-<section class="tj-page-header section-gap-x" data-bg-image="../images/bg/pheader-bg.webp">
+<!-- ================= PAGE HEADER ================= -->
+<section class="tj-page-header section-gap-x" data-bg-image="../images/bg/pheader-bg.webp" *ngIf="!loading && data as d"
+    [class.rtl]="currentLang === 'ar'">
+
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="tj-page-header-content text-center">
-                    <h1 class="tj-page-title">Service Name</h1>
+
+                    <h1 class="tj-page-title">
+                        {{ currentLang === 'ar'
+                        ? d.service.title_ar
+                        : d.service.title_en }}
+                    </h1>
+
                     <div class="tj-page-link">
                         <span><i class="tji-home"></i></span>
+
                         <span>
-                            <a [routerLink]="['/fmcg-home']">Home</a>
+                            <a [routerLink]="['/mep-home']">
+                                {{ currentLang === 'ar' ? 'الرئيسية' : 'Home' }}
+                            </a>
                         </span>
+
                         <span><i class="tji-arrow-right"></i></span>
+
                         <span>
-                            <span>Services</span>
+                            {{ currentLang === 'ar' ? 'الخدمات' : 'Services' }}
                         </span>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
-    <div class="page-header-overlay" data-bg-image="../images/shape/pheader-overlay.webp"></div>
+
+    <div class="page-header-overlay" data-bg-image="../images/shape/pheader-overlay.webp">
+    </div>
 </section>
 
 
-<section class="tj-blog-section">
+
+<!-- ================= CONTENT ================= -->
+<section class="tj-blog-section" *ngIf="!loading && data as d" [class.rtl]="currentLang === 'ar'">
+
     <div class="container">
         <div class="row">
 
-            <!-- SIDEBAR NAVIGATION -->
             <div class="col-lg-12 mt-5 ml-0">
+
+                <!-- SIDEBAR -->
                 <div class="tj-main-sidebar">
                     <div class="tj-sidebar-widget service-categories">
                         <ul class="nav flex-column">
+
                             <li>
-                                <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#service-details"
-                                    role="tab">
-                                    <span class="text">Service Details</span>
-                                    <span class="icon"><i class="fas fa-arrow-right"></i></span>
+                                <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#service-details">
+                                    <span class="text">
+                                        {{ currentLang === 'ar'
+                                        ? 'تفاصيل الخدمة'
+                                        : 'Service Details' }}
+                                    </span>
+                                    <span class="icon">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </span>
                                 </a>
                             </li>
-                            <li>
-                                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#service-products" role="tab">
-                                    <span class="text">Our Products</span>
-                                    <span class="icon"><i class="fas fa-arrow-right"></i></span>
+
+                            <li *ngIf="d.products.length > 0">
+                                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#service-products">
+                                    <span class="text">
+                                        {{ currentLang === 'ar'
+                                        ? 'منتجاتنا'
+                                        : 'Our Products' }}
+                                    </span>
+                                    <span class="icon">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </span>
                                 </a>
                             </li>
+
                         </ul>
                     </div>
                 </div>
 
 
-
                 <!-- TAB CONTENT -->
                 <div class="tab-content">
 
-                    <!-- SERVICE DETAILS TAB -->
-                    <div class="tab-pane fade show active" id="service-details" role="tabpanel">
-                        <div class="post-details-wrapper mt-5">
-                            <h1 class="title">Lighting Fixtures</h1>
-                            <div class="blog-text mt-3 mb-4">
-                                <p>
-                                    All kind of lighting fixtures and solutions including Bollards, Pool
-                                    lights / Underwater lights, Stadium lights, Decorative lighting fixtures,
-                                    street lighting fixtures, Media Facade and all kind of LED fixtures.
+                    <!-- ================= SERVICE DETAILS ================= -->
+                    <div class="tab-pane fade show active" id="service-details">
 
-                                </p>
+                        <div class="post-details-wrapper mt-5">
+
+                            <h1 class="title" *ngIf="d.detail">
+                                {{ currentLang === 'ar'
+                                ? d.detail.main_heading_ar
+                                : d.detail.main_heading_en }}
+                            </h1>
+
+                            <div class="blog-text mt-3 mb-4">
+
+                                <h4 *ngIf="d.detail?.sub_heading_en">
+                                    {{ currentLang === 'ar'
+                                    ? d.detail.sub_heading_ar
+                                    : d.detail.sub_heading_en }}
+                                </h4>
+
+                                <!-- SECTIONS -->
+                                <ng-container *ngFor="let section of d.sections">
+
+                                    <h4 class="my-2">
+                                        {{ currentLang === 'ar'
+                                        ? section.heading_ar
+                                        : section.heading_en }}
+                                    </h4>
+
+                                    <p>
+                                        {{ currentLang === 'ar'
+                                        ? section.paragraph_ar
+                                        : section.paragraph_en }}
+                                    </p>
+
+                                </ng-container>
+
                             </div>
                         </div>
+
+
+                        <!-- IMAGE + ACCORDION -->
                         <div class="container py-5">
                             <div class="row justify-content-between">
-                                <div class="col-lg-6">
-                                    <div class="faq-img-area tj-arrange-item-2"
-                                        style="translate: none; rotate: none; scale: none; transform: translate(-2.2437%, 0%) translate3d(0px, 0px, 0px);">
+
+                                <!-- HERO IMAGE -->
+                                <div class="col-lg-6" *ngIf="d.detail?.hero_image as heroImage">
+
+                                    <div class="faq-img-area">
                                         <div class="faq-img overflow-hidden">
-                                            <img src="/images/fmcg/hero3.jpg" alt="">
+                                            <img [src]="getImage(heroImage)" alt="Service Image">
                                         </div>
                                     </div>
+
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="accordion tj-faq tj-arrange-item-2" id="faqOne">
-                                        <div class="accordion-item active">
-                                            <button class=" faq-title" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#faq-1" aria-expanded="true">Advantages</button>
-                                            <div id="faq-1" class="collapse show" data-bs-parent="#faqOne">
+
+
+                                <!-- ACCORDION -->
+                                <div class="col-lg-6" *ngIf="d.points.length > 0">
+
+                                    <div class="accordion tj-faq" id="faqOne">
+
+                                        <div class="accordion-item" *ngFor="let point of d.points; let i = index">
+
+                                            <button class="faq-title" type="button" data-bs-toggle="collapse"
+                                                [attr.data-bs-target]="'#faq-' + i">
+
+                                                {{ currentLang === 'ar'
+                                                ? point.small_heading_ar
+                                                : point.small_heading_en }}
+
+                                            </button>
+
+                                            <div class="collapse" [id]="'faq-' + i" data-bs-parent="#faqOne">
+
                                                 <div class="accordion-body faq-text">
+
                                                     <ul class="feature-list list-unstyled">
-                                                        <li><i class="fas fa-check-circle"></i>Half Brim Hard Hat</li>
-                                                        <li><i class="fas fa-check-circle"></i>Vented Hard Hat</li>
-                                                        <li><i class="fas fa-check-circle"></i>Full Brim Hard Hat</li>
+
+                                                        <li *ngFor="let p of (currentLang === 'ar'
+                                                            ? point.points_ar
+                                                            : point.points_en)">
+
+                                                            <i class="fas fa-check-circle"></i>
+                                                            {{ p }}
+
+                                                        </li>
+
                                                     </ul>
+
                                                 </div>
+
                                             </div>
+
                                         </div>
-                                        <div class="accordion-item">
-                                            <button class="faq-title collapsed" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#faq-2" aria-expanded="false">Core</button>
-                                            <div id="faq-2" class="collapse" data-bs-parent="#faqOne">
-                                                <div class="accordion-body faq-text">
-                                                    <ul class="feature-list list-unstyled">
-                                                        <li><i class="fas fa-check-circle"></i>Protective Eyewear /
-                                                            Spectacles</li>
-                                                        <li><i class="fas fa-check-circle"></i>Goggles</li>
-                                                        <li><i class="fas fa-check-circle"></i>Face Shield</li>
-                                                        <li><i class="fas fa-check-circle"></i>Welding Face Shield</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
+
                                 </div>
+
                             </div>
                         </div>
+
                     </div>
 
 
 
-                    <!-- PRODUCTS TAB -->
-                    <div class="tab-pane fade my-5" id="service-products" role="tabpanel">
+                    <!-- ================= PRODUCTS ================= -->
+                    <div class="tab-pane fade my-5" id="service-products" *ngIf="d.products.length > 0">
+
                         <div class="post-details-wrapper">
 
                             <div class="row g-4 align-items-stretch">
 
-                                <!-- Product Card -->
-                                <div class="col-xl-4 col-md-6">
-                                    <div class="blog-item h-100">
-                                        <div class="blog-thumb ratio ratio-4x3">
-                                            <img src="images/product/hard-hat.jpg" class="img-fluid"
-                                                alt="Expansion Joint System">
-                                        </div>
-                                        <div class="blog-content">
-                                            <h4 class="title">Hard Hat H700 - Series</h4>
-                                            <p>
-                                                Point Ratchet
-                                                Suspension [20Ex/CASE]
-                                                White, Yellow, Blue, Green,
-                                                Red, Orange
+                                <div class="col-xl-4 col-md-6" *ngFor="let product of d.products">
 
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-md-6">
                                     <div class="blog-item h-100">
-                                        <div class="blog-thumb ratio ratio-4x3">
-                                            <img src="images/product/series-vented.jpg" class="img-fluid"
-                                                alt="Expansion Joint System">
-                                        </div>
-                                        <div class="blog-content">
-                                            <h4 class="title">Hard Hat H700 - Series Vented</h4>
-                                            <p>
-                                                Point Ratchet Suspension
-                                                [20Ex/CASE]
-                                                White, Yellow, Blue, Green
 
-                                            </p>
+                                        <div class="blog-thumb ratio ratio-4x3" *ngIf="product.image">
+
+                                            <img [src]="getImage(product.image)" class="img-fluid" alt="Product Image">
+
                                         </div>
+
+                                        <div class="blog-content">
+
+                                            <h4 class="title">
+                                                {{ currentLang === 'ar'
+                                                ? product.title_ar
+                                                : product.title_en }}
+                                            </h4>
+
+                                            <p>
+                                                {{ currentLang === 'ar'
+                                                ? product.description_ar
+                                                : product.description_en }}
+                                            </p>
+
+                                        </div>
+
                                     </div>
+
                                 </div>
+
                             </div>
 
                         </div>
                     </div>
 
-
                 </div>
+
             </div>
 
         </div>

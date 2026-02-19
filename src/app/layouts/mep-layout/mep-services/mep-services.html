@@ -1,24 +1,50 @@
 <section class="tj-page-header section-gap-x" data-bg-image="../images/bg/pheader-bg.webp">
+
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+
                 <div class="tj-page-header-content text-center">
-                    <h1 class="tj-page-title">MEP Services</h1>
+
+                    <h1 class="tj-page-title">
+                        {{ currentLang === 'ar'
+                        ? 'خدمات الميكانيك والكهرباء'
+                        : 'MEP Services' }}
+                    </h1>
+
                     <div class="tj-page-link">
+
                         <span><i class="tji-home"></i></span>
+
                         <span>
-                            <a [routerLink]="['/mep-home']">Home</a>
+                            <a [routerLink]="['/mep-home']">
+                                {{ currentLang === 'ar'
+                                ? 'الرئيسية'
+                                : 'Home' }}
+                            </a>
                         </span>
+
                         <span><i class="tji-arrow-right"></i></span>
+
                         <span>
-                            <span>Services</span>
+                            <span>
+                                {{ currentLang === 'ar'
+                                ? 'الخدمات'
+                                : 'Services' }}
+                            </span>
                         </span>
+
                     </div>
+
                 </div>
+
             </div>
         </div>
     </div>
-    <div class="page-header-overlay" data-bg-image="../images/shape/pheader-overlay.webp"></div>
+
+    <div class="page-header-overlay" data-bg-image="../images/shape/pheader-overlay.webp">
+    </div>
+
 </section>
 
 
@@ -26,75 +52,54 @@
     <div class="container">
         <div class="row row-gap-4">
 
-            <div class="col-lg-4 col-md-6">
-                <div class="service-item style-4 wow fadeInUp" data-wow-delay=".1s">
+            <div class="col-lg-4 col-md-6" *ngFor="let service of services">
+
+                <div class="service-item style-4 wow fadeInUp">
+
                     <div class="service-bg">
-                        <img src="images/service/1.jpg" alt="Service background">
+                        <img [src]="getImage(service.image)" alt="Service background">
                     </div>
+
                     <div class="service-content">
+
                         <h4 class="title">
-                            <a [routerLink]="['/mep-service-details']">
-                                Lighting Fixtures
+                            <a [routerLink]="['/mep-services', service.slug]">
+                                {{ currentLang === 'ar'
+                                ? service.title_ar
+                                : service.title_en }}
                             </a>
                         </h4>
+
                         <p class="desc">
-                            Customer Experience Solutions are designed to enhance every touchpoint of your
-                            customer journey, from first interaction.
+                            {{ currentLang === 'ar'
+                            ? service.description_ar
+                            : service.description_en }}
                         </p>
-                        <a class="text-btn" [routerLink]="['/mep-service-details']">
-                            <span class="btn-text"><span>Learn More</span></span>
-                            <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+
+                        <a class="text-btn" [routerLink]="['/mep-services', service.slug]">
+
+                            <span class="btn-text">
+                                <span>
+                                    {{ currentLang === 'ar'
+                                    ? 'اقرأ المزيد'
+                                    : 'Learn More' }}
+                                </span>
+                            </span>
+
+                            <span class="btn-icon">
+                                <i class="tji-arrow-right-long"></i>
+                            </span>
                         </a>
+
                     </div>
+
                 </div>
             </div>
 
-            <div class="col-lg-4 col-md-6">
-                <div class="service-item style-4 wow fadeInUp" data-wow-delay=".1s">
-                    <div class="service-bg">
-                        <img src="images/service/3.jpg" alt="Service background">
-                    </div>
-                    <div class="service-content">
-                        <h4 class="title">
-                            <a [routerLink]="['/mep-service-details']">
-                                Landscaping
-                            </a>
-                        </h4>
-                        <p class="desc">
-                            Customer Experience Solutions are designed to enhance every touchpoint of your
-                            customer journey, from first interaction.
-                        </p>
-                        <a class="text-btn" [routerLink]="['/mep-service-details']">
-                            <span class="btn-text"><span>Learn More</span></span>
-                            <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
-                        </a>
-                    </div>
-                </div>
+            <div *ngIf="services.length === 0" class="text-center text-muted py-5">
+                No services available.
             </div>
 
-            <div class="col-lg-4 col-md-6">
-                <div class="service-item style-4 wow fadeInUp" data-wow-delay=".1s">
-                    <div class="service-bg">
-                        <img src="images/service/2.jpg" alt="Service background">
-                    </div>
-                    <div class="service-content">
-                        <h4 class="title">
-                            <a [routerLink]="['/mep-service-details']">
-                                Safety Equipments
-
-                            </a>
-                        </h4>
-                        <p class="desc">
-                            Customer Experience Solutions are designed to enhance every touchpoint of your
-                            customer journey, from first interaction.
-                        </p>
-                        <a class="text-btn" [routerLink]="['/mep-service-details']">
-                            <span class="btn-text"><span>Learn More</span></span>
-                            <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </section>

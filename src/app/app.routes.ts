@@ -83,7 +83,13 @@ export const routes: Routes = [
                         loadComponent: () =>
                             import('./dashboard-layout/pages/fmcg-dashboard-home/fmcg-service-detail/fmcg-service-detail')
                                 .then(m => m.FmcgServiceDetail)
-                    }
+                    },
+                    {
+                        path: 'mep-dashboard-home',
+                        loadComponent: () =>
+                            import('./dashboard-layout/pages/mep-dashboard-home/mep-dashboard-home')
+                                .then(m => m.MepDashboardHome)
+                    },
 
                 ]
             }

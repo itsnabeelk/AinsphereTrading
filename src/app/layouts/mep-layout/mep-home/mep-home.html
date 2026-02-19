@@ -1,52 +1,44 @@
-<section class="tj-banner-section section-gap-x">
+<section class="tj-banner-section section-gap-x" *ngIf="hero">
     <div class="banner-area">
         <div class="banner-left-box">
             <div class="banner-content">
-                <h1 class="banner-title title-anim">MEP &
-                    CONSTRUCTION
-                    <span>MATERIALS.</span>
+
+                <h1 class="banner-title title-anim">
+                    {{ currentLang === 'ar'
+                    ? hero.title_ar
+                    : hero.title_en }}
                 </h1>
+
                 <div class="banner-desc-area wow fadeInUp" data-wow-delay=".7s">
                     <a class="banner-link" [routerLink]="['/mep-services']">
                         <span><i class="tji-arrow-right-big"></i></span>
                     </a>
-                    <div class="banner-desc">AINSPHERE Trading is your trusted partner for high quality building
-                        materials, equipment and industrial solutions.
+
+                    <div class="banner-desc">
+                        {{ currentLang === 'ar'
+                        ? hero.description_ar
+                        : hero.description_en }}
                     </div>
                 </div>
+
             </div>
+
             <div class="banner-shape">
                 <img src="/images/shape/pattern-bg.webp" alt="">
             </div>
         </div>
+
         <div class="banner-right-box">
             <div class="banner-img">
-                <img data-speed="0.8" src="/images/hero/hero-img.webp" alt="">
-            </div>
-
-            <div class="box-area">
-                <div class="customers-box">
-                    <div class="customers">
-                        <ul>
-                            <li class="wow fadeInLeft" data-wow-delay=".5s"><img src="/images/testimonial/client-1.webp"
-                                    alt=""></li>
-                            <li class="wow fadeInLeft" data-wow-delay=".6s"><img src="/images/testimonial/client-2.webp"
-                                    alt=""></li>
-                            <li class="wow fadeInLeft" data-wow-delay=".7s"><img src="/images/testimonial/client-3.webp"
-                                    alt=""></li>
-                            <li class="wow fadeInLeft" data-wow-delay=".8s"><span><i class="tji-plus"></i></span></li>
-                        </ul>
-                    </div>
-                    <div class="customers-number wow fadeInUp" data-wow-delay=".5s">30K</div>
-                    <h6 class="customers-text wow fadeInUp" data-wow-delay=".5s">Happy customer we have world-wide.</h6>
-                </div>
+                <img data-speed="0.8" [src]="getImage(hero.image)" alt="">
             </div>
         </div>
     </div>
+
     <div class="banner-scroll wow fadeInDown" data-wow-delay="2s">
         <a [routerLink]="['/contact-us']" class="scroll-down">
             <span><i class="tji-arrow-down-long"></i></span>
-            Contact Us
+            {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
         </a>
     </div>
 </section>
@@ -54,69 +46,66 @@
 
 
 <!-- start: About Section -->
-<section class="h10-about section-gap">
+<section class="h10-about section-gap" *ngIf="about">
     <div class="container">
-        <div class="row flex-column-reverse flex-md-row ">
+        <div class="row flex-column-reverse flex-md-row">
+
             <div class="col-12 col-lg-5 d-block d-md-none d-lg-block">
                 <div class="about-img-area h10-about-banner wow bounceInLeft" data-wow-delay=".3s">
                     <div class="about-img overflow-hidden">
-                        <img data-speed=".8" src="/images/about/h10-about-banner.webp" alt="">
+                        <img [src]="getImage(about.image)" alt="">
                     </div>
                 </div>
             </div>
+
             <div class="col-12 col-lg-7">
                 <div class="h10-about-content-wrapper">
-                    <div class="sec-heading style-3 ">
-                        <span class="sub-title wow fadeInUp" data-wow-delay=".3s"><i class="tji-box"></i> ABOUT OUR
-                            COMPANY</span>
-                        <h2 class="sec-title title-highlight wow fadeInUp" data-wow-delay=".3s">
-                            Trusted Solutions, Quality
-                            Products, Lasting Partnership
+
+                    <div class="sec-heading style-3">
+                        <span class="sub-title">
+                            <i class="tji-box"></i>
+                            {{ currentLang === 'ar'
+                            ? about.sub_title_ar
+                            : about.sub_title_en }}
+                        </span>
+
+                        <h2 class="sec-title title-highlight">
+                            {{ currentLang === 'ar'
+                            ? about.title_ar
+                            : about.title_en }}
                         </h2>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 d-none d-md-block d-lg-none">
-                            <div class="about-img-area h10-about-banner wow bounceInLeft" data-wow-delay=".3s">
-                                <div class="about-img">
-                                    <img src="/images/about/h10-about-banner.webp" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-12">
-                            <div class="h10-about-content">
 
-                                <p class="desc wow fadeInUp" data-wow-delay=".4s">
-                                    AINSPHERE Trading is your trusted partner for high quality building materials,
-                                    equipment and industrial
-                                    solutions. We specialize in sourcing and supplying
-                                    reliable products across sectors like construction,
-                                    infrastructure and facility management. Our product
-                                    range includes electrical components from top brands,
-                                    heavy-duty mechanical tools, plumbing essentials,
-                                    safety equipment and more.
-                                    At AINSPHERE Trading, we are committed to delivering
-                                    excellence and supporting our clients with tailored
-                                    solutions that drive efficiency and growth. With a focus
-                                    on quality, innovation and strong partnerships, we
-                                    ensure that our customers receive the best products to
-                                    meet their project needs.
-                                </p>
-                            </div>
-                            <div class="about-btn-area-2 wow fadeInUp" data-wow-delay=".7s">
-                                <a class="tj-primary-btn" [routerLink]="['/mep-services']">
-                                    <span class="btn-text"><span>Our Services</span></span>
-                                    <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
-                                </a>
-                            </div>
-                        </div>
+                    <div class="h10-about-content">
+                        <p class="desc">
+                            {{ currentLang === 'ar'
+                            ? about.description_ar
+                            : about.description_en }}
+                        </p>
+                    </div>
+
+                    <div class="about-btn-area-2 wow fadeInUp" data-wow-delay=".7s">
+                        <a class="tj-primary-btn" [routerLink]="['/mep-services']">
+                            <span class="btn-text">
+                                <span>
+                                    {{ currentLang === 'ar'
+                                    ? 'خدماتنا'
+                                    : 'Our Services' }}
+                                </span>
+                            </span>
+                            <span class="btn-icon">
+                                <i class="tji-arrow-right-long"></i>
+                            </span>
+                        </a>
                     </div>
 
                 </div>
-
             </div>
+
         </div>
     </div>
 </section>
+
 <!-- end: About Section -->
 
 <!-- start: Project Section -->
@@ -255,129 +244,93 @@
 
 
 <!-- start: Working process Section -->
-<div class="tj-working-process section-gap section-gap-x">
+<div class="tj-working-process section-gap section-gap-x" *ngIf="working.length">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="sec-heading-wrap">
-                    <span class="sub-title wow fadeInUp" data-wow-delay=".3s">Why Choose Us?</span>
+                    <span class="sub-title">
+                        {{ currentLang === 'ar' ? 'لماذا تختارنا؟' : 'Why Choose Us?' }}
+                    </span>
                     <div class="heading-wrap-content">
                         <div class="sec-heading style-2">
-                            <h2 class="sec-title text-anim">Your Trusted Partner for Quality and Innovation.</h2>
-                        </div>
-                        <div class="btn-wrap wow fadeInUp" data-wow-delay=".6s">
-                            <a class="tj-primary-btn" href="#">
-                                <span class="btn-text"><span>Contact Us</span></span>
-                                <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
-                            </a>
+                            <h2 class="sec-title text-anim">
+                                {{ currentLang === 'ar'
+                                ? 'شريكك الموثوق للجودة والابتكار.'
+                                : 'Your Trusted Partner for Quality and Innovation.' }}
+                            </h2>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-12">
                 <div class="working-process-area">
-                    <div class="process-item wow fadeInLeft" data-wow-delay=".5s">
-                        <div class="process-step">
-                            <span>01</span>
-                        </div>
-                        <div class="process-content">
-                            <h4 class="title">Quality Assurance</h4>
-                            <p class="desc">
-                                We prioritize the highest standards of quality in every product and solution we offer,
-                                ensuring durability, performance and reliability.
 
-                            </p>
-                        </div>
-                    </div>
-                    <div class="process-item wow fadeInLeft" data-wow-delay=".7s">
-                        <div class="process-step">
-                            <span>02</span>
-                        </div>
-                        <div class="process-content">
-                            <h4 class="title">Industry Expertise</h4>
-                            <p class="desc">
-                                With deep knowledge across various sectors, including construction, infrastructure and
-                                safety,
-                                we provide expert guidance and products designed to enhance efficiency and growth.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="process-item wow fadeInLeft" data-wow-delay=".9s">
-                        <div class="process-step">
-                            <span>03</span>
-                        </div>
-                        <div class="process-content">
-                            <h4 class="title">Strong Partnerships</h4>
-                            <p class="desc">
-                                We value long-term relationships and work closely with our clients to ensure success
-                                through consistent communication, support and service.
+                    <div class="process-item" *ngFor="let item of working">
 
+                        <div class="process-step">
+                            <span>{{ item.step_number }}</span>
+                        </div>
+
+                        <div class="process-content">
+                            <h4 class="title">
+                                {{ currentLang === 'ar'
+                                ? item.title_ar
+                                : item.title_en }}
+                            </h4>
+
+                            <p class="desc">
+                                {{ currentLang === 'ar'
+                                ? item.description_ar
+                                : item.description_en }}
                             </p>
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
-    <div class="bg-shape-1">
-        <img src="../images/shape/pattern-2.svg" alt="">
-    </div>
-    <div class="bg-shape-2">
-        <img src="../images/shape/pattern-3.svg" alt="">
-    </div>
 </div>
+
 <!-- end: Working process Section -->
 
 <!-- start: Client Section -->
-<section class="tj-client-section-2 h6-client section-gap-x wow fadeInUp" data-wow-delay=".4s">
+<section class="tj-client-section-2 h6-client section-gap-x wow fadeInUp" *ngIf="clients.length">
+
     <div class="container-fluid client-container">
         <div class="row">
             <div class="col-12">
                 <div class="h6-client-title-wrapper">
-                    <h6 class="h6-client-title
-              ">we’re proud to partner with best-in-class clients</h6>
-
+                    <h6 class="h6-client-title">
+                        {{ currentLang === 'ar'
+                        ? 'نفخر بشراكتنا مع أفضل العملاء'
+                        : 'we’re proud to partner with best-in-class clients' }}
+                    </h6>
                 </div>
             </div>
+
             <div class="col-12">
                 <div class="swiper client-slider client-slider-2 h6-client-slider">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide client-item">
+
+                        <div class="swiper-slide client-item" *ngFor="let client of clients">
+
                             <div class="client-logo">
-                                <img src="/images/brands/brand-1-light.webp" alt="">
+                                <img [src]="getImage(client.image)" alt="">
                             </div>
+
                         </div>
-                        <div class="swiper-slide client-item">
-                            <div class="client-logo">
-                                <img src="/images/brands/brand-2-light.webp" alt="">
-                            </div>
-                        </div>
-                        <div class="swiper-slide client-item">
-                            <div class="client-logo">
-                                <img src="/images/brands/brand-3-light.webp" alt="">
-                            </div>
-                        </div>
-                        <div class="swiper-slide client-item">
-                            <div class="client-logo">
-                                <img src="/images/brands/brand-4-light.webp" alt="">
-                            </div>
-                        </div>
-                        <div class="swiper-slide client-item">
-                            <div class="client-logo">
-                                <img src="/images/brands/brand-5-light.webp" alt="">
-                            </div>
-                        </div>
-                        <div class="swiper-slide client-item">
-                            <div class="client-logo">
-                                <img src="/images/brands/brand-6-light.webp" alt="">
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 <!-- end: Client Section -->

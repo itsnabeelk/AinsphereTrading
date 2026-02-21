@@ -73,7 +73,9 @@ export class GeneralServiceDetail implements OnInit {
   selectedProductFile: File | null = null;
   productPreview: string | null = null;
   isProductEditing = false;
-
+  deleteSectionId: number | null = null;
+  deletePointId: number | null = null;
+  deleteProductId: number | null = null;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -190,10 +192,7 @@ export class GeneralServiceDetail implements OnInit {
     this.sectionForm = { ...section };
   }
 
-  deleteSection(id: number) {
-    this.serviceApi.deleteSection(id)
-      .subscribe(() => this.loadSections());
-  }
+
 
   resetSection() {
     this.isSectionEditing = false;
@@ -241,10 +240,7 @@ export class GeneralServiceDetail implements OnInit {
     };
   }
 
-  deletePoint(id: number) {
-    this.serviceApi.deletePoint(id)
-      .subscribe(() => this.loadPoints());
-  }
+
 
   resetPoint() {
     this.isPointEditing = false;
@@ -280,12 +276,7 @@ export class GeneralServiceDetail implements OnInit {
     new bootstrap.Modal(document.getElementById('productModal')).show();
   }
 
-  deleteProduct(id: number) {
-    if (!confirm('Delete this product?')) return;
 
-    this.serviceApi.deleteProduct(id)
-      .subscribe(() => this.loadProducts());
-  }
 
   saveProduct() {
     const formData = new FormData();
@@ -326,5 +317,57 @@ export class GeneralServiceDetail implements OnInit {
     this.productPreview = null;
     this.selectedProductFile = null;
   }
+  openSectionDeleteModal(id: number) {
+    this.deleteSectionId = id;
+    new bootstrap.Modal(document.getElementById('sectionDeleteModal')).show();
+  }
 
+  openPointDeleteModal(id: number) {
+    this.deletePointId = id;
+    new bootstrap.Modal(document.getElementById('pointDeleteModal')).show();
+  }
+
+  openProductDeleteModal(id: number) {
+    this.deleteProductId = id;
+    new bootstrap.Modal(document.getElementById('productDeleteModal')).show();
+  }
+
+  confirmSectionDelete() {
+    if (!this.deleteSectionId) return;
+
+    this.serviceApi.deleteSection(this.deleteSectionId)
+      .subscribe(() => {
+        this.loadSections();
+
+        bootstrap.Modal
+          .getInstance(document.getElementById('sectionDeleteModal')!)
+          ?.hide();
+      });
+  }
+
+  confirmPointDelete() {
+    if (!this.deletePointId) return;
+
+    this.serviceApi.deletePoint(this.deletePointId)
+      .subscribe(() => {
+        this.loadPoints();
+
+        bootstrap.Modal
+          .getInstance(document.getElementById('pointDeleteModal')!)
+          ?.hide();
+      });
+  }
+
+  confirmProductDelete() {
+    if (!this.deleteProductId) return;
+
+    this.serviceApi.deleteProduct(this.deleteProductId)
+      .subscribe(() => {
+        this.loadProducts();
+
+        bootstrap.Modal
+          .getInstance(document.getElementById('productDeleteModal')!)
+          ?.hide();
+      });
+  }
 }

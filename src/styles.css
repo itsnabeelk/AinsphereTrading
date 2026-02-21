@@ -1,4 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Droid+Arabic+Kufi:wght@400;700&display=swap');
+
+html[dir="ltr"] * {
+    font-family: "Raleway", "Font Awesome 5 Brands", ;
+}
+
+html[dir="rtl"] * {
+    font-family: "cairo", "Font Awesome 5 Brands";
+}
+
 .service-item.style-4 .title {
     color: #000;
 }
@@ -38,4 +48,103 @@ button {
 
 .menu_bar.mobile_menu_bar {
     background: #000000 !important;
+}
+
+/* .tj-primary-btn {
+    padding: 10px !important;
+} */
+
+.lang-btn img {
+    width: 30px;
+    height: 30px;
+}
+
+html[dir="rtl"] .project-slider .project-item .project-content {
+    direction: ltr;
+}
+
+html[dir="rtl"] .process-item:not(:last-child)::after {
+    transform: rotate(180deg);
+}
+
+html[dir="rtl"] .service-categories ul li a .icon {
+    transform: rotate(180deg);
+}
+
+html[dir="rtl"] .tj-faq .accordion-item .faq-title {
+    padding: 27px 0px 27px 60px;
+}
+
+html[dir="rtl"] .tj-page-link span:not(:first-child) i {
+    transform: rotate(180deg);
+}
+
+html[dir="rtl"] .copyright-text {
+    direction: ltr;
+}
+
+html[dir="rtl"] .footer-contact {
+    direction: ltr;
+}
+
+html[dir="rtl"] .client-slider-1::after {
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    background-image: -webkit-gradient(linear, right top, left top, from(rgb(233, 237, 237)), to(rgba(233, 237, 237, 0)));
+    background-image: linear-gradient(92deg, rgb(233, 237, 237) 0%, rgba(233, 237, 237, 0) 100%);
+}
+
+html[dir="rtl"] .client-slider-1::before,
+html[dir="rtl"] .client-slider-1::after {
+    content: "";
+    position: absolute;
+    width: 448px;
+    height: 100%;
+    background-image: -webkit-gradient(linear, left top, right top, from(rgb(233, 237, 237)), to(rgba(233, 237, 237, 0)));
+    background-image: linear-gradient(274deg, rgb(233, 237, 237) 0%, rgba(233, 237, 237, 0) 100%);
+    top: 0;
+    inset-inline-start: 0;
+    z-index: 2;
+}
+
+html[dir="rtl"] .team-content {
+    text-align: left;
+}
+
+html[dir="rtl"] .lang-btn {
+    font-family: "Raleway", "Font Awesome 5 Brands" !important;
+}
+
+html[dir="ltr"] .lang-btn {
+    font-family: "Droid Arabic Kufi", "Font Awesome 5 Brands" !important;
+}
+
+
+html[dir="rtl"] .slider-next .anim-icon i,
+.slider-prev .anim-icon i {
+    transform: rotate(170deg);
+}
+
+.tj-preloader {
+    direction: ltr !important;
+}
+
+html[dir="rtl"] .tj-primary-btn {
+    padding: 5px 25px 5px 5px;
+}
+
+html[dir="rtl"] .lang-btn {
+    padding: 5px 5px 5px 25px;
+}
+
+html[dir="ltr"] .lang-btn {
+    padding: 5px 25px 5px 5px;
+}
+
+html[dir="rtl"] .contact-list {
+    direction: ltr;
+}
+
+html[dir="rtl"] input {
+    text-align: right;
 }

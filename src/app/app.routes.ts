@@ -95,7 +95,19 @@ export const routes: Routes = [
                         loadComponent: () =>
                             import('./dashboard-layout/pages/mep-dashboard-home/mep-service-detail/mep-service-detail')
                                 .then(m => m.MepServiceDetail)
-                    }
+                    },
+                    {
+                        path: 'uniform-dashboard-home',
+                        loadComponent: () =>
+                            import('./dashboard-layout/pages/uniform-dashboard-home/uniform-dashboard-home')
+                                .then(m => m.UniformDashboardHome)
+                    },
+                    {
+                        path: 'uniform-service-detail/:id',
+                        loadComponent: () =>
+                            import('./dashboard-layout/pages/uniform-dashboard-home/uniform-service-detail/uniform-service-detail')
+                                .then(m => m.UniformServiceDetail)
+                    },
 
                 ]
             }
@@ -152,10 +164,9 @@ export const routes: Routes = [
         path: '',
         component: UniformLayout,
         children: [
-            { path: '', component: UniformHome },
             { path: 'uniform-home', component: UniformHome },
             { path: 'uniform-services', component: UniformServices },
-            { path: 'uniform-service-details', component: UniformServiceDetails },
+            { path: 'uniform-services/:slug', component: UniformServiceDetails }
         ]
     }
 ];

@@ -464,42 +464,44 @@
 
 
 <!-- ================= HERO MODAL ================= -->
-<div class="modal fade" id="heroModal">
+<div class="modal fade" id="heroModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
 
+            <!-- HEADER -->
             <div class="modal-header">
                 <h5 class="modal-title">
                     {{ isEditing ? 'Edit Hero' : 'Add Hero' }}
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
+            <!-- BODY -->
             <div class="modal-body">
 
                 <div class="mb-3">
-                    <label class="form-label">Title (English)</label>
+                    <label>Title (English)</label>
                     <input class="form-control" [(ngModel)]="form.title_en">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Title (Arabic)</label>
-                    <input class="form-control" [(ngModel)]="form.title_ar">
+                    <label>Title (Arabic)</label>
+                    <input class="form-control" dir="rtl" [(ngModel)]="form.title_ar">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Image</label>
+                    <label>Image</label>
                     <input type="file" class="form-control" (change)="onFileChange($event)">
                 </div>
 
-                <div *ngIf="previewImage" class="mt-3 text-left">
+                <div *ngIf="previewImage" class="mt-3">
                     <img [src]="previewImage" class="img-fluid rounded shadow-sm"
-                        style="max-height:100px; object-fit:cover;">
+                        style="max-height:120px; object-fit:cover;">
                 </div>
-
 
             </div>
 
+            <!-- FOOTER -->
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancel
@@ -514,26 +516,25 @@
     </div>
 </div>
 
-
 <!-- ================= DELETE MODAL ================= -->
-<div class="modal fade" id="deleteModal">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
 
             <div class="modal-header">
-                <h6 class="modal-title">Confirm Delete</h6>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <div class="modal-body text-center">
+            <div class="modal-body">
                 Are you sure you want to delete this slide?
             </div>
 
-            <div class="modal-footer justify-content-center">
-                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancel
                 </button>
-                <button class="btn btn-danger btn-sm" (click)="confirmDelete()">
+                <button class="btn btn-danger" (click)="confirmDelete()">
                     Delete
                 </button>
             </div>
@@ -541,7 +542,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- ================= CLIENT MODAL ================= -->
 <div class="modal fade" id="clientModal">
@@ -586,24 +586,28 @@
     </div>
 </div>
 
-<div class="modal fade" id="clientDeleteModal">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
+
+<div class="modal fade" id="clientDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
 
+            <!-- HEADER -->
             <div class="modal-header">
-                <h6 class="modal-title">Confirm Delete</h6>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <div class="modal-body text-center">
+            <!-- BODY -->
+            <div class="modal-body">
                 Delete this client logo?
             </div>
 
-            <div class="modal-footer justify-content-center">
-                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancel
                 </button>
-                <button class="btn btn-danger btn-sm" (click)="confirmClientDelete()">
+                <button class="btn btn-danger" (click)="confirmClientDelete()">
                     Delete
                 </button>
             </div>
@@ -668,20 +672,31 @@
 </div>
 
 
-<div class="modal fade" id="workingDeleteModal">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
+<div class="modal fade" id="workingDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-body text-center">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
                 Delete this item?
             </div>
-            <div class="modal-footer justify-content-center">
-                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancel
                 </button>
-                <button class="btn btn-danger btn-sm" (click)="confirmWorkingDelete()">
+                <button class="btn btn-danger" (click)="confirmWorkingDelete()">
                     Delete
                 </button>
             </div>
+
         </div>
     </div>
 </div>
@@ -751,20 +766,31 @@
 </div>
 
 
-<div class="modal fade" id="teamDeleteModal">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
+<div class="modal fade" id="teamDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-body text-center">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
                 Delete this team member?
             </div>
-            <div class="modal-footer justify-content-center">
-                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancel
                 </button>
-                <button class="btn btn-danger btn-sm" (click)="confirmTeamDelete()">
+                <button class="btn btn-danger" (click)="confirmTeamDelete()">
                     Delete
                 </button>
             </div>
+
         </div>
     </div>
 </div>
@@ -834,20 +860,31 @@
 </div>
 
 
-<div class="modal fade" id="serviceDeleteModal">
-    <div class="modal-dialog modal-sm modal-dialog-centered">
+<div class="modal fade" id="serviceDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-body text-center">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
                 Delete this service?
             </div>
-            <div class="modal-footer justify-content-center">
-                <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancel
                 </button>
-                <button class="btn btn-danger btn-sm" (click)="confirmServiceDelete()">
+                <button class="btn btn-danger" (click)="confirmServiceDelete()">
                     Delete
                 </button>
             </div>
+
         </div>
     </div>
 </div>

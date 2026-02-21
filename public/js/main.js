@@ -147,7 +147,7 @@ function manJs() {
 		////////////////////////////////////////////////////
 		// Nice Select Js
 		if ($("select").length > 0) {
-			$("select").niceSelect();
+			$("select:not(.no-nice)").niceSelect();
 		}
 
 		////////////////////////////////////////////////////

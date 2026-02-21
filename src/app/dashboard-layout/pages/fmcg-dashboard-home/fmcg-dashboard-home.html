@@ -69,7 +69,7 @@
 
                     <div class="row g-3">
 
-                        <div class="col-md-3 col-sm-6" *ngFor="let slide of heroSlides">
+                        <div class="col-md-2 col-sm-6" *ngFor="let slide of heroSlides">
 
                             <div class="card shadow-sm h-100">
 
@@ -92,7 +92,8 @@
                                             Edit
                                         </button>
 
-                                        <button class="btn btn-sm btn-outline-danger" (click)="deleteHero(slide.id)">
+                                        <button class="btn btn-sm btn-outline-danger"
+                                            (click)="openHeroDeleteModal(slide.id)">
                                             Delete
                                         </button>
 
@@ -117,47 +118,97 @@
                 <!-- ================= ABOUT TAB ================= -->
                 <div class="tab-pane fade" id="aboutTab">
 
-                    <h5 class="mb-4">About Section (Bilingual)</h5>
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label>Title (English)</label>
-                            <input class="form-control" [(ngModel)]="aboutForm.title_en">
-                        </div>
+                            <h5 class="mb-4">About Section (Bilingual)</h5>
 
-                        <div class="col-md-6 mb-3">
-                            <label>Title (Arabic)</label>
-                            <input class="form-control" dir="rtl" [(ngModel)]="aboutForm.title_ar">
+                            <!-- ================= TITLE ================= -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label>Title (English)</label>
+                                    <input class="form-control" [(ngModel)]="aboutForm.title_en">
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label>Title (Arabic)</label>
+                                    <input class="form-control" dir="rtl" [(ngModel)]="aboutForm.title_ar">
+                                </div>
+                            </div>
+
+                            <!-- ================= DESCRIPTION ================= -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label>Description (English)</label>
+                                    <textarea class="form-control" rows="3"
+                                        [(ngModel)]="aboutForm.description_en"></textarea>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label>Description (Arabic)</label>
+                                    <textarea class="form-control" dir="rtl" rows="3"
+                                        [(ngModel)]="aboutForm.description_ar"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- ================= BROCHURE EN ================= -->
+                            <div class="mb-3">
+                                <label>Brochure PDF (English)</label>
+                                <input type="file" class="form-control" accept="application/pdf"
+                                    (change)="onBrochureEnChange($event)">
+                            </div>
+
+                            <div *ngIf="brochureEnPreview" class="mb-3 p-2 border rounded bg-light">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="bi bi-file-earmark-pdf text-danger me-2"></i>
+                                        English Brochure.pdf
+                                    </div>
+                                    <a [href]="brochureEnPreview" target="_blank"
+                                        class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- ================= BROCHURE AR ================= -->
+                            <div class="mb-3">
+                                <label>Brochure PDF (Arabic)</label>
+                                <input type="file" class="form-control" accept="application/pdf"
+                                    (change)="onBrochureArChange($event)">
+                            </div>
+
+                            <div *ngIf="brochureArPreview" class="mb-3 p-2 border rounded bg-light">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="bi bi-file-earmark-pdf text-danger me-2"></i>
+                                        Arabic Brochure.pdf
+                                    </div>
+                                    <a [href]="brochureArPreview" target="_blank"
+                                        class="btn btn-sm btn-outline-primary">
+                                        View
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- ================= IMAGE ================= -->
+                            <div class="mb-3">
+                                <label>About Image</label>
+                                <input type="file" class="form-control" (change)="onAboutImageChange($event)">
+                            </div>
+
+                            <div *ngIf="aboutPreview" class="mb-3">
+                                <img [src]="aboutPreview" class="img-fluid rounded shadow-sm"
+                                    style="max-height:120px;object-fit:cover;">
+                            </div>
+
+                            <!-- ================= SAVE ================= -->
+                            <button class="btn btn-primary" (click)="saveAbout()">
+                                Save About Section
+                            </button>
+
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label>Description (English)</label>
-                            <textarea class="form-control" rows="3" [(ngModel)]="aboutForm.description_en">
-                            </textarea>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label>Description (Arabic)</label>
-                            <textarea class="form-control" dir="rtl" rows="3" [(ngModel)]="aboutForm.description_ar">
-                            </textarea>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label>About Image</label>
-                        <input type="file" class="form-control" (change)="onAboutImageChange($event)">
-                    </div>
-
-                    <div *ngIf="aboutPreview" class="mb-3">
-                        <img [src]="aboutPreview" class="img-fluid rounded shadow-sm"
-                            style="max-height:120px;object-fit:cover;">
-                    </div>
-
-                    <button class="btn btn-primary" (click)="saveAbout()">
-                        Save About Section
-                    </button>
 
                 </div>
 
@@ -199,7 +250,8 @@
                                     <button class="btn btn-sm btn-outline-primary me-1" (click)="editMarquee(item)">
                                         Edit
                                     </button>
-                                    <button class="btn btn-sm btn-outline-danger" (click)="deleteMarquee(item.id)">
+                                    <button class="btn btn-sm btn-outline-danger"
+                                        (click)="openMarqueeDeleteModal(item.id)">
                                         Delete
                                     </button>
                                 </td>
@@ -235,7 +287,8 @@
                                         Edit
                                     </button>
 
-                                    <button class="btn btn-sm btn-outline-danger" (click)="deleteClient(client.id)">
+                                    <button class="btn btn-sm btn-outline-danger"
+                                        (click)="openClientDeleteModal(client.id)">
                                         Delete
                                     </button>
 
@@ -528,6 +581,75 @@
                 <button class="btn btn-primary" (click)="saveService()">
                     Save
                 </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="heroDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Delete this hero slide?
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-danger" (click)="confirmHeroDelete()">Delete</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="marqueeDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Delete this marquee item?
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-danger" (click)="confirmMarqueeDelete()">Delete</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="clientDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Delete this client?
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-danger" (click)="confirmClientDelete()">Delete</button>
             </div>
 
         </div>

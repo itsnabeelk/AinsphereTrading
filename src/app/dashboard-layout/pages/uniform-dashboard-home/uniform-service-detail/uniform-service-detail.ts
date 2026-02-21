@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FmcgServiceDetailService } from '../../../../service/fmcg-service-detail.service';
+import { UniformServiceDetailService } from '../../../../service/uniform-service-detail.service';
 
 declare var bootstrap: any;
 
 @Component({
-  selector: 'app-fmcg-service-detail',
+  selector: 'app-uniform-service-detail',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './fmcg-service-detail.html',
-  styleUrl: './fmcg-service-detail.css'
+  templateUrl: './uniform-service-detail.html',
+  styleUrl: './uniform-service-detail.css',
 })
-export class FmcgServiceDetail implements OnInit {
+export class UniformServiceDetail implements OnInit {
 
   serviceId!: number;
   loading = true;
@@ -21,12 +21,10 @@ export class FmcgServiceDetail implements OnInit {
   /* ================= MAIN DETAIL ================= */
 
   detailForm: any = {
-    service_id: null,
     main_heading_en: '',
     main_heading_ar: '',
     sub_heading_en: '',
-    sub_heading_ar: '',
-    is_active: 1
+    sub_heading_ar: ''
   };
 
   heroPreview: string | null = null;
@@ -74,14 +72,13 @@ export class FmcgServiceDetail implements OnInit {
   productPreview: string | null = null;
   isProductEditing = false;
 
-  deleteSectionId: number | null = null;
-  deletePointId: number | null = null;
-  deleteProductId: number | null = null;
+  deleteId: number | null = null;
+  deleteType: 'section' | 'point' | 'product' | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private serviceApi: FmcgServiceDetailService
+    private api: UniformServiceDetailService
   ) { }
 
   ngOnInit(): void {
@@ -89,45 +86,35 @@ export class FmcgServiceDetail implements OnInit {
     this.loadAll();
   }
 
-  /* ================= LOAD ALL ================= */
+  /* ================= LOAD ================= */
 
   loadAll() {
-    this.loadDetail();
-    this.loadSections();
-    this.loadPoints();
-    this.loadProducts();
+    this.api.getAdmin(this.serviceId).subscribe((res: any) => {
+      this.detailForm = res.detail || {};
+      this.sections = res.sections || [];
+      this.points = res.points || [];
+      this.products = res.products || [];
+
+      this.heroPreview = res.detail?.hero_image
+        ? this.getImage(res.detail.hero_image)
+        : null;
+
+      this.loading = false;
+    });
   }
 
   getImage(path: string | null) {
-    return this.serviceApi.getImage(path);
+    return this.api.getImage(path);
   }
 
   goBack() {
-    this.router.navigate(['/dashboard/fmcg-dashboard-home']);
+    this.router.navigate(['/dashboard/uniform-dashboard-home']);
   }
 
   /* ================= DETAIL ================= */
 
-  loadDetail() {
-    this.serviceApi.getAdminDetail(this.serviceId).subscribe({
-      next: (res: any) => {
-        if (res) {
-          this.detailForm = { ...res };
-          this.heroPreview = res.hero_image
-            ? this.getImage(res.hero_image)
-            : null;
-        }
-        this.loading = false;
-      },
-      error: () => {
-        this.loading = false;
-      }
-    });
-  }
-
   saveDetail() {
     const formData = new FormData();
-    this.detailForm.service_id = this.serviceId;
 
     Object.keys(this.detailForm).forEach(key => {
       formData.append(key, this.detailForm[key] ?? '');
@@ -137,8 +124,8 @@ export class FmcgServiceDetail implements OnInit {
       formData.append('hero_image', this.selectedHeroFile);
     }
 
-    this.serviceApi.saveDetail(formData)
-      .subscribe(() => alert('Detail Saved'));
+    this.api.saveDetail(this.serviceId, formData)
+      .subscribe(() => this.showToast('Saved', 'success'));
   }
 
   onHeroImageChange(event: any) {
@@ -146,94 +133,32 @@ export class FmcgServiceDetail implements OnInit {
     if (!file) return;
 
     this.selectedHeroFile = file;
+
     const reader = new FileReader();
     reader.onload = () => this.heroPreview = reader.result as string;
     reader.readAsDataURL(file);
   }
 
-  /* ================= SECTIONS ================= */
-
-  loadSections() {
-    this.serviceApi.getSections(this.serviceId)
-      .subscribe(res => this.sections = res || []);
-  }
+  /* ================= SECTION ================= */
 
   saveSection() {
-    const payload = {
-      ...this.sectionForm,
-      service_id: this.serviceId
-    };
+    const payload = { ...this.sectionForm, service_id: this.serviceId };
 
     const request = this.isSectionEditing
-      ? this.serviceApi.updateSection(this.sectionForm.id, payload)
-      : this.serviceApi.createSection(payload);
+      ? this.api.updateSection(this.sectionForm.id, payload)
+      : this.api.createSection(this.serviceId, payload);
 
     request.subscribe(() => {
-      this.loadSections();
+      this.loadAll();
       this.resetSection();
     });
   }
 
-  editSection(section: any) {
+  editSection(s: any) {
     this.isSectionEditing = true;
-    this.sectionForm = { ...section };
+    this.sectionForm = { ...s };
   }
 
-  openSectionDeleteModal(id: number) {
-    this.deleteSectionId = id;
-    new bootstrap.Modal(document.getElementById('sectionDeleteModal')).show();
-  }
-
-  openPointDeleteModal(id: number) {
-    this.deletePointId = id;
-    new bootstrap.Modal(document.getElementById('pointDeleteModal')).show();
-  }
-
-  confirmPointDelete() {
-    if (!this.deletePointId) return;
-
-    this.serviceApi.deletePoint(this.deletePointId)
-      .subscribe(() => {
-        this.loadPoints();
-
-        bootstrap.Modal
-          .getInstance(document.getElementById('pointDeleteModal')!)
-          ?.hide();
-      });
-  }
-
-
-  openProductDeleteModal(id: number) {
-    this.deleteProductId = id;
-    new bootstrap.Modal(document.getElementById('productDeleteModal')).show();
-  }
-
-  confirmProductDelete() {
-    if (!this.deleteProductId) return;
-
-    this.serviceApi.deleteProduct(this.deleteProductId)
-      .subscribe(() => {
-        this.loadProducts();
-
-        bootstrap.Modal
-          .getInstance(document.getElementById('productDeleteModal')!)
-          ?.hide();
-      });
-  }
-
-
-  confirmSectionDelete() {
-    if (!this.deleteSectionId) return;
-
-    this.serviceApi.deleteSection(this.deleteSectionId)
-      .subscribe(() => {
-        this.loadSections();
-
-        bootstrap.Modal
-          .getInstance(document.getElementById('sectionDeleteModal')!)
-          ?.hide();
-      });
-  }
   resetSection() {
     this.isSectionEditing = false;
     this.sectionForm = {
@@ -246,41 +171,32 @@ export class FmcgServiceDetail implements OnInit {
     };
   }
 
-  /* ================= POINTS ================= */
-
-  loadPoints() {
-    this.serviceApi.getPoints(this.serviceId)
-      .subscribe(res => this.points = res || []);
-  }
+  /* ================= POINT ================= */
 
   savePoint() {
     const payload = {
       ...this.pointForm,
-      service_id: this.serviceId,
-      points_en: JSON.stringify(this.pointForm.points_en.split('\n')),
-      points_ar: JSON.stringify(this.pointForm.points_ar.split('\n'))
+      service_id: this.serviceId
     };
 
     const request = this.isPointEditing
-      ? this.serviceApi.updatePoint(this.pointForm.id, payload)
-      : this.serviceApi.createPoint(payload);
+      ? this.api.updatePoint(this.pointForm.id, payload)
+      : this.api.createPoint(this.serviceId, payload);
 
     request.subscribe(() => {
-      this.loadPoints();
+      this.loadAll();
       this.resetPoint();
     });
   }
 
-  editPoint(point: any) {
+  editPoint(p: any) {
     this.isPointEditing = true;
     this.pointForm = {
-      ...point,
-      points_en: (point.points_en || []).join('\n'),
-      points_ar: (point.points_ar || []).join('\n')
+      ...p,
+      points_en: (p.points_en || []).join('\n'),
+      points_ar: (p.points_ar || []).join('\n')
     };
   }
-
-
 
   resetPoint() {
     this.isPointEditing = false;
@@ -294,29 +210,20 @@ export class FmcgServiceDetail implements OnInit {
     };
   }
 
-  /* ================= PRODUCTS ================= */
-
-  loadProducts() {
-    this.serviceApi.getProducts(this.serviceId)
-      .subscribe(res => this.products = res || []);
-  }
+  /* ================= PRODUCT ================= */
 
   openProductModal() {
     this.resetProduct();
     new bootstrap.Modal(document.getElementById('productModal')).show();
   }
 
-  editProduct(product: any) {
+  editProduct(p: any) {
     this.isProductEditing = true;
-    this.productForm = { ...product };
-    this.productPreview = product.image
-      ? this.getImage(product.image)
-      : null;
+    this.productForm = { ...p };
+    this.productPreview = p.image ? this.getImage(p.image) : null;
 
     new bootstrap.Modal(document.getElementById('productModal')).show();
   }
-
-
 
   saveProduct() {
     const formData = new FormData();
@@ -332,15 +239,13 @@ export class FmcgServiceDetail implements OnInit {
     }
 
     const request = this.isProductEditing
-      ? this.serviceApi.updateProduct(this.productForm.id, formData)
-      : this.serviceApi.createProduct(formData);
+      ? this.api.updateProduct(this.productForm.id, formData)
+      : this.api.createProduct(this.serviceId, formData);
 
     request.subscribe(() => {
-      this.loadProducts();
+      this.loadAll();
       this.resetProduct();
-      bootstrap.Modal.getInstance(
-        document.getElementById('productModal')
-      )?.hide();
+      bootstrap.Modal.getInstance(document.getElementById('productModal'))?.hide();
     });
   }
 
@@ -369,4 +274,46 @@ export class FmcgServiceDetail implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  /* ================= DELETE ================= */
+
+  openDeleteModal(id: number, type: 'section' | 'point' | 'product') {
+    this.deleteId = id;
+    this.deleteType = type;
+    new bootstrap.Modal(document.getElementById('deleteModal')).show();
+  }
+
+  confirmDelete() {
+    if (!this.deleteId || !this.deleteType) return;
+
+    let request;
+
+    if (this.deleteType === 'section') {
+      request = this.api.deleteSection(this.deleteId);
+    } else if (this.deleteType === 'point') {
+      request = this.api.deletePoint(this.deleteId);
+    } else {
+      request = this.api.deleteProduct(this.deleteId);
+    }
+
+    request.subscribe(() => {
+      this.loadAll();
+      bootstrap.Modal.getInstance(document.getElementById('deleteModal'))?.hide();
+    });
+  }
+
+  /* ================= TOAST ================= */
+
+  showToast(msg: string, type: 'success' | 'danger') {
+    const toastEl = document.getElementById('uniformToast');
+    const body = document.getElementById('uniformToastBody');
+
+    if (!toastEl || !body) return;
+
+    body.innerText = msg;
+
+    toastEl.classList.remove('bg-success', 'bg-danger');
+    toastEl.classList.add(type === 'success' ? 'bg-success' : 'bg-danger');
+
+    new bootstrap.Toast(toastEl).show();
+  }
 }

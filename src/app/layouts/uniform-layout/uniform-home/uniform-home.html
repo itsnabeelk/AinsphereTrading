@@ -1,148 +1,127 @@
 <!-- start: Banner Section -->
-<section class="tj-banner-section h6-hero section-gap-x">
-    <div class="banner-area">
-        <div class="banner-left-box">
-            <div class="banner-content">
-                <h1 class="banner-title title-anim">Welcome to AINSPHERE UNIFORMS
+<section class="tj-banner-section h6-hero section-gap-x" *ngIf="heroSlides.length">
 
-                </h1>
-                <div class="btn-area wow fadeInUp" data-wow-delay=".8s">
-                    <a class="tj-primary-btn" [routerLink]="['/uniform-services']">
-                        <span class="btn-text"><span>Our Services</span></span>
-                        <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
-                    </a>
-                </div>
+    <div class="swiper main-hero-slider">
+        <div class="swiper-wrapper">
 
-                <div class="h6-hero-bottom wow fadeInLeft" data-wow-delay=".9s">
-                    <div class="h6-hero-history">
-                        <h4 class="h6-hero-history-title">About Us</h4>
-                        <p class="h6-hero-history-desc">Welcome to AINSPHERE UNIFORMS
-                            Your trusted partner in premium-quality since
-                            2014! We take pride in outfitting professionals
-                            across Saudi Arabia with stylish, comfortable, </p>
-                    </div>
-                    <div class="h6-hero-card-wrapper wow fadeInRight" data-wow-delay="1s">
-                        <div class="swiper h6-hero-card-slider">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="h6-hero-card">
-                                        <div class="h6-hero-card-banner">
-                                            <img src="/images/hero/h6-hero-cart-1.webp" alt="">
-                                        </div>
-                                        <div class="h6-hero-card-content">
-                                            <h5 class="h6-hero-card-title"><a [routerLink]="['/uniform-services']">
-                                                    Office and Business Uniforms
-                                                </a>
-                                            </h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="h6-hero-card">
-                                        <div class="h6-hero-card-banner">
-                                            <img src="/images/hero/h6-hero-cart-2.webp" alt="">
-                                        </div>
-                                        <div class="h6-hero-card-content">
-                                            <h5 class="h6-hero-card-title"><a
-                                                    [routerLink]="['/uniform-services']">Healthcare
-                                                </a>
-                                            </h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="h6-hero-card">
-                                        <div class="h6-hero-card-banner">
-                                            <img src="/images/hero/h6-hero-cart-3.webp" alt="">
-                                        </div>
-                                        <div class="h6-hero-card-content">
-                                            <h5 class="h6-hero-card-title"><a [routerLink]="['/uniform-services']">Hotel
-                                                    Uniforms
-                                                </a>
-                                            </h5>
-                                        </div>
-                                    </div>
+            <div class="swiper-slide" *ngFor="let hero of heroSlides">
+
+                <div class="banner-area">
+                    <div class="banner-left-box">
+                        <div class="banner-content">
+
+                            <!-- MAIN TITLE -->
+                            <h1 class="banner-title title-anim">
+                                {{ isArabic
+                                ? (hero.title_ar || '')
+                                : (hero.title_en || '') }}
+                            </h1>
+
+                            <!-- HERO DESCRIPTION -->
+                            <div class="h6-hero-bottom wow fadeInLeft" data-wow-delay=".9s">
+                                <div class="h6-hero-history">
+                                    <p class="h6-hero-history-desc">
+                                        {{ isArabic
+                                        ? hero.description_ar
+                                        : hero.description_en }}
+                                    </p>
                                 </div>
                             </div>
-                            <div class="swiper-pagination-area"></div>
+
+                            <!-- BUTTON (UNCHANGED EXACT LOGIC) -->
+                            <div class="btn-area wow fadeInUp" data-wow-delay=".8s">
+                                <a class="tj-primary-btn" [routerLink]="[hero.button_link || '/uniform-services']">
+
+                                    <span class="btn-text">
+
+                                        <span *ngIf="!isArabic">
+                                            {{ hero.button_text_en || 'Explore Services' }}
+                                        </span>
+
+                                        <span *ngIf="isArabic">
+                                            {{ hero.button_text_ar || 'استكشف الخدمات' }}
+                                        </span>
+
+                                    </span>
+
+                                    <span class="btn-icon">
+                                        <i class="tji-arrow-right-long"></i>
+                                    </span>
+
+                                </a>
+                            </div>
+
+                            <div class="bg-shape-2">
+                                <img src="/images/shape/pattern-3.svg" alt="">
+                            </div>
+
                         </div>
-
                     </div>
-                </div>
-                <div class="bg-shape-2">
-                    <img src="/images/shape/pattern-3.svg" alt="">
-                </div>
-            </div>
 
-        </div>
-        <div class="banner-right-box">
-            <div class="banner-img wow fadeInUp" data-wow-delay=".3s">
-                <img data-speed=".8" src="/images/uniforms/hero.jpg" alt="">
+                    <!-- RIGHT IMAGE -->
+                    <div class="banner-right-box">
+                        <div class="banner-img wow fadeInUp" data-wow-delay=".3s">
+                            <img data-speed=".8" [src]="getImage(hero.image)" alt="">
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
 
         </div>
     </div>
+
 </section>
 <!-- end: Banner Section -->
 
 <!-- start: About Section -->
-<section class="h10-about section-gap">
+<section class="h10-about section-gap" *ngIf="about">
     <div class="container">
         <div class="row flex-column-reverse flex-md-row ">
-            <div class="col-12 col-lg-5 d-block d-md-none d-lg-block">
-                <div class="about-img-area h10-about-banner wow bounceInLeft" data-wow-delay=".3s">
+
+            <div class="col-12 col-lg-5">
+                <div class="about-img-area h10-about-banner wow bounceInLeft">
                     <div class="about-img overflow-hidden">
-                        <img data-speed=".8" src="/images/about/h10-about-banner.webp" alt="">
+                        <img [src]="getImage(about.image)" alt="">
                     </div>
                 </div>
             </div>
+
             <div class="col-12 col-lg-7">
                 <div class="h10-about-content-wrapper">
-                    <div class="sec-heading style-3 ">
-                        <h2 class="sec-title title-highlight wow fadeInUp" data-wow-delay=".3s">
-                            Welcome to Ainsphere Uniforms
+
+                    <div class="sec-heading style-3">
+                        <h2 class="sec-title title-highlight wow fadeInUp">
+                            {{ isArabic ? about.title_ar : about.title_en }}
                         </h2>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 d-none d-md-block d-lg-none">
-                            <div class="about-img-area h10-about-banner wow bounceInLeft" data-wow-delay=".3s">
-                                <div class="about-img">
-                                    <img src="/images/about/h10-about-banner.webp" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-12">
-                            <div class="h10-about-content">
 
-                                <p class="desc wow fadeInUp" data-wow-delay=".4s">
-                                    Welcome to AINSPHERE UNIFORMS
-                                    Your trusted partner in premium-quality since
-                                    2014! We take pride in outfitting professionals
-                                    across Saudi Arabia with stylish, comfortable, and
-                                    durable uniforms that reflect the essence of your
-                                    business. Whether you're looking to elevate your
-                                    brand's image or ensure the utmost comfort for
-                                    your team, we've got you covered. Explore our
-                                    diverse range of uniforms and experience
-                                    unmatched quality, professionalism, and
-                                    exceptional service. Thank you for choosing
-                                    Ainsphere Ventures – where style meets
-                                    functionality!
+                    <div class="h10-about-content">
+                        <p class="desc wow fadeInUp">
+                            {{ isArabic
+                            ? about.description_ar
+                            : about.description_en }}
+                        </p>
+                    </div>
 
-                                </p>
-                            </div>
-                            <div class="about-btn-area-2 wow fadeInUp pt-3" data-wow-delay=".7s">
-                                <a class="tj-primary-btn" [routerLink]="['/uniform-services']">
-                                    <span class="btn-text"><span>Our Services</span></span>
-                                    <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
-                                </a>
-                            </div>
-                        </div>
+                    <div class="about-btn-area-2 wow fadeInUp pt-3">
+                        <a class="tj-primary-btn" *ngIf="(isArabic ? about?.brochure_ar : about?.brochure_en)"
+                            [href]="getFile(isArabic ? about.brochure_ar : about.brochure_en)" target="_blank">
+
+                            <span class="btn-text">
+                                <span>{{ isArabic ? 'تحميل الكتيب' : 'Download Brochure' }}</span>
+                            </span>
+
+                            <span class="btn-icon">
+                                <i class="tji-arrow-right-long"></i>
+                            </span>
+                        </a>
                     </div>
 
                 </div>
-
             </div>
+
         </div>
     </div>
 </section>
@@ -150,52 +129,37 @@
 
 
 <!-- start: Client Section -->
-<section class="tj-client-section-2 h6-client section-gap-x wow fadeInUp" data-wow-delay=".4s">
+<section class="tj-client-section-2 h6-client section-gap-x wow fadeInUp" data-wow-delay=".4s" *ngIf="clients.length">
+
     <div class="container-fluid client-container">
         <div class="row">
+
             <div class="col-12">
                 <div class="h6-client-title-wrapper">
-                    <h6 class="h6-client-title
-              ">we’re proud to partner with best-in-class clients</h6>
-
+                    <h6 class="h6-client-title">
+                        {{ isArabic
+                        ? 'نفخر بشراكتنا مع أفضل العملاء'
+                        : 'We’re proud to partner with best-in-class clients' }}
+                    </h6>
                 </div>
             </div>
+
             <div class="col-12">
                 <div class="swiper client-slider client-slider-2 h6-client-slider">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide client-item">
+
+                        <div class="swiper-slide client-item" *ngFor="let client of clients">
+
                             <div class="client-logo">
-                                <img src="/images/brands/brand-1-light.webp" alt="">
+                                <img [src]="getImage(client.image)" alt="">
                             </div>
+
                         </div>
-                        <div class="swiper-slide client-item">
-                            <div class="client-logo">
-                                <img src="/images/brands/brand-2-light.webp" alt="">
-                            </div>
-                        </div>
-                        <div class="swiper-slide client-item">
-                            <div class="client-logo">
-                                <img src="/images/brands/brand-3-light.webp" alt="">
-                            </div>
-                        </div>
-                        <div class="swiper-slide client-item">
-                            <div class="client-logo">
-                                <img src="/images/brands/brand-4-light.webp" alt="">
-                            </div>
-                        </div>
-                        <div class="swiper-slide client-item">
-                            <div class="client-logo">
-                                <img src="/images/brands/brand-5-light.webp" alt="">
-                            </div>
-                        </div>
-                        <div class="swiper-slide client-item">
-                            <div class="client-logo">
-                                <img src="/images/brands/brand-6-light.webp" alt="">
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
@@ -221,64 +185,40 @@
                     <div class="swiper project-slider">
                         <div class="swiper-wrapper">
 
-                            <div class="swiper-slide">
-                                <div class="project-item">
-                                    <div class="project-img" data-bg-image="../images/service/1.jpg"></div>
-                                    <div class="project-content">
-                                        <span class="categories"><a href="#">Services</a></span>
-                                        <div class="project-text">
-                                            <h3 class="title"><a href="#">Office and Business Uniforms</a></h3>
-                                            <a class="project-btn" href="#">
-                                                <i class="tji-arrow-right-big"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="swiper-slide" *ngFor="let service of uniformServices">
 
-                            <div class="swiper-slide">
                                 <div class="project-item">
-                                    <div class="project-img" data-bg-image="../images/service/2.jpg"></div>
-                                    <div class="project-content">
-                                        <span class="categories"><a href="#">Services</a></span>
-                                        <div class="project-text">
-                                            <h3 class="title"><a href="#">Healthcare</a></h3>
-                                            <a class="project-btn" href="#">
-                                                <i class="tji-arrow-right-big"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="swiper-slide">
-                                <div class="project-item">
-                                    <div class="project-img" data-bg-image="../images/service/3.jpg"></div>
-                                    <div class="project-content">
-                                        <span class="categories"><a href="#">Services</a></span>
-                                        <div class="project-text">
-                                            <h3 class="title"><a href="#">Hotel Uniforms</a></h3>
-                                            <a class="project-btn" href="#">
-                                                <i class="tji-arrow-right-big"></i>
-                                            </a>
-                                        </div>
+                                    <!-- IMAGE -->
+                                    <div class="project-img"
+                                        [style.background-image]="'url(' + getServiceImage(service.image) + ')'">
                                     </div>
-                                </div>
-                            </div>
 
-                            <div class="swiper-slide">
-                                <div class="project-item">
-                                    <div class="project-img" data-bg-image="../images/service/4.jpg"></div>
                                     <div class="project-content">
-                                        <span class="categories"><a href="#">Services</a></span>
+
+                                        <span class="categories">
+                                            <a href="javascript:void(0)">Services</a>
+                                        </span>
+
                                         <div class="project-text">
-                                            <h3 class="title"><a href="#">Institutional Uniform</a></h3>
-                                            <a class="project-btn" href="#">
+
+                                            <!-- TITLE -->
+                                            <h3 class="title">
+                                                <a [routerLink]="['/uniform-services', service.slug]">
+                                                    {{ isArabic ? service.title_ar : service.title_en }}
+                                                </a>
+                                            </h3>
+
+                                            <!-- BUTTON -->
+                                            <a class="project-btn" [routerLink]="['/uniform-services', service.slug]">
                                                 <i class="tji-arrow-right-big"></i>
                                             </a>
+
                                         </div>
+
                                     </div>
                                 </div>
+
                             </div>
 
                         </div>
@@ -293,67 +233,87 @@
 
 
 <!-- start: Fun fact Section -->
-<section class=" h8-funfact section-gap">
+<section class="h8-funfact section-gap" *ngIf="mission">
     <div class="container">
+
+        <!-- HEADING -->
         <div class="row">
             <div class="col-lg-12">
                 <div class="sec-heading style-3 sec-heading-centered">
-                    <span class="sub-title wow fadeInUp" data-wow-delay=".3s"><i class="tji-box"></i>OUR FUN FACT</span>
-                    <h2 class="sec-title title-anim">Numbers and facts that define performance.</h2>
+
+                    <span class="sub-title wow fadeInUp">
+                        <i class="tji-box"></i>
+                        {{ isArabic ? mission.sub_title_ar : mission.sub_title_en }}
+                    </span>
+
+                    <h2 class="sec-title title-anim">
+                        {{ isArabic ? mission.title_ar : mission.title_en }}
+                    </h2>
+
                 </div>
             </div>
         </div>
+
         <div class="row justify-content-between">
+
+            <!-- LEFT -->
             <div class="col-12 col-lg-6">
-                <div class="h8-funfact-banner wow fadeInLeft" data-wow-delay=".3s">
+                <div class="h8-funfact-banner">
+
                     <div class="h8-funfact-banner-img">
-                        <img src="/images/funfact/h8-funfact-banner.webp" alt="">
+                        <img *ngIf="mission.banner_image" [src]="getImage(mission.banner_image)">
                     </div>
+
                     <div class="box-area">
-                        <div class="call-box wow fadeInUp" data-wow-delay=".5s">
-                            <h4 class="title">Contact Our Team </h4>
-                            <span class="call-icon"><i class="tji-phone"></i></span>
-                            <a class="number" [routerLink]="['/contact-us']"><span>Contact Us</span></a>
+                        <div class="call-box">
+
+                            <h4 class="title">
+                                {{ isArabic ? mission.contact_title_ar : mission.contact_title_en }}
+                            </h4>
+
+                            <span class="call-icon">
+                                <i class="tji-phone"></i>
+                            </span>
+
+                            <!-- ✅ STATIC BUTTON -->
+                            <a class="number" [routerLink]="['/contact-us']">
+                                <span>
+                                    {{ isArabic ? 'اتصل بنا' : 'Contact Us' }}
+                                </span>
+                            </a>
+
                         </div>
                     </div>
+
                 </div>
             </div>
-            <div class="col-12 col-lg-6 pl-0">
-                <div class="h8-funfact-wrapper">
-                    <div class="countup-item style-2 h8-funfact-item">
-                        <div class="count-inner">
-                            <div class="counter-desc">
-                                <h4 class="counter-title">Our Vision</h4>
-                                <p class="count-text">
-                                    To be the leading uniform providerin Saudi
-                                    Arabia, recognized for our dedication to quality,
-                                    customer satisfaction, and innovative solutions.
-                                    We aspire to outfit every professionalwith
-                                    uniforms that inspire excellence, foster
-                                    teamwork, and embody the values of their
-                                    organizations.
 
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+            <!-- RIGHT -->
+            <div class="col-12 col-lg-6">
+                <div class="h8-funfact-wrapper">
+
+                    <!-- VISION -->
                     <div class="countup-item style-2 h8-funfact-item">
-                        <div class="count-inner">
-                            <div class="counter-desc">
-                                <h4 class="counter-title">Our Mission</h4>
-                                <p class="count-text">
-                                    Our mission is to deliver high-quality, stylish, and
-                                    comfortable uniforms that enhance
-                                    professionalism and reflect the unique identity of
-                                    businesses across SaudiArabia.We are
-                                    committed to providing exceptional service,
-                                    innovative designs, and durable fabrics that
-                                    empower professionals to perform with
-                                    confidence and pride
-                                </p>
-                            </div>
-                        </div>
+                        <h4 class="counter-title">
+                            {{ isArabic ? mission.vision_title_ar : mission.vision_title_en }}
+                        </h4>
+
+                        <p class="count-text">
+                            {{ isArabic ? mission.vision_desc_ar : mission.vision_desc_en }}
+                        </p>
                     </div>
+
+                    <!-- MISSION -->
+                    <div class="countup-item style-2 h8-funfact-item">
+                        <h4 class="counter-title">
+                            {{ isArabic ? mission.mission_title_ar : mission.mission_title_en }}
+                        </h4>
+
+                        <p class="count-text">
+                            {{ isArabic ? mission.mission_desc_ar : mission.mission_desc_en }}
+                        </p>
+                    </div>
+
                 </div>
             </div>
 
@@ -364,70 +324,35 @@
 
 
 <!-- start: Working process Section -->
-<div class="tj-working-process section-gap section-gap-x">
+<section class="tj-working-process section-gap section-gap-x" *ngIf="working.length">
+
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="working-process-area">
-                    <div class="process-item wow fadeInLeft" data-wow-delay=".5s">
-                        <div class="process-step">
-                            <span>01</span>
-                        </div>
-                        <div class="process-content">
-                            <h4 class="title">Perfect Tailoring: Where
-                                Precision Meets Style</h4>
-                            <p class="desc">
-                                We believe that a perfectly tailored uniform is more than
-                                just clothing – it’s a reflection of your brand’s
-                                professionalism and attention to detail. With our expertise
-                                in tailoring, we ensure that every piece fits flawlessly,
-                                combining comfort with elegance.
 
-                            </p>
-                        </div>
-                    </div>
-                    <div class="process-item wow fadeInLeft" data-wow-delay=".7s">
+                    <div class="process-item wow fadeInLeft" *ngFor="let item of working; let i = index">
+
                         <div class="process-step">
-                            <span>02</span>
+                            <span>
+                                {{ (i + 1) < 10 ? '0' + (i + 1) : (i + 1) }} </span>
                         </div>
+
                         <div class="process-content">
-                            <h4 class="title">Materials: Crafted for
-                                Quality and Comfort</h4>
+                            <h4 class="title">
+                                {{ isArabic ? item.title_ar : item.title_en }}
+                            </h4>
+
                             <p class="desc">
-                                We understand that the foundation of a great uniform
-                                lies in its materials. That’s why we carefully select
-                                only the finest fabrics to ensure style, durability, and
-                                all-day comfort for your team. Explore the materials
-                                that set our uniforms apart:
+                                {{ isArabic ? item.description_ar : item.description_en }}
                             </p>
                         </div>
+
                     </div>
-                    <div class="process-item wow fadeInLeft" data-wow-delay=".9s">
-                        <div class="process-step">
-                            <span>03</span>
-                        </div>
-                        <div class="process-content">
-                            <h4 class="title">Customization</h4>
-                            <p class="desc">
-                                We bring your vision to life with personalized
-                                uniform solutions. From unique designs and
-                                tailored fits to embroidered logos and brand
-                                colors, our customization options ensure that
-                                every piece reflects your identity. Elevate your
-                                team’s style and make a lasting impression
-                                with uniforms crafted just for you
-                            </p>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-    <div class="bg-shape-1">
-        <img src="../images/shape/pattern-2.svg" alt="">
-    </div>
-    <div class="bg-shape-2">
-        <img src="../images/shape/pattern-3.svg" alt="">
-    </div>
-</div>
+</section>
 <!-- end: Working process Section -->

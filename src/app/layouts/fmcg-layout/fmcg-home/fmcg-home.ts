@@ -135,6 +135,7 @@ export class FmcgHome implements OnInit, AfterViewInit, OnDestroy {
       requestAnimationFrame(() => {
         this.initMarquee();
         this.initHeroSlider();
+        this.initClientSlider();
       });
     };
 
@@ -145,6 +146,7 @@ export class FmcgHome implements OnInit, AfterViewInit, OnDestroy {
         requestAnimationFrame(() => {
           this.initMarquee();
           this.initHeroSlider();
+          this.initClientSlider();
         });
       }
     });
@@ -152,15 +154,16 @@ export class FmcgHome implements OnInit, AfterViewInit, OnDestroy {
 
   /* ================= SAFE REINIT ================= */
 
-  private safeReInit() {
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        this.initMarquee();
-        this.initHeroSlider();
-      }, 0);
-    });
-  }
+  private reinitTimer: any;
 
+  private safeReInit() {
+    clearTimeout(this.reinitTimer);
+    this.reinitTimer = setTimeout(() => {
+      this.initMarquee();
+      this.initHeroSlider();
+      this.initClientSlider();
+    }, 100);
+  }
 
   /* ================= MARQUEE ================= */
 
@@ -175,14 +178,20 @@ export class FmcgHome implements OnInit, AfterViewInit, OnDestroy {
         slidesPerView: 'auto',
         loop: true,
         speed: 5000,
-        spaceBetween: 30,
+        spaceBetween: 10,
         allowTouchMove: false,
+
+        freeMode: true,
+        freeModeMomentum: false,
+
         autoplay: {
-          delay: 1,
+          delay: 0,
           disableOnInteraction: false,
+          pauseOnMouseEnter: false
         },
+
         breakpoints: {
-          768: { spaceBetween: 35 },
+          768: { spaceBetween: 10 },
           1024: { spaceBetween: 50 },
         }
       });
@@ -225,6 +234,35 @@ export class FmcgHome implements OnInit, AfterViewInit, OnDestroy {
     this.marqueeSwipers.forEach(s => s?.destroy?.(true, true));
     this.heroSwiper?.destroy?.(true, true);
     this.routerSub?.unsubscribe();
+  }
+
+
+
+  private clientSwiper: any;
+
+  initClientSlider(): void {
+    if (this.clientSwiper) {
+      this.clientSwiper.destroy(true, true);
+      this.clientSwiper = null;
+    }
+
+    const el = document.querySelector('.client-slider') as HTMLElement;
+    if (!el || typeof Swiper === 'undefined') return;
+
+    this.clientSwiper = new Swiper(el, {
+      slidesPerView: 2,
+      spaceBetween: 30,
+      loop: true,
+      speed: 4000,
+      autoplay: {
+        delay: 0,
+        disableOnInteraction: false,
+      },
+      breakpoints: {
+        768: { slidesPerView: 3 },
+        1024: { slidesPerView: 5 },
+      }
+    });
   }
 
 }

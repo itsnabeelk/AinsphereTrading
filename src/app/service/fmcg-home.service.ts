@@ -42,6 +42,8 @@ export interface FmcgAbout {
     funfact_2_text_en: string;
     funfact_2_text_ar: string;
     image: string;
+    brochure_en: string;
+    brochure_ar: string;
     is_active: number;
 }
 

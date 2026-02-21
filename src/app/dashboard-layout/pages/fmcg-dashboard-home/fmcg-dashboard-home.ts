@@ -102,6 +102,15 @@ export class FmcgDashboardHome implements OnInit {
   clientPreview: string | null = null;
   selectedClientFile: File | null = null;
   isClientEditing = false;
+  deleteHeroId: number | null = null;
+  deleteMarqueeId: number | null = null;
+  deleteClientId: number | null = null;
+
+  selectedBrochureEn: File | null = null;
+  selectedBrochureAr: File | null = null;
+
+  brochureEnPreview: string | null = null;
+  brochureArPreview: string | null = null;
 
   constructor(
     private router: Router,
@@ -206,16 +215,19 @@ export class FmcgDashboardHome implements OnInit {
   }
 
 
-  deleteHero(id: number) {
-    if (!confirm('Delete this slide?')) return;
-    this.api.deleteHero(id).subscribe(() => this.loadHero());
-  }
+
 
   onHeroImageChange(event: any) {
-    const file = event.target.files[0];
+    const file = event.target.files?.[0];
     if (!file) return;
 
+    if (!this.validateImage(file)) {
+      event.target.value = '';
+      return;
+    }
+
     this.selectedHeroFile = file;
+
     const reader = new FileReader();
     reader.onload = () => this.heroPreview = reader.result as string;
     reader.readAsDataURL(file);
@@ -245,10 +257,24 @@ export class FmcgDashboardHome implements OnInit {
 
   loadAbout() {
     this.api.getAboutAdmin().subscribe(res => {
-      if (res) {
-        this.aboutForm = { ...res };
-        this.aboutPreview = res.image ? this.getImage(res.image) : null;
-      }
+      if (!res) return;
+
+      this.aboutForm = { ...res };
+
+      // IMAGE PREVIEW
+      this.aboutPreview = res.image
+        ? this.getImage(res.image)
+        : null;
+
+      // ✅ BROCHURE EN PREVIEW
+      this.brochureEnPreview = res.brochure_en
+        ? this.getImage(res.brochure_en)
+        : null;
+
+      // ✅ BROCHURE AR PREVIEW
+      this.brochureArPreview = res.brochure_ar
+        ? this.getImage(res.brochure_ar)
+        : null;
     });
   }
 
@@ -262,7 +288,13 @@ export class FmcgDashboardHome implements OnInit {
     if (this.selectedAboutFile) {
       formData.append('image', this.selectedAboutFile);
     }
+    if (this.selectedBrochureEn) {
+      formData.append('brochure_en', this.selectedBrochureEn);
+    }
 
+    if (this.selectedBrochureAr) {
+      formData.append('brochure_ar', this.selectedBrochureAr);
+    }
     this.api.saveAbout(formData).subscribe({
 
       next: () => {
@@ -282,15 +314,20 @@ export class FmcgDashboardHome implements OnInit {
   }
 
   onAboutImageChange(event: any) {
-    const file = event.target.files[0];
+    const file = event.target.files?.[0];
     if (!file) return;
 
+    if (!this.validateImage(file)) {
+      event.target.value = '';
+      return;
+    }
+
     this.selectedAboutFile = file;
+
     const reader = new FileReader();
     reader.onload = () => this.aboutPreview = reader.result as string;
     reader.readAsDataURL(file);
   }
-
   /* ===================================================== */
   /* ================= MARQUEE ============================ */
   /* ===================================================== */
@@ -317,9 +354,7 @@ export class FmcgDashboardHome implements OnInit {
     this.marqueeForm = { ...item };
   }
 
-  deleteMarquee(id: number) {
-    this.api.deleteMarquee(id).subscribe(() => this.loadMarquee());
-  }
+
 
   resetMarquee() {
     this.isMarqueeEditing = false;
@@ -393,27 +428,12 @@ export class FmcgDashboardHome implements OnInit {
   }
 
 
-  deleteClient(id: number) {
-    if (!confirm('Delete this client?')) return;
-    this.api.deleteClient(id).subscribe(() => this.loadClients());
-  }
 
   onClientImageChange(event: any) {
-
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    const maxSize = 1 * 1024 * 1024; // 1MB
-
-    if (!allowedTypes.includes(file.type)) {
-      this.showToast('Only JPG, PNG, or WEBP images allowed', 'danger');
-      event.target.value = '';
-      return;
-    }
-
-    if (file.size > maxSize) {
-      this.showToast('File size must be less than 1MB', 'danger');
+    if (!this.validateImage(file)) {
       event.target.value = '';
       return;
     }
@@ -424,7 +444,6 @@ export class FmcgDashboardHome implements OnInit {
     reader.onload = () => this.clientPreview = reader.result as string;
     reader.readAsDataURL(file);
   }
-
 
   resetClient() {
     this.isClientEditing = false;
@@ -468,17 +487,7 @@ export class FmcgDashboardHome implements OnInit {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const maxSize = 2 * 1024 * 1024; // 2MB
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-
-    if (!allowedTypes.includes(file.type)) {
-      this.showToast('Only JPG, PNG or WEBP allowed', 'danger');
-      event.target.value = '';
-      return;
-    }
-
-    if (file.size > maxSize) {
-      this.showToast('Image must be less than 2MB', 'danger');
+    if (!this.validateImage(file)) {
       event.target.value = '';
       return;
     }
@@ -567,6 +576,115 @@ export class FmcgDashboardHome implements OnInit {
     this.selectedServiceFile = null;
     this.servicePreview = null;
   }
+  openHeroDeleteModal(id: number) {
+    this.deleteHeroId = id;
+    new bootstrap.Modal(document.getElementById('heroDeleteModal')).show();
+  }
 
+  openMarqueeDeleteModal(id: number) {
+    this.deleteMarqueeId = id;
+    new bootstrap.Modal(document.getElementById('marqueeDeleteModal')).show();
+  }
 
+  openClientDeleteModal(id: number) {
+    this.deleteClientId = id;
+    new bootstrap.Modal(document.getElementById('clientDeleteModal')).show();
+  }
+
+  confirmHeroDelete() {
+    if (!this.deleteHeroId) return;
+
+    this.api.deleteHero(this.deleteHeroId).subscribe(() => {
+      this.showToast('Hero deleted successfully', 'success');
+      this.loadHero();
+
+      bootstrap.Modal
+        .getInstance(document.getElementById('heroDeleteModal')!)
+        ?.hide();
+    });
+  }
+  confirmMarqueeDelete() {
+    if (!this.deleteMarqueeId) return;
+
+    this.api.deleteMarquee(this.deleteMarqueeId).subscribe(() => {
+      this.showToast('Item deleted successfully', 'success');
+      this.loadMarquee();
+
+      bootstrap.Modal
+        .getInstance(document.getElementById('marqueeDeleteModal')!)
+        ?.hide();
+    });
+  }
+  confirmClientDelete() {
+    if (!this.deleteClientId) return;
+
+    this.api.deleteClient(this.deleteClientId).subscribe(() => {
+      this.showToast('Client deleted successfully', 'success');
+      this.loadClients();
+
+      bootstrap.Modal
+        .getInstance(document.getElementById('clientDeleteModal')!)
+        ?.hide();
+    });
+  }
+
+  onBrochureEnChange(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const maxSize = 15 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      this.showToast('English brochure must be less than 15MB', 'danger');
+      event.target.value = '';
+      return;
+    }
+
+    if (file.type !== 'application/pdf') {
+      this.showToast('Only PDF allowed (English)', 'danger');
+      event.target.value = '';
+      return;
+    }
+
+    this.selectedBrochureEn = file;
+    this.brochureEnPreview = URL.createObjectURL(file);
+  }
+  onBrochureArChange(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const maxSize = 15 * 1024 * 1024;
+
+    if (file.size > maxSize) {
+      this.showToast('Arabic brochure must be less than 15MB', 'danger');
+      event.target.value = '';
+      return;
+    }
+
+    if (file.type !== 'application/pdf') {
+      this.showToast('Only PDF allowed (Arabic)', 'danger');
+      event.target.value = '';
+      return;
+    }
+
+    this.selectedBrochureAr = file;
+    this.brochureArPreview = URL.createObjectURL(file);
+  }
+
+  private validateImage(file: File): boolean {
+    const maxSize = 2 * 1024 * 1024; // 2MB
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+    if (!allowedTypes.includes(file.type)) {
+      this.showToast('Only JPG, PNG, or WEBP images allowed', 'danger');
+      return false;
+    }
+
+    if (file.size > maxSize) {
+      this.showToast('Image must be less than 2MB', 'danger');
+      return false;
+    }
+
+    return true;
+  }
 }

@@ -22,7 +22,7 @@
 
                         <!-- BUTTON -->
                         <div class="btn-area wow fadeInUp" data-wow-delay=".8s">
-                            <a class="tj-primary-btn" [routerLink]="[slide.button_link || '/products']">
+                            <a class="tj-primary-btn" [routerLink]="[slide.button_link || '/fmcg-services']">
 
                                 <span class="btn-text">
                                     <span>
@@ -186,7 +186,27 @@
                         </div>
 
                     </div>
+                    <!-- ================= DOWNLOAD BROCHURE ================= -->
+                    <div class="about-btn-area-2 wow fadeInUp mt-4" data-wow-delay=".7s">
 
+                        <a class="tj-primary-btn"
+                            *ngIf="(isArabic && about.brochure_ar) || (!isArabic && about.brochure_en)"
+                            [href]="getImage(isArabic ? about.brochure_ar : about.brochure_en)" target="_blank"
+                            download>
+
+                            <span class="btn-text">
+                                <span>
+                                    {{ isArabic ? 'تحميل البروشور' : 'Download Brochure' }}
+                                </span>
+                            </span>
+
+                            <span class="btn-icon">
+                                <i class="tji-arrow-right-long"></i>
+                            </span>
+
+                        </a>
+
+                    </div>
                 </div>
             </div>
 

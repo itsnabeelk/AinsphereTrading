@@ -1,21 +1,19 @@
 <app-header-general></app-header-general>
 
-<!-- start: Breadcrumb Section -->
 <section class="tj-page-header section-gap-x" data-bg-image="../images/bg/pheader-bg.webp">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="tj-page-header-content text-center">
-                    <h1 class="tj-page-title">Contact Us</h1>
+                    <h1 class="tj-page-title">{{ t('Contact Us', 'اتصل بنا') }}</h1>
+
                     <div class="tj-page-link">
                         <span><i class="tji-home"></i></span>
                         <span>
-                            <a href="index.html">Home</a>
+                            <a [routerLink]="['/']">{{ t('Home', 'الرئيسية') }}</a>
                         </span>
                         <span><i class="tji-arrow-right"></i></span>
-                        <span>
-                            <span>Contact Us</span>
-                        </span>
+                        <span><span>{{ t('Contact Us', 'اتصل بنا') }}</span></span>
                     </div>
                 </div>
             </div>
@@ -23,133 +21,237 @@
     </div>
     <div class="page-header-overlay" data-bg-image="../images/shape/pheader-overlay.webp"></div>
 </section>
-<!-- end: Breadcrumb Section -->
 
-<!-- start: Contact Top Section -->
 <div class="tj-contact-area section-gap">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="sec-heading text-center">
-                    <span class="sub-title wow fadeInUp" data-wow-delay=".1s"><i class="tji-box"></i>Contact info</span>
-                    <h2 class="sec-title title-anim"><span>Reach</span> Out to Us</h2>
+                    <span class="sub-title wow fadeInUp" data-wow-delay=".1s">
+                        <i class="tji-box"></i>{{ t('Contact info', 'معلومات التواصل') }}
+                    </span>
+                    <h2 class="sec-title title-anim">
+                        <span>{{ t('Reach', 'تواصل') }}</span> {{ t('Out to Us', 'معنا') }}
+                    </h2>
                 </div>
             </div>
         </div>
+
         <div class="row row-gap-4">
+            <!-- Location -->
             <div class="col-xl-3 col-lg-6 col-sm-6">
                 <div class="contact-item style-2 wow fadeInUp" data-wow-delay=".3s">
-                    <div class="contact-icon">
-                        <i class="tji-location-3"></i>
-                    </div>
-                    <h3 class="contact-title">Our Location</h3>
-                    <p>993 Renner Burg, West Rond, MT 94251-030</p>
+                    <div class="contact-icon"><i class="tji-location-3"></i></div>
+                    <h3 class="contact-title">{{ t('Our Location', 'موقعنا') }}</h3>
+                    <p>{{ isArabic ? contactInfo.location_ar : contactInfo.location_en }}</p>
                 </div>
             </div>
+
+            <!-- Emails -->
             <div class="col-xl-3 col-lg-6 col-sm-6">
                 <div class="contact-item style-2 wow fadeInUp" data-wow-delay=".5s">
-                    <div class="contact-icon">
-                        <i class="tji-envelop"></i>
-                    </div>
-                    <h3 class="contact-title">Email us</h3>
+                    <div class="contact-icon"><i class="tji-envelop"></i></div>
+                    <h3 class="contact-title">{{ t('Email us', 'راسلنا') }}</h3>
                     <ul class="contact-list">
-                        <li><a href="mailto:support@bexon.com">support@bexon.com</a></li>
-                        <li><a href="mailto:info@bexon.com">info@bexon.com</a></li>
+                        <li *ngFor="let em of contactInfo.emails">
+                            <a [href]="'mailto:' + em">{{ em }}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
+
+            <!-- Phones -->
             <div class="col-xl-3 col-lg-6 col-sm-6">
                 <div class="contact-item style-2 wow fadeInUp" data-wow-delay=".7s">
-                    <div class="contact-icon">
-                        <i class="tji-phone"></i>
-                    </div>
-                    <h3 class="contact-title">Call us</h3>
+                    <div class="contact-icon"><i class="tji-phone"></i></div>
+                    <h3 class="contact-title">{{ t('Call us', 'اتصل بنا') }}</h3>
                     <ul class="contact-list">
-                        <li><a href="tel:10095447818">+1 (009) 544-7818</a></li>
-                        <li><a href="tel:10098801810">+1 (009) 880-1810</a></li>
+                        <li *ngFor="let p of contactInfo.phones">
+                            <a [href]="'tel:' + p.replace(/[^0-9+]/g,'')">{{ p }}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
+
+            <!-- Live chat -->
             <div class="col-xl-3 col-lg-6 col-sm-6">
                 <div class="contact-item style-2 wow fadeInUp" data-wow-delay=".9s">
-                    <div class="contact-icon">
-                        <i class="tji-chat"></i>
-                    </div>
-                    <h3 class="contact-title">Live chat</h3>
+                    <div class="contact-icon"><i class="tji-chat"></i></div>
+                    <h3 class="contact-title">{{ t('Live chat', 'الدردشة') }}</h3>
                     <ul class="contact-list">
-                        <li><a href="mailto:livechat@bexon.com">livechat@bexon.com</a></li>
-                        <li class="active"><a href="contact.html">Need help?</a></li>
+                        <li><a [href]="'mailto:' + contactInfo.livechatEmail">{{ contactInfo.livechatEmail }}</a></li>
+                        <li class="active">
+                            <a [routerLink]="['/contact-us']">{{ t('Need help?', 'تحتاج مساعدة؟') }}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
-<!-- end: Contact Top Section -->
 
-<!-- start: Contact Section -->
 <section class="tj-contact-section-2 section-bottom-gap">
     <div class="container">
         <div class="row">
+
             <div class="col-lg-6">
                 <div class="contact-form wow fadeInUp" data-wow-delay=".1s">
-                    <h3 class="title">Feel Free to Get in Touch or Visit our Location.</h3>
-                    <form id="contact-form">
+                    <h3 class="title">
+                        {{ t('Feel Free to Get in Touch or Visit our Location.', 'يسعدنا تواصلكم معنا أو زيارتنا في
+                        موقعنا.') }}
+                    </h3>
+
+                    <!-- alerts -->
+                    <div *ngIf="sent" class="alert alert-success">
+                        {{ t('Your message has been sent successfully.', 'تم إرسال رسالتك بنجاح.') }}
+                    </div>
+
+                    <div *ngIf="errorMsg" class="alert alert-danger">
+                        {{ errorMsg }}
+                    </div>
+
+                    <form id="contact-form" #f="ngForm" (ngSubmit)="submit(f)" novalidate>
                         <div class="row">
+
+                            <!-- Name -->
                             <div class="col-sm-6">
                                 <div class="form-input">
-                                    <input type="text" name="conName" placeholder="Full Name*" required>
+                                    <input type="text" name="conName" [(ngModel)]="form.name" #conName="ngModel"
+                                        [placeholder]="t('Full Name*', 'الاسم الكامل*')" required
+                                        (input)="clearFieldError('name')" />
+                                    <small class="text-danger"
+                                        *ngIf="(conName.touched || submitted) && conName.invalid">
+                                        {{ t('Full name is required.', 'الاسم مطلوب.') }}
+                                    </small>
+                                    <small class="text-danger" *ngIf="fieldErrors.name">
+                                        {{ fieldErrors.name }}
+                                    </small>
                                 </div>
                             </div>
+
+                            <!-- Email -->
                             <div class="col-sm-6">
                                 <div class="form-input">
-                                    <input type="email" name="conEmail" placeholder="Email Address*" required>
+                                    <input type="email" name="conEmail" [(ngModel)]="form.email" #conEmail="ngModel"
+                                        [placeholder]="t('Email Address*', 'البريد الإلكتروني*')" required email
+                                        (input)="clearFieldError('email')" />
+                                    <small class="text-danger"
+                                        *ngIf="(conEmail.touched || submitted) && conEmail.invalid">
+                                        <span *ngIf="conEmail.errors?.['required']">
+                                            {{ t('Email is required.', 'البريد الإلكتروني مطلوب.') }}
+                                        </span>
+                                        <span *ngIf="conEmail.errors?.['email']">
+                                            {{ t('Please enter a valid email.', 'يرجى إدخال بريد إلكتروني صحيح.') }}
+                                        </span>
+                                    </small>
+                                    <small class="text-danger" *ngIf="fieldErrors.email">
+                                        {{ fieldErrors.email }}
+                                    </small>
                                 </div>
                             </div>
+
+                            <!-- Phone -->
                             <div class="col-sm-6">
                                 <div class="form-input">
-                                    <input type="tel" name="conPhone" placeholder="Phone number*" required>
+                                    <input type="tel" name="conPhone" [(ngModel)]="form.phone" #conPhone="ngModel"
+                                        [placeholder]="t('Phone number*', 'رقم الهاتف*')" required
+                                        (input)="clearFieldError('phone')" />
+                                    <small class="text-danger"
+                                        *ngIf="(conPhone.touched || submitted) && conPhone.invalid">
+                                        {{ t('Phone number is required.', 'رقم الهاتف مطلوب.') }}
+                                    </small>
+                                    <small class="text-danger" *ngIf="fieldErrors.phone">
+                                        {{ fieldErrors.phone }}
+                                    </small>
                                 </div>
                             </div>
+
+                            <!-- Subject -->
                             <div class="col-sm-6">
                                 <div class="form-input">
                                     <div class="tj-nice-select-box">
                                         <div class="tj-select">
-                                            <select name="conSubject">
-                                                <option value="">Chose a option</option>
-                                                <option value="General Trading">General Trading</option>
-                                                <option value="FMCG Trading">FMCG Trading</option>
-                                                <option value="MEP Trading">MEP Trading</option>
-                                                <option value="Uniforms">Uniforms</option>
+                                            <select class="no-nice" name="conSubject" [(ngModel)]="form.subject"
+                                                #conSubject="ngModel" required>
+                                                <option value="">{{ t('Choose an option', 'اختر خياراً') }}</option>
+                                                <option value="General Trading">{{ t('General Trading', 'التجارة
+                                                    العامة') }}</option>
+                                                <option value="FMCG Trading">{{ t('FMCG Trading', 'تجارة السلع
+                                                    الاستهلاكية') }}</option>
+                                                <option value="MEP Trading">{{ t('MEP Trading', 'تجارة MEP') }}</option>
+                                                <option value="Uniforms">{{ t('Uniforms', 'الزي الموحد') }}</option>
                                             </select>
                                         </div>
                                     </div>
+
+                                    <small class="text-danger"
+                                        *ngIf="(conSubject.touched || submitted) && conSubject.invalid">
+                                        {{ t('Please select a subject.', 'يرجى اختيار الموضوع.') }}
+                                    </small>
+
+                                    <small class="text-danger" *ngIf="fieldErrors.subject">
+                                        {{ fieldErrors.subject }}
+                                    </small>
                                 </div>
                             </div>
+
+                            <!-- Message -->
                             <div class="col-sm-12">
                                 <div class="form-input message-input">
-                                    <textarea name="conMessage" id="message" placeholder="Type message*"
-                                        required></textarea>
+                                    <textarea name="conMessage" id="message" [(ngModel)]="form.message"
+                                        #conMessage="ngModel" [placeholder]="t('Type message*', 'اكتب رسالتك*')"
+                                        required minlength="3" maxlength="4000"
+                                        (input)="clearFieldError('message')"></textarea>
+
+                                    <small class="text-danger"
+                                        *ngIf="(conMessage.touched || submitted) && conMessage.invalid">
+                                        <span *ngIf="conMessage.errors?.['required']">
+                                            {{ t('Message is required.', 'الرسالة مطلوبة.') }}
+                                        </span>
+                                        <span *ngIf="conMessage.errors?.['minlength']">
+                                            {{ t('Message is too short.', 'الرسالة قصيرة جداً.') }}
+                                        </span>
+                                        <span *ngIf="conMessage.errors?.['maxlength']">
+                                            {{ t('Message is too long (max 4000).', 'الرسالة طويلة جداً (الحد 4000).')
+                                            }}
+                                        </span>
+                                    </small>
+
+                                    <small class="text-danger" *ngIf="fieldErrors.message">
+                                        {{ fieldErrors.message }}
+                                    </small>
                                 </div>
                             </div>
+
                             <div class="submit-btn">
-                                <button class="tj-primary-btn" type="submit">
-                                    <span class="btn-text"><span>Submit Now</span></span>
+                                <button class="tj-primary-btn" type="submit" [disabled]="sending">
+                                    <span class="btn-text">
+                                        <span>{{ sending ? t('Sending...', 'جاري الإرسال...') : t('Submit Now', 'إرسال')
+                                            }}</span>
+                                    </span>
                                     <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
                                 </button>
                             </div>
+
                         </div>
                     </form>
+
                 </div>
             </div>
+
             <div class="col-lg-6">
                 <div class="map-area wow fadeInUp" data-wow-delay=".3s">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d316440.5712687838!2d-74.01091796224334!3d40.67186885683901!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1745918398047!5m2!1sen!2sbd"></iframe>
+                    <a [href]="contactInfo.mapEmbedUrl" target="_blank"
+                        style="display:block; width:100%; height:100%; position:relative;">
+                        <iframe src="https://www.google.com/maps?q=Saudi+Arabia&output=embed"
+                            style="width:100%; height:100%; border:0; pointer-events:none;"></iframe>
+                    </a>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
-<!-- end: Contact Section -->
+
 <app-general-footer></app-general-footer>

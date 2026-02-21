@@ -37,9 +37,27 @@ export class MepDashboardHome implements OnInit {
 
   /* ================= HERO ================= */
 
-  hero: any = {};
+
+  MAX_FILE_SIZE = 2 * 1024 * 1024;
+  ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+
+  heroSlides: any[] = [];
+
+  heroForm: any = {
+    id: null,
+    title_en: '',
+    title_ar: '',
+    description_en: '',
+    description_ar: '',
+    sort_order: 0,
+    is_active: 1
+  };
+
   heroPreview: string | null = null;
   selectedHeroFile: File | null = null;
+  isHeroEditing = false;
+  deleteType: 'hero' | null = null;
+  deleteId: number | null = null;
 
   /* ================= ABOUT ================= */
 
@@ -95,7 +113,10 @@ export class MepDashboardHome implements OnInit {
   servicePreview: string | null = null;
   isServiceEditing = false;
   deleteServiceId: number | null = null;
-
+  selectedBrochureEn: File | null = null;
+  selectedBrochureAr: File | null = null;
+  brochureEnPreview: string | null = null;
+  brochureArPreview: string | null = null;
 
   constructor(
     private api: MepHomeService,
@@ -129,32 +150,53 @@ export class MepDashboardHome implements OnInit {
   /* ===================================================== */
 
   loadHero() {
-    this.api.getHeroAdmin().subscribe(res => {
-      this.hero = res || {};
-      this.heroPreview = res?.image ? this.getImage(res.image) : null;
-      this.loading = false;
+    this.api.getHeroAdmin().subscribe({
+      next: (res: any) => {
+        this.heroSlides = res || [];
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+        this.showToast('Failed to load hero slides', 'danger');
+      }
     });
   }
 
-  saveHero() {
 
+  private validateImage(file: File, maxSize = this.MAX_FILE_SIZE): boolean {
+    if (!this.ALLOWED_TYPES.includes(file.type)) {
+      this.showToast('Only JPG, PNG or WEBP allowed', 'danger');
+      return false;
+    }
+
+    if (file.size > maxSize) {
+      this.showToast(`Image must be less than ${Math.round(maxSize / 1024 / 1024)}MB`, 'danger');
+      return false;
+    }
+
+    return true;
+  }
+
+  saveHero() {
     const formData = new FormData();
 
-    Object.keys(this.hero).forEach(key => {
-      formData.append(key, this.hero[key] ?? '');
+    Object.keys(this.heroForm).forEach(key => {
+      formData.append(key, this.heroForm[key] ?? '');
     });
 
-    if (this.selectedHeroFile)
+    if (this.selectedHeroFile) {
       formData.append('image', this.selectedHeroFile);
+    }
 
     this.api.saveHero(formData).subscribe({
       next: (res: any) => {
-        this.showToast(res?.message || 'Hero saved successfully', 'success');
+        this.showToast(res?.message || 'Hero slide saved successfully', 'success');
         this.loadHero();
+        bootstrap.Modal.getInstance(document.getElementById('heroModal')!)?.hide();
+        this.resetHeroForm();
       },
       error: (err: any) => {
-
-        this.showToast(err?.error?.message || 'Failed to save hero', 'danger');
+        this.showToast(err?.error?.message || 'Failed to save hero slide', 'danger');
       }
     });
   }
@@ -166,7 +208,16 @@ export class MepDashboardHome implements OnInit {
   loadAbout() {
     this.api.getAboutAdmin().subscribe(res => {
       this.about = res || {};
-      this.aboutPreview = res?.image ? this.getImage(res.image) : null;
+      this.aboutPreview = res?.image
+        ? this.getImage(res.image)
+        : null;
+      this.brochureEnPreview = res?.brochure_en
+        ? this.api.getFile(res.brochure_en)
+        : null;
+
+      this.brochureArPreview = res?.brochure_ar
+        ? this.api.getFile(res.brochure_ar)
+        : null;
     });
   }
 
@@ -180,6 +231,12 @@ export class MepDashboardHome implements OnInit {
 
     if (this.selectedAboutFile)
       formData.append('image', this.selectedAboutFile);
+
+    if (this.selectedBrochureEn)
+      formData.append('brochure_en', this.selectedBrochureEn);
+
+    if (this.selectedBrochureAr)
+      formData.append('brochure_ar', this.selectedBrochureAr);
 
     this.api.saveAbout(formData).subscribe({
       next: (res: any) => {
@@ -342,22 +399,11 @@ export class MepDashboardHome implements OnInit {
   }
 
 
-  onHeroFileChange(event: any) {
-
+  onHeroImageChange(event: any) {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    const maxSize = 2 * 1024 * 1024; // 2MB
-
-    if (!allowedTypes.includes(file.type)) {
-      this.showToast('Only JPG, PNG or WEBP allowed', 'danger');
-      event.target.value = '';
-      return;
-    }
-
-    if (file.size > maxSize) {
-      this.showToast('Image must be less than 2MB', 'danger');
+    if (!this.validateImage(file)) {
       event.target.value = '';
       return;
     }
@@ -365,12 +411,9 @@ export class MepDashboardHome implements OnInit {
     this.selectedHeroFile = file;
 
     const reader = new FileReader();
-    reader.onload = () => {
-      this.heroPreview = reader.result as string;
-    };
+    reader.onload = () => this.heroPreview = reader.result as string;
     reader.readAsDataURL(file);
   }
-
 
   onAboutFileChange(event: any) {
 
@@ -566,6 +609,124 @@ export class MepDashboardHome implements OnInit {
         }
       });
   }
+  onBrochureEnChange(event: any) {
 
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const maxSize = 15 * 1024 * 1024;
+
+    if (file.type !== 'application/pdf') {
+      this.showToast('Only PDF allowed (English)', 'danger');
+      event.target.value = '';
+      return;
+    }
+
+    if (file.size > maxSize) {
+      this.showToast('English brochure must be less than 15MB', 'danger');
+      event.target.value = '';
+      return;
+    }
+
+    this.selectedBrochureEn = file;
+    this.brochureEnPreview = URL.createObjectURL(file);
+  }
+
+
+  onBrochureArChange(event: any) {
+
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const maxSize = 15 * 1024 * 1024;
+
+    if (file.type !== 'application/pdf') {
+      this.showToast('Only PDF allowed (Arabic)', 'danger');
+      event.target.value = '';
+      return;
+    }
+
+    if (file.size > maxSize) {
+      this.showToast('Arabic brochure must be less than 15MB', 'danger');
+      event.target.value = '';
+      return;
+    }
+
+    this.selectedBrochureAr = file;
+    this.brochureArPreview = URL.createObjectURL(file);
+  }
+
+  getFile(path: string | null) {
+    return this.api.getFile(path);
+  }
+
+
+  openHeroModal() {
+    this.resetHeroForm();
+    new bootstrap.Modal(document.getElementById('heroModal')).show();
+  }
+
+  editHero(slide: any) {
+    this.isHeroEditing = true;
+    this.heroForm = { ...slide };
+    this.heroPreview = slide?.image ? this.getImage(slide.image) : null;
+    this.selectedHeroFile = null;
+    new bootstrap.Modal(document.getElementById('heroModal')).show();
+  }
+
+  resetHeroForm() {
+    this.isHeroEditing = false;
+    this.heroForm = {
+      id: null,
+      title_en: '',
+      title_ar: '',
+      description_en: '',
+      description_ar: '',
+      sort_order: 0,
+      is_active: 1
+    };
+    this.heroPreview = null;
+    this.selectedHeroFile = null;
+  }
+
+  openDeleteModal(type: 'hero', id: number) {
+    this.deleteType = type;
+    this.deleteId = id;
+    new bootstrap.Modal(document.getElementById('deleteModal')).show();
+  }
+
+  confirmDelete() {
+    if (!this.deleteType || !this.deleteId) return;
+
+    if (this.deleteType === 'hero') {
+      this.api.deleteHero(this.deleteId).subscribe({
+        next: () => {
+          this.showToast('Hero slide deleted successfully', 'success');
+          this.loadHero();
+          bootstrap.Modal.getInstance(document.getElementById('deleteModal')!)?.hide();
+        },
+        error: (err: any) => {
+          this.showToast(err?.error?.message || 'Delete failed', 'danger');
+        }
+      });
+    }
+  }
+
+
+  toggleHeroStatus(slide: any) {
+
+    const newStatus = slide.is_active ? 0 : 1;
+
+    this.api.toggleHeroStatus(slide.id, newStatus)
+      .subscribe({
+        next: () => {
+          slide.is_active = newStatus;
+          this.showToast('Hero status updated', 'success');
+        },
+        error: (err: any) => {
+          this.showToast(err?.error?.message || 'Failed to update status', 'danger');
+        }
+      });
+  }
 
 }

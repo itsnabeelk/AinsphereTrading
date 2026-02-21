@@ -1,100 +1,100 @@
+<!-- ================= PAGE HEADER ================= -->
 <section class="tj-page-header section-gap-x" data-bg-image="../images/bg/pheader-bg.webp">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="tj-page-header-content text-center">
-                    <h1 class="tj-page-title">Uniform Services</h1>
+
+                    <h1 class="tj-page-title">
+                        {{ isArabic ? 'خدمات الزي الموحد' : 'Uniform Services' }}
+                    </h1>
+
                     <div class="tj-page-link">
                         <span><i class="tji-home"></i></span>
+
                         <span>
-                            <a [routerLink]="['/uniform-home']">Home</a>
+                            <a [routerLink]="['/uniform-home']">
+                                {{ isArabic ? 'الرئيسية' : 'Home' }}
+                            </a>
                         </span>
+
                         <span><i class="tji-arrow-right"></i></span>
+
                         <span>
-                            <span>Services</span>
+                            {{ isArabic ? 'الخدمات' : 'Services' }}
                         </span>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+
     <div class="page-header-overlay" data-bg-image="../images/shape/pheader-overlay.webp"></div>
 </section>
 
 
+<!-- ================= SERVICES ================= -->
 <section class="tj-service-section service-4 section-gap">
     <div class="container">
+
         <div class="row row-gap-4">
 
-            <div class="col-lg-4 col-md-6">
-                <div class="service-item style-4 wow fadeInUp" data-wow-delay=".1s">
-                    <div class="service-bg">
-                        <img src="images/service/1.jpg" alt="Service background">
-                    </div>
-                    <div class="service-content">
-                        <h4 class="title">
-                            <a [routerLink]="['/uniform-service-details']">
-                                Lighting Fixtures
-                            </a>
-                        </h4>
-                        <p class="desc">
-                            Customer Experience Solutions are designed to enhance every touchpoint of your
-                            customer journey, from first interaction.
-                        </p>
-                        <a class="text-btn" [routerLink]="['/uniform-service-details']">
-                            <span class="btn-text"><span>Learn More</span></span>
-                            <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
-                        </a>
-                    </div>
-                </div>
+            <!-- LOADING -->
+            <div *ngIf="loading" class="col-12 text-center">
+                <p>{{ isArabic ? 'جاري التحميل...' : 'Loading services...' }}</p>
             </div>
 
-            <div class="col-lg-4 col-md-6">
-                <div class="service-item style-4 wow fadeInUp" data-wow-delay=".1s">
-                    <div class="service-bg">
-                        <img src="images/service/3.jpg" alt="Service background">
-                    </div>
-                    <div class="service-content">
-                        <h4 class="title">
-                            <a [routerLink]="['/uniform-service-details']">
-                                Landscaping
-                            </a>
-                        </h4>
-                        <p class="desc">
-                            Customer Experience Solutions are designed to enhance every touchpoint of your
-                            customer journey, from first interaction.
-                        </p>
-                        <a class="text-btn" [routerLink]="['/uniform-service-details']">
-                            <span class="btn-text"><span>Learn More</span></span>
-                            <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
-                        </a>
-                    </div>
-                </div>
+            <!-- EMPTY -->
+            <div *ngIf="!loading && services.length === 0" class="col-12 text-center">
+                <p>{{ isArabic ? 'لا توجد خدمات' : 'No services available' }}</p>
             </div>
 
-            <div class="col-lg-4 col-md-6">
-                <div class="service-item style-4 wow fadeInUp" data-wow-delay=".1s">
-                    <div class="service-bg">
-                        <img src="images/service/2.jpg" alt="Service background">
-                    </div>
-                    <div class="service-content">
-                        <h4 class="title">
-                            <a [routerLink]="['/uniform-service-details']">
-                                Safety Equipments
+            <!-- SERVICES -->
+            <div class="col-lg-4 col-md-6" *ngFor="let item of services; let i = index">
 
+                <div class="service-item style-4 wow fadeInUp" [attr.data-wow-delay]="(i * 0.15 + 0.1) + 's'">
+
+                    <!-- IMAGE -->
+                    <div class="service-bg">
+                        <img [src]="getImage(item.image)" [alt]="isArabic ? item.title_ar : item.title_en">
+                    </div>
+
+                    <!-- CONTENT -->
+                    <div class="service-content">
+
+                        <!-- TITLE -->
+                        <h4 class="title">
+                            <a [routerLink]="['/uniform-services', item.slug]">
+                                {{ isArabic ? item.title_ar : item.title_en }}
                             </a>
                         </h4>
+
+                        <!-- DESCRIPTION -->
                         <p class="desc">
-                            Customer Experience Solutions are designed to enhance every touchpoint of your
-                            customer journey, from first interaction.
+                            {{ isArabic ? item.description_ar : item.description_en }}
                         </p>
-                        <a class="text-btn" [routerLink]="['/uniform-service-details']">
-                            <span class="btn-text"><span>Learn More</span></span>
-                            <span class="btn-icon"><i class="tji-arrow-right-long"></i></span>
+
+                        <!-- BUTTON -->
+                        <a class="text-btn" [routerLink]="['/uniform-services', item.slug]">
+
+                            <span class="btn-text">
+                                <span>
+                                    {{ isArabic ? 'اعرف المزيد' : 'Learn More' }}
+                                </span>
+                            </span>
+
+                            <span class="btn-icon">
+                                <i class="tji-arrow-right-long"></i>
+                            </span>
                         </a>
+
                     </div>
+
                 </div>
+
             </div>
+
         </div>
     </div>
 </section>

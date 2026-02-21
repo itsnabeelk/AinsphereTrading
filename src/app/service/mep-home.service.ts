@@ -23,8 +23,9 @@ export interface MepAbout {
     description_en: string;
     description_ar: string;
     image: string;
+    brochure_en?: string;
+    brochure_ar?: string;
 }
-
 export interface MepWorking {
     id?: number;
     step_number: number;
@@ -54,15 +55,18 @@ export class MepHomeService {
     /* ================= HERO ================= */
 
     getHeroPublic() {
-        return this.http.get<MepHero>(`${this.baseUrl}/hero/public`);
+        return this.http.get<MepHero[]>(`${this.baseUrl}/hero/public`);
     }
 
     getHeroAdmin() {
-        return this.http.get<MepHero>(`${this.baseUrl}/hero/admin`);
+        return this.http.get<MepHero[]>(`${this.baseUrl}/hero/admin`);
     }
 
     saveHero(formData: FormData) {
         return this.http.post(`${this.baseUrl}/hero/save`, formData);
+    }
+    deleteHero(id: number) {
+        return this.http.delete(`${this.baseUrl}/hero/${id}`);
     }
 
     /* ================= ABOUT ================= */
@@ -123,11 +127,21 @@ export class MepHomeService {
         return this.http.delete(`${this.baseUrl}/clients/${id}`);
     }
 
-    /* ================= IMAGE ================= */
 
     getImage(path: string | null): string {
         if (!path) return '';
         if (path.startsWith('http')) return path;
         return `${API_BASE_URL}${path}`;
+    }
+
+    getFile(path: string | null): string {
+        if (!path) return '';
+        if (path.startsWith('http')) return path;
+        return `${API_BASE_URL}${path}`;
+    }
+
+
+    toggleHeroStatus(id: number, status: number) {
+        return this.http.put(`${this.baseUrl}/hero/status/${id}`, { is_active: status });
     }
 }

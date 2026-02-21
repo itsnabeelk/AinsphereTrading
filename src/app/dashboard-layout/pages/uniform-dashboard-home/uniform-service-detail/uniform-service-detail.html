@@ -1,8 +1,8 @@
 <!-- ================= TOAST ================= -->
 <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index:1100;">
-    <div id="mepToast" class="toast align-items-center text-white border-0" role="alert">
+    <div id="uniformToast" class="toast align-items-center text-white border-0">
         <div class="d-flex">
-            <div class="toast-body" id="mepToastBody"></div>
+            <div class="toast-body" id="uniformToastBody"></div>
             <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
     </div>
@@ -10,16 +10,16 @@
 
 <div class="container-fluid py-4" *ngIf="!loading">
 
-    <!-- HEADER -->
+    <!-- ================= HEADER ================= -->
     <div class="d-flex justify-content-between mb-3">
-        <h4>MEP Service Detail Management</h4>
+        <h4>Uniform Service Detail Management</h4>
         <button class="btn btn-secondary btn-sm" (click)="goBack()">
             ← Back
         </button>
     </div>
 
     <!-- ===================================================== -->
-    <!-- ================= MAIN DETAIL ======================= -->
+    <!-- ================= MAIN DETAIL ======================== -->
     <!-- ===================================================== -->
 
     <div class="card shadow-sm mb-4">
@@ -60,11 +60,6 @@
                 <img [src]="heroPreview" class="img-fluid rounded shadow-sm" style="max-height:150px;">
             </div>
 
-            <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" [(ngModel)]="detailForm.is_active">
-                <label class="form-check-label">Active</label>
-            </div>
-
             <button class="btn btn-primary" (click)="saveDetail()">
                 Save Detail
             </button>
@@ -73,7 +68,7 @@
     </div>
 
     <!-- ===================================================== -->
-    <!-- ================= SECTIONS ========================== -->
+    <!-- ================= SECTIONS =========================== -->
     <!-- ===================================================== -->
 
     <div class="card shadow-sm mb-4">
@@ -84,6 +79,7 @@
             </div>
 
             <div class="row mb-3">
+
                 <div class="col-md-6">
                     <input class="form-control mb-2" [(ngModel)]="sectionForm.heading_en" placeholder="Heading EN">
 
@@ -98,6 +94,7 @@
                     <textarea class="form-control" rows="2" dir="rtl" [(ngModel)]="sectionForm.paragraph_ar"
                         placeholder="Paragraph AR"></textarea>
                 </div>
+
             </div>
 
             <button class="btn btn-success btn-sm mb-3" (click)="saveSection()">
@@ -113,6 +110,7 @@
                         <th width="120">Actions</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     <tr *ngFor="let s of sections; let i = index">
                         <td>{{ i + 1 }}</td>
@@ -122,11 +120,13 @@
                             <button class="btn btn-sm btn-outline-primary me-1" (click)="editSection(s)">
                                 Edit
                             </button>
+
                             <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(s.id, 'section')">
                                 Delete
                             </button>
                         </td>
                     </tr>
+
                     <tr *ngIf="sections.length === 0">
                         <td colspan="4" class="text-center text-muted">
                             No sections added yet.
@@ -148,6 +148,7 @@
             <h5>Accordion Points</h5>
 
             <div class="row mb-3">
+
                 <div class="col-md-6">
                     <input class="form-control mb-2" [(ngModel)]="pointForm.small_heading_en"
                         placeholder="Small Heading EN">
@@ -163,6 +164,7 @@
                     <textarea class="form-control" rows="4" dir="rtl" [(ngModel)]="pointForm.points_ar"
                         placeholder="Points AR (one per line)"></textarea>
                 </div>
+
             </div>
 
             <button class="btn btn-success btn-sm mb-3" (click)="savePoint()">
@@ -173,29 +175,32 @@
                 <thead class="table-light">
                     <tr>
                         <th>#</th>
-                        <th>Small Heading EN</th>
-                        <th>Small Heading AR</th>
+                        <th>Heading EN</th>
+                        <th>Heading AR</th>
                         <th width="120">Actions</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     <tr *ngFor="let p of points; let i = index">
                         <td>{{ i + 1 }}</td>
                         <td>{{ p.small_heading_en }}</td>
                         <td dir="rtl">{{ p.small_heading_ar }}</td>
+
                         <td>
                             <button class="btn btn-sm btn-outline-primary me-1" (click)="editPoint(p)">
                                 Edit
                             </button>
+
                             <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(p.id, 'point')">
                                 Delete
                             </button>
-
                         </td>
                     </tr>
+
                     <tr *ngIf="points.length === 0">
                         <td colspan="4" class="text-center text-muted">
-                            No point groups added yet.
+                            No points added yet.
                         </td>
                     </tr>
                 </tbody>
@@ -227,23 +232,28 @@
                         <th width="150">Actions</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     <tr *ngFor="let p of products; let i = index">
                         <td>{{ i + 1 }}</td>
+
                         <td>
                             <img [src]="getImage(p.image)" style="height:40px;object-fit:contain;">
                         </td>
+
                         <td>{{ p.title_en }}</td>
+
                         <td>
                             <button class="btn btn-sm btn-outline-primary me-1" (click)="editProduct(p)">
                                 Edit
                             </button>
+
                             <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(p.id, 'product')">
                                 Delete
                             </button>
-
                         </td>
                     </tr>
+
                     <tr *ngIf="products.length === 0">
                         <td colspan="4" class="text-center text-muted">
                             No products added yet.
@@ -257,61 +267,67 @@
 
 </div>
 
+
 <!-- ================= PRODUCT MODAL ================= -->
 <div class="modal fade" id="productModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
+            <!-- HEADER -->
             <div class="modal-header">
                 <h5 class="modal-title">
                     {{ isProductEditing ? 'Edit Product' : 'Add Product' }}
                 </h5>
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
+            <!-- BODY -->
             <div class="modal-body">
 
-                <div class="row g-3">
+                <div class="row">
 
+                    <!-- EN -->
                     <div class="col-md-6">
-                        <label>Title EN</label>
-                        <input class="form-control" [(ngModel)]="productForm.title_en">
+                        <label>Title (EN)</label>
+                        <input class="form-control mb-2" [(ngModel)]="productForm.title_en">
+
+                        <label>Description (EN)</label>
+                        <textarea class="form-control" rows="3" [(ngModel)]="productForm.description_en"></textarea>
                     </div>
 
+                    <!-- AR -->
                     <div class="col-md-6">
-                        <label>Title AR</label>
-                        <input class="form-control" dir="rtl" [(ngModel)]="productForm.title_ar">
-                    </div>
+                        <label>Title (AR)</label>
+                        <input class="form-control mb-2" dir="rtl" [(ngModel)]="productForm.title_ar">
 
-                    <div class="col-md-6">
-                        <label>Description EN</label>
-                        <textarea class="form-control" [(ngModel)]="productForm.description_en"></textarea>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label>Description AR</label>
-                        <textarea class="form-control" dir="rtl" [(ngModel)]="productForm.description_ar"></textarea>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label>Image</label>
-                        <input type="file" class="form-control" (change)="onProductImageChange($event)">
+                        <label>Description (AR)</label>
+                        <textarea class="form-control" rows="3" dir="rtl"
+                            [(ngModel)]="productForm.description_ar"></textarea>
                     </div>
 
                 </div>
 
-                <div *ngIf="productPreview" class="text-center mt-3">
-                    <img [src]="productPreview" style="max-height:120px;">
+                <!-- IMAGE -->
+                <div class="mt-3">
+                    <label>Product Image</label>
+                    <input type="file" class="form-control" (change)="onProductImageChange($event)">
+                </div>
+
+                <!-- PREVIEW -->
+                <div *ngIf="productPreview" class="mt-3">
+                    <img [src]="productPreview" class="img-fluid rounded shadow-sm" style="max-height:150px;">
                 </div>
 
             </div>
 
+            <!-- FOOTER -->
             <div class="modal-footer">
                 <button class="btn btn-secondary" data-bs-dismiss="modal">
                     Cancel
                 </button>
+
                 <button class="btn btn-primary" (click)="saveProduct()">
-                    Save
+                    {{ isProductEditing ? 'Update' : 'Save' }}
                 </button>
             </div>
 
@@ -320,6 +336,7 @@
 </div>
 
 
+<!-- ================= DELETE MODAL ================= -->
 <div class="modal fade" id="deleteModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

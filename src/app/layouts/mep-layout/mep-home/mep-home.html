@@ -1,37 +1,50 @@
-<section class="tj-banner-section section-gap-x" *ngIf="hero">
-    <div class="banner-area">
-        <div class="banner-left-box">
-            <div class="banner-content">
+<section class="tj-banner-section section-gap-x" *ngIf="heroSlides.length">
 
-                <h1 class="banner-title title-anim">
-                    {{ currentLang === 'ar'
-                    ? hero.title_ar
-                    : hero.title_en }}
-                </h1>
+    <div class="swiper main-hero-slider">
+        <div class="swiper-wrapper">
 
-                <div class="banner-desc-area wow fadeInUp" data-wow-delay=".7s">
-                    <a class="banner-link" [routerLink]="['/mep-services']">
-                        <span><i class="tji-arrow-right-big"></i></span>
-                    </a>
+            <div class="swiper-slide" *ngFor="let hero of heroSlides">
 
-                    <div class="banner-desc">
-                        {{ currentLang === 'ar'
-                        ? hero.description_ar
-                        : hero.description_en }}
+                <!-- ✅ SAME STRUCTURE (UNCHANGED) -->
+                <div class="banner-area">
+                    <div class="banner-left-box">
+                        <div class="banner-content">
+
+                            <h1 class="banner-title title-anim">
+                                {{ currentLang === 'ar'
+                                ? hero.title_ar
+                                : hero.title_en }}
+                            </h1>
+
+                            <div class="banner-desc-area wow fadeInUp" data-wow-delay=".7s">
+                                <a class="banner-link" [routerLink]="['/mep-services']">
+                                    <span><i class="tji-arrow-right-big"></i></span>
+                                </a>
+
+                                <div class="banner-desc">
+                                    {{ currentLang === 'ar'
+                                    ? hero.description_ar
+                                    : hero.description_en }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="banner-shape">
+                            <img src="/images/shape/pattern-bg.webp" alt="">
+                        </div>
+                    </div>
+
+                    <div class="banner-right-box">
+                        <div class="banner-img">
+                            <img data-speed="0.8" [src]="getImage(hero.image)" alt="">
+                        </div>
                     </div>
                 </div>
+                <!-- ✅ SAME STRUCTURE (UNCHANGED) -->
 
             </div>
 
-            <div class="banner-shape">
-                <img src="/images/shape/pattern-bg.webp" alt="">
-            </div>
-        </div>
-
-        <div class="banner-right-box">
-            <div class="banner-img">
-                <img data-speed="0.8" [src]="getImage(hero.image)" alt="">
-            </div>
         </div>
     </div>
 
@@ -41,8 +54,8 @@
             {{ currentLang === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
         </a>
     </div>
-</section>
 
+</section>
 
 
 <!-- start: About Section -->
@@ -85,14 +98,16 @@
                     </div>
 
                     <div class="about-btn-area-2 wow fadeInUp" data-wow-delay=".7s">
-                        <a class="tj-primary-btn" [routerLink]="['/mep-services']">
+                        <a class="tj-primary-btn" [href]="getFile(about.brochure_en || null)" target="_blank" download>
+
                             <span class="btn-text">
                                 <span>
                                     {{ currentLang === 'ar'
-                                    ? 'خدماتنا'
-                                    : 'Our Services' }}
+                                    ? 'تحميل البروشور'
+                                    : 'Download Brochure' }}
                                 </span>
                             </span>
+
                             <span class="btn-icon">
                                 <i class="tji-arrow-right-long"></i>
                             </span>

@@ -1,16 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header-uniforms',
+  standalone: true,
   imports: [RouterLink],
   templateUrl: './header-uniforms.html',
   styleUrl: './header-uniforms.css',
 })
-export class HeaderUNIFORMS {
-  closeHamburger() {
+export class HeaderUNIFORMS implements OnInit {
+
+  currentLang: 'en' | 'ar' = 'en';
+
+  ngOnInit(): void {
+    const lang = localStorage.getItem('lang');
+    this.currentLang = lang === 'ar' ? 'ar' : 'en';
+
+    // optional: ensure dir is correct on first load
+    document.documentElement.dir = this.currentLang === 'ar' ? 'rtl' : 'ltr';
+  }
+
+  closeHamburger(): void {
     document.querySelector('.hamburger-area')?.classList.remove('opened');
     document.querySelector('.body-overlay')?.classList.remove('opened');
     document.body.classList.remove('overflow-hidden');
   }
+
+  setLanguage(lang: 'en' | 'ar'): void {
+    localStorage.setItem('lang', lang);
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    window.location.reload();
+  }
+
 }

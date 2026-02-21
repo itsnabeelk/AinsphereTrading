@@ -148,3 +148,7 @@ html[dir="rtl"] .contact-list {
 html[dir="rtl"] input {
     text-align: right;
 }
+
+html[dir="rtl"] #applyJobModal .modal-header {
+    direction: ltr !important;
+}

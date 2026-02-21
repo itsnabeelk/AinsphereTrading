@@ -1,79 +1,214 @@
 <app-header-general></app-header-general>
 
-
-
-<!-- start: Breadcrumb Section -->
-<section class="tj-page-header section-gap-x" data-bg-image="assets/images/bg/pheader-bg.webp">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="tj-page-header-content text-center">
-                    <h1 class="tj-page-title">Careers</h1>
-                    <div class="tj-page-link">
-                        <span><i class="tji-home"></i></span>
-                        <span>
-                            <a href="index.html">Home</a>
-                        </span>
-                        <span><i class="tji-arrow-right"></i></span>
-                        <span>
-                            <span>Careers</span>
-                        </span>
-                    </div>
-                </div>
-            </div>
+<!-- ================= TOAST ================= -->
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index:1100;">
+    <div id="careerToast" class="toast text-white border-0">
+        <div class="d-flex">
+            <div class="toast-body" id="careerToastBody"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
         </div>
     </div>
-    <div class="page-header-overlay" data-bg-image="assets/images/shape/pheader-overlay.webp"></div>
-</section>
-<!-- end: Breadcrumb Section -->
+</div>
 
-<!-- start: Careers Section -->
-<section class="tj-careers-section section-gap">
+<!-- ================= HEADER ================= -->
+<section class="tj-page-header section-gap-x" data-bg-image="assets/images/bg/pheader-bg.webp">
+    <div class="container text-center">
+        <h1 class="tj-page-title">
+            {{ t('Careers', 'الوظائف') }}
+        </h1>
+    </div>
+</section>
+
+<!-- ================= JOB LIST ================= -->
+<section class="tj-careers-section section-gap" [attr.dir]="isArabic ? 'rtl' : 'ltr'">
     <div class="container">
         <div class="row rg-30">
-            <div class="col-xl-4 col-md-6">
-                <div class="tj-careers wow fadeInUp" data-wow-delay="0.1s">
+
+            <div class="col-xl-4 col-md-6" *ngFor="let job of jobs">
+                <div class="tj-careers wow fadeInUp">
+
                     <div class="tj-careers-tag">
-                        <span>Full time job</span>
+                        <span>{{ job.job_type || t('Full time job', 'دوام كامل') }}</span>
                     </div>
+
                     <h4 class="tj-careers-title">
-                        <a [routerLink]="['/']">Business Strategy Consultant</a>
+                        {{ isArabic ? job.title_ar : job.title_en }}
                     </h4>
+
                     <div class="tj-careers-salary">
                         <p>
-                            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                            {{ isArabic ? job.description_ar : job.description_en }}
                         </p>
                     </div>
+
                     <div class="tj-careers-bottom">
-                        <span class="location"><i class="tji-location"></i>Saudi Arabia</span>
-                        <a href="javascript:void(0)" class="tj-careers-btn" (click)="openApplyModal()">
-                            <div class="btn-text">
-                                <span>Apply Now</span>
-                            </div>
-                            <span class="btn-icon">
-                                <i class="tji-arrow-right"></i>
-                                <i class="tji-arrow-right"></i>
-                            </span>
+                        <span class="location">
+                            <i class="tji-location"></i>
+                            {{ job.location || t('Saudi Arabia', 'السعودية') }}
+                        </span>
+
+                        <a href="javascript:void(0)" class="tj-careers-btn" (click)="openApplyModal(job)">
+                            <span>{{ t('Apply Now', 'قدم الآن') }}</span>
                         </a>
                     </div>
+
                 </div>
             </div>
-        </div>
-        <!-- post pagination -->
-        <div class="tj-pagination d-flex justify-content-center">
-            <ul>
-                <li>
-                    <span aria-current="page" class="page-numbers current">01</span>
-                </li>
-                <li>
-                    <a class="page-numbers" href="#">02</a>
-                </li>
-                <li>
-                    <a class="next page-numbers" href="#"><i class="tji-arrow-right-long"></i></a>
-                </li>
-            </ul>
+
+            <!-- EMPTY -->
+            <div *ngIf="jobs.length === 0" class="text-center mt-5">
+                <p class="text-muted">
+                    {{ t('No job openings available.', 'لا توجد وظائف متاحة حالياً') }}
+                </p>
+            </div>
+
         </div>
     </div>
 </section>
-<!-- end: Careers Section -->
+
+<!-- ================= GENERAL APPLY ================= -->
+<section class="tj-career-general section-gap pt-0" [attr.dir]="isArabic ? 'rtl' : 'ltr'">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="career-general-box text-center wow fadeInUp p-4 border rounded-3 shadow-sm">
+
+                    <h3 class="mb-3">
+                        {{ t('Didn’t find a suitable position?', 'لم تجد الوظيفة المناسبة؟') }}
+                    </h3>
+
+                    <p class="mb-4 text-muted">
+                        {{ t(
+                        'Send us your CV and we will contact you when a suitable opportunity arises.',
+                        'أرسل لنا سيرتك الذاتية وسنتواصل معك عند توفر فرصة مناسبة.'
+                        ) }}
+                    </p>
+
+                    <a href="javascript:void(0)" class="tj-primary-btn" (click)="openApplyModal(null)">
+
+                        <span class="btn-text">
+                            {{ t('Submit Your CV', 'أرسل سيرتك الذاتية') }}
+                        </span>
+
+                        <span class="btn-icon">
+                            <i class="tji-arrow-right-long"></i>
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
 <app-general-footer></app-general-footer>
+
+<!-- ================= MODAL ================= -->
+<div class="modal fade" id="applyJobModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {{ selectedJob
+                    ? t('Apply for Position', 'التقديم على الوظيفة')
+                    : t('General Application', 'طلب عام') }}
+                </h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
+                <form (ngSubmit)="submitApplication()">
+
+                    <div class="row g-3">
+
+                        <!-- NAME -->
+                        <div class="col-md-6">
+                            <label>{{ t('Full Name *', 'الاسم الكامل *') }}</label>
+                            <input class="form-control" [(ngModel)]="form.name" name="name">
+                            <small class="text-danger" *ngIf="errors.name">{{ errors.name }}</small>
+                        </div>
+
+                        <!-- EMAIL -->
+                        <div class="col-md-6">
+                            <label>{{ t('Email *', 'البريد الإلكتروني *') }}</label>
+                            <input class="form-control" [(ngModel)]="form.email" name="email">
+                            <small class="text-danger" *ngIf="errors.email">{{ errors.email }}</small>
+                        </div>
+
+                        <!-- PHONE -->
+                        <div class="col-md-6">
+                            <label>{{ t('Phone *', 'رقم الهاتف *') }}</label>
+                            <input class="form-control" [(ngModel)]="form.phone" name="phone">
+                            <small class="text-danger" *ngIf="errors.phone">{{ errors.phone }}</small>
+                        </div>
+
+                        <!-- POSITION -->
+                        <div class="col-md-6">
+                            <label>
+                                {{ selectedJob
+                                ? t('Position', 'الوظيفة')
+                                : t('Application Type', 'نوع الطلب') }}
+                            </label>
+
+                            <input class="form-control" [value]="selectedJob
+                                    ? (isArabic ? selectedJob.title_ar : selectedJob.title_en)
+                                    : t('General Application', 'طلب عام')" readonly>
+                        </div>
+
+                        <!-- FILE -->
+                        <div class="col-12">
+                            <label>{{ t('Upload CV *', 'رفع السيرة الذاتية *') }}</label>
+
+                            <input type="file" class="form-control" accept=".pdf,.doc,.docx"
+                                (change)="onFileChange($event)">
+
+                            <small class="text-danger" *ngIf="errors.cv">{{ errors.cv }}</small>
+
+                            <div *ngIf="selectedFileName" class="mt-2 text-success">
+                                {{ selectedFileName }}
+                            </div>
+                        </div>
+
+                        <!-- MESSAGE -->
+                        <div class="col-12">
+                            <label>{{ t('Message', 'رسالة') }}</label>
+                            <textarea class="form-control" [(ngModel)]="form.message" name="message"></textarea>
+                        </div>
+
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="modal-footer mt-3">
+
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeModal()">
+                            {{ t('Cancel', 'إلغاء') }}
+                        </button>
+
+                        <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+
+                            <span *ngIf="!isSubmitting">
+                                {{ t('Submit Application', 'إرسال الطلب') }}
+                            </span>
+
+                            <span *ngIf="isSubmitting">
+                                <span class="spinner-border spinner-border-sm"></span>
+                                {{ t('Sending...', 'جاري الإرسال...') }}
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

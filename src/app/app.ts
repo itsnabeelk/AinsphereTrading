@@ -16,7 +16,7 @@ declare function manJs(): void;
 })
 export class App implements OnInit {
 
-  isDashboardRoute = false;   // ✅ REQUIRED
+  isDashboardRoute = false;
 
   constructor(
     private authService: AuthService,
@@ -32,7 +32,14 @@ export class App implements OnInit {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: any) => {
-        this.isDashboardRoute = event.url.includes('/dashboard');
+
+        const url = event.url;
+
+        // ❗ disable smooth for dashboard + career (modal pages)
+        this.isDashboardRoute =
+          url.includes('/dashboard') ||
+          url.includes('/career');
+
       });
   }
 }

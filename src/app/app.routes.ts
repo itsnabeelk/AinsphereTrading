@@ -108,6 +108,12 @@ export const routes: Routes = [
                             import('./dashboard-layout/pages/uniform-dashboard-home/uniform-service-detail/uniform-service-detail')
                                 .then(m => m.UniformServiceDetail)
                     },
+                    {
+                        path: 'dashboard-career',
+                        loadComponent: () =>
+                            import('./dashboard-layout/pages/dashboard-career/dashboard-career')
+                                .then(m => m.DashboardCareer)
+                    },
 
                 ]
             }

@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://api.ainspheretrading.com'
+    apiUrl: 'https://api.itsnabeelk.cloud'
 };

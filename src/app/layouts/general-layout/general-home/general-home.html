@@ -65,7 +65,7 @@
 
 
 <!-- ================= CLIENT SECTION ================= -->
-<section class="tj-client-section section-top-gap" [class.rtl]="currentLang === 'ar'">
+<!-- <section class="tj-client-section section-top-gap" [class.rtl]="currentLang === 'ar'">
     <div class="container-fluid client-container">
         <div class="row">
             <div class="col-12">
@@ -110,7 +110,7 @@
         </div>
     </div>
 </section>
-
+ -->
 
 
 <!-- ================= ABOUT SECTION ================= -->
@@ -280,8 +280,19 @@
         <div class="row">
             <div class="col-12">
                 <div class="sec-heading style-2 text-center">
-                    <span class="sub-title wow fadeInUp" data-wow-delay=".3s">Service Categories</span>
-                    <h2 class="sec-title text-anim">Breaking Boundaries, Building <span>Dreams.</span></h2>
+
+                    <span class="sub-title wow fadeInUp" data-wow-delay=".3s">
+                        {{ currentLang === 'ar'
+                        ? 'قطاعات أعمالنا'
+                        : 'Our Business Divisions' }}
+                    </span>
+
+                    <h2 class="sec-title text-anim">
+                        {{ currentLang === 'ar'
+                        ? 'حلول تجارية موثوقة لتلبية احتياجات القطاعات المتنوعة'
+                        : 'Reliable Trading Solutions for Diverse Industry Needs' }}
+                    </h2>
+
                 </div>
             </div>
         </div>
@@ -351,8 +362,8 @@
 
                     <h2 class="sec-title text-anim">
                         {{ currentLang === 'ar'
-                        ? 'الأشخاص الذين يقودون النجاح'
-                        : 'The People Empowering Business Level.' }}
+                        ? 'الأشخاص الذين يقفون وراء الرؤية'
+                        : 'The People Behind the Vision.' }}
                     </h2>
 
                 </div>

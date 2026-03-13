@@ -1554,6 +1554,7 @@ function manJs() {
 
 			/* Text Effect Animation */
 			if ($(".text-anim").length) {
+
 				let staggerAmount = 0.02,
 					translateXValue = rtlValue(20),
 					delayValue = 0.1,
@@ -1561,17 +1562,26 @@ function manJs() {
 					animatedTextElements = document.querySelectorAll(".text-anim");
 
 				animatedTextElements.forEach(element => {
+
+					let isRTL = document.documentElement.dir === "rtl";
+
 					let animationSplitText = new SplitText(element, {
-						type: "chars, words",
+						type: isRTL ? "words" : "chars, words"
 					});
-					gsap.from(animationSplitText.chars, {
+
+					let targets = isRTL ? animationSplitText.words : animationSplitText.chars;
+
+					gsap.from(targets, {
 						duration: 1,
 						delay: delayValue,
 						x: translateXValue,
 						autoAlpha: 0,
 						stagger: staggerAmount,
 						ease: easeType,
-						scrollTrigger: { trigger: element, start: "top 85%" },
+						scrollTrigger: {
+							trigger: element,
+							start: "top 85%"
+						}
 					});
 				});
 			}

@@ -31,6 +31,9 @@ export class GeneralHome implements OnInit, AfterViewInit {
   workingItems: GeneralWorking[] = [];
   teamMembers: GeneralTeam[] = [];
   services: GeneralService[] = [];
+
+  private scriptsInitialized = false;
+
   constructor(
     private generalService: GeneralHomeService,
     private clientService: GeneralClientService,
@@ -45,7 +48,9 @@ export class GeneralHome implements OnInit, AfterViewInit {
   ===================================================== */
 
   ngOnInit(): void {
+
     const savedLang = localStorage.getItem('lang');
+
     if (savedLang === 'ar' || savedLang === 'en') {
       this.currentLang = savedLang;
     } else {
@@ -65,11 +70,15 @@ export class GeneralHome implements OnInit, AfterViewInit {
   }
 
   /* =====================================================
-     REINIT SCRIPTS (SAFE SWIPER RESET)
+     REINIT SCRIPTS (RUN ONLY ONCE)
   ===================================================== */
 
   private reInitScripts(): void {
+
+    if (this.scriptsInitialized) return;
+
     setTimeout(() => {
+
       if (typeof manJs === 'function') {
         manJs();
       }
@@ -79,9 +88,16 @@ export class GeneralHome implements OnInit, AfterViewInit {
           el.dir = 'rtl';
         });
       }
-    }, 300);
+
+      this.scriptsInitialized = true;
+
+    }, 500);
+
   }
 
+  /* =====================================================
+     SERVICES (last loader triggers scripts)
+  ===================================================== */
 
   loadServices() {
     this.generalServicesApi.getListPage().subscribe({
@@ -103,19 +119,16 @@ export class GeneralHome implements OnInit, AfterViewInit {
   loadHero() {
     this.generalService.getPublicHero().subscribe(res => {
       this.heroes = res;
-      this.reInitScripts();
     });
   }
 
   /* =====================================================
-     CLIENTS (DUPLICATED FOR SMOOTH LOOP)
+     CLIENTS
   ===================================================== */
 
   loadClients() {
     this.clientService.getPublicClients().subscribe(res => {
-      // Duplicate for smooth infinite marquee
       this.clients = [...res, ...res, ...res];
-      this.reInitScripts();
     });
   }
 
@@ -136,19 +149,16 @@ export class GeneralHome implements OnInit, AfterViewInit {
   loadWorking() {
     this.workingService.getPublicWorking().subscribe(res => {
       this.workingItems = res;
-      this.reInitScripts();
     });
   }
 
   /* =====================================================
-     TEAM (DUPLICATED FOR SMOOTH LOOP)
+     TEAM
   ===================================================== */
 
   loadTeam() {
     this.teamService.getPublicTeam().subscribe(res => {
-      // Duplicate for smooth infinite marquee
       this.teamMembers = [...res, ...res, ...res];
-      this.reInitScripts();
     });
   }
 
@@ -165,10 +175,13 @@ export class GeneralHome implements OnInit, AfterViewInit {
   setLanguage(lang: 'en' | 'ar') {
     this.currentLang = lang;
     localStorage.setItem('lang', lang);
+
+    this.scriptsInitialized = false;
     this.reInitScripts();
   }
 
   getBrochure(): string | null {
+
     if (!this.about) return null;
 
     const file =
@@ -180,6 +193,7 @@ export class GeneralHome implements OnInit, AfterViewInit {
   }
 
   getTitle(): string {
+
     if (!this.about) return '';
 
     return this.currentLang === 'ar'
@@ -188,6 +202,7 @@ export class GeneralHome implements OnInit, AfterViewInit {
   }
 
   getDesc1(): string {
+
     if (!this.about) return '';
 
     return this.currentLang === 'ar'
@@ -196,6 +211,7 @@ export class GeneralHome implements OnInit, AfterViewInit {
   }
 
   getDesc2(): string {
+
     if (!this.about) return '';
 
     return this.currentLang === 'ar'

@@ -17,8 +17,8 @@ export class GeneralServices implements OnInit, AfterViewInit {
 
   currentLang: 'en' | 'ar' = 'en';
 
-  breadcrumbTitleEn = 'General Services';
-  breadcrumbTitleAr = 'الخدمات العامة';
+  breadcrumbTitleEn = 'Our Product Categories ';
+  breadcrumbTitleAr = 'فئات منتجاتنا';
 
   services: GeneralService[] = [];
 

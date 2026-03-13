@@ -6,7 +6,7 @@ html[dir="ltr"] * {
 }
 
 html[dir="rtl"] * {
-    font-family: "cairo", "Font Awesome 5 Brands";
+    font-family: "cairo", "Font Awesome 5 Brands", "Font Awesome 6 Pro";
 }
 
 .service-item.style-4 .title {

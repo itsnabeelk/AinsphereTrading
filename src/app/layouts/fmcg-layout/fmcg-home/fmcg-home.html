@@ -52,10 +52,11 @@
                             {{
                             isArabic
                             ? (slide.description_ar ||
-                            'نقدم منتجات استهلاكية عالية الجودة مع شبكة توزيع قوية وسلسلة إمداد موثوقة.')
+                            'نقوم بتوريد وتوزيع وتطوير منتجات السلع الاستهلاكية سريعة التداول التي تلبي احتياجات السوق
+                            مع الالتزام الصارم بمعايير الجودة والسلامة.')
                             : (slide.description_en ||
-                            'Delivering high-quality FMCG products with strong distribution networks and reliable supply
-                            chains.')
+                            'We source, distribute, and develop FMCG products that meet market needs with strict quality
+                            and safety standard.')
                             }}
                         </p>
                     </div>
@@ -149,7 +150,7 @@
                             <div class="countup-item">
                                 <div class="inline-content">
                                     <span class="odometer countup-number"
-                                        [attr.data-count]="about.funfact_1_number || 25">
+                                        [attr.data-count]="about.funfact_1_number || 10">
                                     </span>
                                     <span class="count-plus">
                                         {{ about.funfact_1_suffix || '+' }}
@@ -168,7 +169,7 @@
                             <div class="countup-item">
                                 <div class="inline-content">
                                     <span class="odometer countup-number"
-                                        [attr.data-count]="about.funfact_2_number || 150">
+                                        [attr.data-count]="about.funfact_2_number || 500">
                                     </span>
                                     <span class="count-plus">
                                         {{ about.funfact_2_suffix || '+' }}
@@ -177,7 +178,7 @@
                                 <span class="count-text">
                                     {{
                                     isArabic
-                                    ? (about.funfact_2_text_ar || 'منتج في السوق')
+                                    ? (about.funfact_2_text_ar || ' المنتجات في السوق ')
                                     : (about.funfact_2_text_en || 'Products in Market')
                                     }}
                                 </span>
@@ -279,9 +280,18 @@
         <div class="row">
             <div class="col-12">
                 <div class="sec-heading style-4 text-center">
-                    <span class="sub-title wow fadeInUp" data-wow-delay=".3s"><i class="tji-box"></i>Proud
-                        Projects</span>
-                    <h2 class="sec-title title-anim">Breaking Boundaries, Building Dreams.</h2>
+
+                    <span class="sub-title wow fadeInUp" data-wow-delay=".3s">
+                        <i class="tji-box"></i>
+                        {{ isArabic ? 'منتجاتنا' : 'Our Products ' }}
+                    </span>
+
+                    <h2 class="sec-title" [class.title-anim]="!isArabic">
+                        {{ isArabic
+                        ? 'منتجات عالية الجودة للاحتياجات اليومية'
+                        : 'Quality Products for Everyday Needs.' }}
+                    </h2>
+
                 </div>
             </div>
         </div>
@@ -343,8 +353,8 @@
                 <div class="h6-client-title-wrapper">
                     <h6 class="h6-client-title">
                         {{ isArabic
-                        ? 'نفخر بشراكتنا مع أفضل العملاء'
-                        : 'we’re proud to partner with best-in-class clients'
+                        ? 'العلامات التجارية التي تعزز وعدنا'
+                        : 'Brands That Strengthen Our Promise'
                         }}
                     </h6>
                 </div>

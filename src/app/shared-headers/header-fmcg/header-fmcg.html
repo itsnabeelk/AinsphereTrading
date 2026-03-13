@@ -20,7 +20,9 @@
                 </div>
             </div>
             <div class="hamburger-search-area">
-                <h5 class="hamburger-title">Search Now!</h5>
+                <h5 class="hamburger-title">
+                    {{ currentLang === 'ar' ? 'ابحث الآن' : 'Search Now!' }}
+                </h5>
                 <div class="hamburger_search">
                     <form>
                         <button type="submit"><i class="tji-search"></i></button>
@@ -31,44 +33,82 @@
             <div class="hamburger_menu">
                 <div class="mobile_menu">
                     <ul>
-                        <li class="urrent-menu-ancestor"><a [routerLink]="['/fmcg-home']"
-                                (click)="closeHamburger()">Home</a></li>
-                        <li class="urrent-menu-ancestor"><a [routerLink]="['/fmcg-services']"
-                                (click)="closeHamburger()">Services</a>
-                        </li>
-                        <li class="urrent-menu-ancestor"><a [routerLink]="['/general-trading']"
-                                (click)="closeHamburger()">General</a>
-                        </li>
-                        <li class="urrent-menu-ancestor"><a [routerLink]="['/mep-home']"
-                                (click)="closeHamburger()">MEP</a></li>
-                        <li class="urrent-menu-ancestor"><a [routerLink]="['/uniform-home']"
-                                (click)="closeHamburger()">Uniforms</a></li>
-                        <li><a [routerLink]="['/career']">Career</a></li>
-                        <li><a [routerLink]="['/contact-us']">Contact Us</a></li>
-                    </ul>
 
+                        <li class="urrent-menu-ancestor">
+                            <a [routerLink]="['/fmcg-home']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'الرئيسية' : 'Home' }}
+                            </a>
+                        </li>
+
+                        <li class="urrent-menu-ancestor">
+                            <a [routerLink]="['/fmcg-services']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'المنتجات' : 'Products' }}
+                            </a>
+                        </li>
+
+                        <li class="urrent-menu-ancestor">
+                            <a [routerLink]="['/general-trading']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'التجارة العامة' : 'General Trading' }}
+                            </a>
+                        </li>
+
+                        <li class="urrent-menu-ancestor">
+                            <a [routerLink]="['/mep-home']" (click)="closeHamburger()">MEP</a>
+                        </li>
+
+                        <li class="urrent-menu-ancestor">
+                            <a [routerLink]="['/uniform-home']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'الزي الموحد' : 'Uniforms' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/career']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'الوظائف' : 'Career' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/contact-us']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'اتصل بنا' : 'Contact Us' }}
+                            </a>
+                        </li>
+
+                    </ul>
                 </div>
             </div>
             <div class="hamburger-infos">
-                <h5 class="hamburger-title">Contact Info</h5>
+                <h5 class="hamburger-title">
+                    {{ currentLang === 'ar' ? 'معلومات الاتصال' : 'Contact Info' }}
+                </h5>
                 <div class="contact-info">
                     <div class="contact-item">
-                        <span class="subtitle">Phone</span>
+                        <span class="subtitle">
+                            {{ currentLang === 'ar' ? 'الهاتف' : 'Phone' }}
+                        </span>
                         <a class="contact-link" href="tel:+966543612700">+966543612700</a>
                     </div>
                     <div class="contact-item">
-                        <span class="subtitle">Email</span>
+                        <span class="subtitle">
+                            {{ currentLang === 'ar' ? 'البريد الإلكتروني' : 'Email' }}
+                        </span>
                         <a class="contact-link" href="mailto:info@ainsphere.com">info@ainsphere.com</a>
                     </div>
                     <div class="contact-item">
-                        <span class="subtitle">Location</span>
-                        <span class="contact-link">Saudi Arabia, Riyadh</span>
+                        <span class="subtitle">
+                            {{ currentLang === 'ar' ? 'الموقع' : 'Location' }}
+                        </span>
+                        <span class="contact-link">
+                            {{ currentLang === 'ar' ? 'المملكة العربية السعودية، الرياض' : 'Saudi Arabia, Riyadh' }}
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="hamburger-socials">
-            <h5 class="hamburger-title">Follow Us</h5>
+            <h5 class="hamburger-title">
+                {{ currentLang === 'ar' ? 'تابعنا' : 'Follow Us' }}
+            </h5>
             <div class="social-links style-3">
                 <ul>
                     <li><a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
@@ -101,15 +141,47 @@
                     <div class="menu-area d-none d-lg-inline-flex align-items-center">
                         <nav id="mobile-menu" class="mainmenu">
                             <ul>
-                                <li class="urrent-menu-ancestor"><a [routerLink]="['/fmcg-home']">Home</a></li>
-                                <li class="urrent-menu-ancestor"><a [routerLink]="['/fmcg-services']">Services</a>
+
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/fmcg-home']">
+                                        {{ currentLang === 'ar' ? 'الرئيسية' : 'Home' }}
+                                    </a>
                                 </li>
-                                <li class="urrent-menu-ancestor"><a [routerLink]="['/general-trading']">General</a>
+
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/fmcg-services']">
+                                        {{ currentLang === 'ar' ? 'المنتجات' : 'Products' }}
+                                    </a>
                                 </li>
-                                <li class="urrent-menu-ancestor"><a [routerLink]="['/mep-home']">MEP</a></li>
-                                <li class="urrent-menu-ancestor"><a [routerLink]="['/uniform-home']">Uniforms</a></li>
-                                <li><a [routerLink]="['/career']">Career</a></li>
-                                <li><a [routerLink]="['/contact-us']">Contact Us</a></li>
+
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/general-trading']">
+                                        {{ currentLang === 'ar' ? 'التجارة العامة' : 'General Trading' }}
+                                    </a>
+                                </li>
+
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/mep-home']">MEP</a>
+                                </li>
+
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/uniform-home']">
+                                        {{ currentLang === 'ar' ? 'الزي الموحد' : 'Uniforms' }}
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a [routerLink]="['/career']">
+                                        {{ currentLang === 'ar' ? 'الوظائف' : 'Career' }}
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a [routerLink]="['/contact-us']">
+                                        {{ currentLang === 'ar' ? 'اتصل بنا' : 'Contact Us' }}
+                                    </a>
+                                </li>
+
                             </ul>
                         </nav>
                     </div>

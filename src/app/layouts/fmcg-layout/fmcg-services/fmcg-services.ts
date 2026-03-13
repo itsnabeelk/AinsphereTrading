@@ -15,8 +15,8 @@ declare function manJs(): void;
 export class FmcgServices implements OnInit, AfterViewInit {
 
   currentLang: 'en' | 'ar' = 'en';
-  breadcrumbTitleEn = 'FMCG Services';
-  breadcrumbTitleAr = 'خدمات المنتجات الاستهلاكية';
+  breadcrumbTitleEn = 'Our Products ';
+  breadcrumbTitleAr = 'منتجاتنا';
 
   services: FmcgService[] = [];
   loading = true;

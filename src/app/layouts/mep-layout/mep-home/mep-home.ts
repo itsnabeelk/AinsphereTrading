@@ -29,15 +29,15 @@ export class MepHome implements OnInit, AfterViewInit, OnDestroy {
 
   currentLang: 'en' | 'ar' = 'en';
 
-  // ✅ CHANGE: hero -> heroSlides
   heroSlides: MepHero[] = [];
-
   about: MepAbout | null = null;
   working: MepWorking[] = [];
   clients: MepClient[] = [];
   services: any[] = [];
 
   private mainHeroSwiper: any;
+  private clientSwiper: any;
+  private projectSwiper: any;
   private routerSub: any;
   private manJsInitialized = false;
 
@@ -48,6 +48,7 @@ export class MepHome implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
     const lang = localStorage.getItem('lang');
     if (lang === 'ar' || lang === 'en') {
       this.currentLang = lang;
@@ -63,37 +64,51 @@ export class MepHome implements OnInit, AfterViewInit, OnDestroy {
       this.manJsInitialized = true;
     }
 
-    // ✅ init once after view
-    requestAnimationFrame(() => this.initMainHeroSlider());
+    requestAnimationFrame(() => {
+      this.initMainHeroSlider();
+      this.initClientSlider();
+      this.initProjectSlider();
+    });
 
-    // ✅ re-init after route navigation (same idea as Uniform)
     this.routerSub = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        requestAnimationFrame(() => this.initMainHeroSlider());
+        requestAnimationFrame(() => {
+          this.initMainHeroSlider();
+          this.initClientSlider();
+        });
       }
     });
   }
 
   loadData() {
 
-    // ✅ IMPORTANT: supports backend returning SINGLE hero or ARRAY
     this.api.getHeroPublic().subscribe((res: any) => {
+
       this.heroSlides = res
         ? (Array.isArray(res) ? res : [res])
         : [];
 
-      // ✅ init after data is rendered
       setTimeout(() => this.initMainHeroSlider(), 0);
     });
 
-    this.api.getAboutPublic().subscribe((res: any) => this.about = res);
-    this.api.getWorkingPublic().subscribe((res: any[]) => this.working = res);
-    this.api.getClientsPublic().subscribe((res: any[]) => this.clients = res);
+    this.api.getAboutPublic().subscribe(res => this.about = res);
+    this.api.getWorkingPublic().subscribe(res => this.working = res);
+
+    this.api.getClientsPublic().subscribe((res: any[]) => {
+      this.clients = res;
+
+      // initialize client slider after DOM render
+      setTimeout(() => this.initClientSlider(), 0);
+    });
 
     this.serviceApi.getPublic().subscribe((res: any[]) => {
       this.services = res?.filter(s => s.is_active == 1) || [];
+
+      setTimeout(() => this.initProjectSlider(), 0);
     });
   }
+
+  /* ================= HERO SLIDER ================= */
 
   initMainHeroSlider(): void {
 
@@ -120,6 +135,87 @@ export class MepHome implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  /* ================= CLIENT SLIDER ================= */
+
+  initClientSlider(): void {
+
+    if (this.clientSwiper) {
+      this.clientSwiper.destroy(true, true);
+      this.clientSwiper = null;
+    }
+
+    const el = document.querySelector('.client-slider-2') as HTMLElement;
+    if (!el || typeof Swiper === 'undefined') return;
+
+    this.clientSwiper = new Swiper(el, {
+      slidesPerView: 2,
+      spaceBetween: 30,
+      loop: true,
+      speed: 4000,
+
+      autoplay: {
+        delay: 0,
+        disableOnInteraction: false
+      },
+
+      freeMode: true,
+      freeModeMomentum: false,
+
+      breakpoints: {
+        768: {
+          slidesPerView: 3
+        },
+        1024: {
+          slidesPerView: 5
+        }
+      }
+    });
+  }
+
+
+  /* ================= PROJECT SLIDER ================= */
+
+  initProjectSlider(): void {
+
+    if (this.projectSwiper) {
+      this.projectSwiper.destroy(true, true);
+      this.projectSwiper = null;
+    }
+
+    const el = document.querySelector('.project-slider-2') as HTMLElement;
+    if (!el || typeof Swiper === 'undefined') return;
+
+    this.projectSwiper = new Swiper(el, {
+
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: true,
+      speed: 1200,
+
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false
+      },
+
+      navigation: {
+        nextEl: '.slider-next',
+        prevEl: '.slider-prev'
+      },
+
+      pagination: {
+        el: el.querySelector('.swiper-pagination-area'),
+        clickable: true
+      },
+
+      breakpoints: {
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 }
+      }
+
+    });
+
+  }
+
   getImage(path: string | null): string {
     return this.api.getImage(path);
   }
@@ -130,6 +226,8 @@ export class MepHome implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.mainHeroSwiper?.destroy?.(true, true);
+    this.clientSwiper?.destroy?.(true, true);
+    this.projectSwiper?.destroy?.(true, true);
     this.routerSub?.unsubscribe();
   }
 }

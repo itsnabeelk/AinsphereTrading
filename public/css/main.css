@@ -12089,6 +12089,8 @@ only screen and (min-width: 992px) and (max-width: 1199px) {
   backdrop-filter: blur(10px);
 }
 
+
+
 .project-area .project-item .project-content .categories a:hover {
   background-color: var(--tj-color-theme-primary);
 }

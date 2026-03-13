@@ -162,3 +162,9 @@
     padding: 30px 5px;
     margin-top: 15px;
 }
+
+
+.project-item .project-img {
+    max-height: 320px !important;
+    overflow: hidden;
+}

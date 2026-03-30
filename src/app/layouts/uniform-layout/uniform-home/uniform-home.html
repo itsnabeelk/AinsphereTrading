@@ -35,11 +35,11 @@
                                     <span class="btn-text">
 
                                         <span *ngIf="!isArabic">
-                                            {{ hero.button_text_en || 'Explore Services' }}
+                                            {{ hero.button_text_en || 'Explore Categories' }}
                                         </span>
 
                                         <span *ngIf="isArabic">
-                                            {{ hero.button_text_ar || 'استكشف الخدمات' }}
+                                            {{ hero.button_text_ar || 'استكشف الفئات' }}
                                         </span>
 
                                     </span>
@@ -172,8 +172,21 @@
         <div class="row">
             <div class="col-12">
                 <div class="sec-heading style-2 text-center">
-                    <span class="sub-title wow fadeInUp" data-wow-delay=".3s">Service Categories</span>
-                    <h2 class="sec-title text-anim">Breaking Boundaries, Building <span>Dreams.</span></h2>
+
+                    <span class="sub-title wow fadeInUp" data-wow-delay=".3s">
+                        {{ currentLang === 'ar' ? 'فئات الزي الموحد لدينا ' : 'Our Uniform Categories ' }}
+                    </span>
+
+                    <h2 class="sec-title text-anim">
+                        {{ currentLang === 'ar'
+                        ? 'أزياء موحدة مصممة خصيصًا لكل قطاع '
+                        : 'Uniforms Tailored for Every Sector ' }}
+
+                        <span>
+                            {{ currentLang === 'ar' ? 'الأحلام' : 'Dreams.' }}
+                        </span>
+                    </h2>
+
                 </div>
             </div>
         </div>
@@ -197,7 +210,9 @@
                                     <div class="project-content">
 
                                         <span class="categories">
-                                            <a href="javascript:void(0)">Services</a>
+                                            <a href="javascript:void(0)">
+                                                {{ isArabic ? 'الفئات' : 'Categories' }}
+                                            </a>
                                         </span>
 
                                         <div class="project-text">

@@ -29,10 +29,12 @@ export class UniformServiceDetailService {
     getImage(path: string | null): string {
         if (!path) return 'assets/img/placeholder-image.png';
 
-        // if already full URL
         if (path.startsWith('http')) return path;
 
-        return `${API_BASE_URL.replace('/api', '')}${path}`;
+        const normalizedPath = path.replace(/\\/g, '/');
+        const cleanPath = normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`;
+
+        return `${API_BASE_URL.replace('/api', '')}${cleanPath}`;
     }
 
     /* ===================================================== */

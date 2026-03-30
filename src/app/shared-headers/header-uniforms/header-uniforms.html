@@ -1,67 +1,131 @@
-<!-- start: Search Popup -->
-<div class="search-popup-overlay"></div>
-<div class="body-overlay"></div>
-<!-- end: Search Popup -->
-
-<!-- start: Hamburger Menu -->
+<!-- HAMBURGER MENU -->
 <div class="hamburger-area d-lg-none">
     <div class="hamburger_bg"></div>
     <div class="hamburger_wrapper">
         <div class="hamburger_inner">
+
             <div class="hamburger_top d-flex align-items-center justify-content-between">
                 <div class="hamburger_logo">
                     <a [routerLink]="['/uniform-home']" class="mobile_logo">
                         <img src="../images/logos/uniform-light.webp" alt="Logo">
                     </a>
                 </div>
+
                 <div class="hamburger_close">
                     <button class="hamburger_close_btn">
-                        <i class="fa-thin fa-times"></i></button>
+                        <i class="fa-thin fa-times"></i>
+                    </button>
                 </div>
             </div>
+
+            <!-- SEARCH -->
             <div class="hamburger-search-area">
-                <h5 class="hamburger-title">Search Now!</h5>
+                <h5 class="hamburger-title">
+                    {{ currentLang === 'ar' ? 'ابحث الآن' : 'Search Now!' }}
+                </h5>
+
                 <div class="hamburger_search">
                     <form>
                         <button type="submit"><i class="tji-search"></i></button>
-                        <input type="search" autocomplete="off" name="s" value="" placeholder="Search here...">
+                        <input type="search" autocomplete="off" name="s"
+                            placeholder="{{ currentLang === 'ar' ? 'ابحث هنا...' : 'Search here...' }}">
                     </form>
                 </div>
             </div>
+
+            <!-- MOBILE MENU -->
             <div class="hamburger_menu">
                 <div class="mobile_menu">
                     <ul>
-                        <li><a [routerLink]="['/uniform-home']" (click)="closeHamburger()">Home</a></li>
-                        <li><a [routerLink]="['/uniform-services']" (click)="closeHamburger()">Services</a>
+
+                        <li>
+                            <a [routerLink]="['/uniform-home']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'الرئيسية' : 'Home' }}
+                            </a>
                         </li>
-                        <li><a [routerLink]="['/general-trading']" (click)="closeHamburger()">General</a></li>
-                        <li><a [routerLink]="['/fmcg-home']" (click)="closeHamburger()">FMCG</a></li>
-                        <li><a [routerLink]="['/mep-home']" (click)="closeHamburger()">MEP</a></li>
-                        <li><a [routerLink]="['/career']" (click)="closeHamburger()">Career</a></li>
-                        <li><a [routerLink]="['/contact-us']" (click)="closeHamburger()">Contact Us</a></li>
+
+                        <li>
+                            <a [routerLink]="['/uniform-services']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'فئات الزي الموحد' : 'Uniform Categories' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/general-trading']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'التجارة العامة' : 'General' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/fmcg-home']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'المنتجات الاستهلاكية' : 'FMCG' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/mep-home']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'أنظمة MEP' : 'MEP' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/career']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'الوظائف' : 'Career' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/contact-us']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'اتصل بنا' : 'Contact Us' }}
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
+
+            <!-- CONTACT INFO -->
             <div class="hamburger-infos">
-                <h5 class="hamburger-title">Contact Info</h5>
+                <h5 class="hamburger-title">
+                    {{ currentLang === 'ar' ? 'معلومات الاتصال' : 'Contact Info' }}
+                </h5>
+
                 <div class="contact-info">
+
                     <div class="contact-item">
-                        <span class="subtitle">Phone</span>
+                        <span class="subtitle">
+                            {{ currentLang === 'ar' ? 'الهاتف' : 'Phone' }}
+                        </span>
                         <a class="contact-link" href="tel:+966543612700">+966543612700</a>
                     </div>
+
                     <div class="contact-item">
-                        <span class="subtitle">Email</span>
+                        <span class="subtitle">
+                            {{ currentLang === 'ar' ? 'البريد الإلكتروني' : 'Email' }}
+                        </span>
                         <a class="contact-link" href="mailto:info@ainsphere.com">info@ainsphere.com</a>
                     </div>
+
                     <div class="contact-item">
-                        <span class="subtitle">Location</span>
-                        <span class="contact-link">Saudi Arabia, Riyadh</span>
+                        <span class="subtitle">
+                            {{ currentLang === 'ar' ? 'الموقع' : 'Location' }}
+                        </span>
+                        <span class="contact-link">
+                            {{ currentLang === 'ar' ? 'المملكة العربية السعودية، الرياض' : 'Saudi Arabia, Riyadh' }}
+                        </span>
                     </div>
+
                 </div>
             </div>
+
         </div>
+
+        <!-- SOCIAL -->
         <div class="hamburger-socials">
-            <h5 class="hamburger-title">Follow Us</h5>
+            <h5 class="hamburger-title">
+                {{ currentLang === 'ar' ? 'تابعنا' : 'Follow Us' }}
+            </h5>
+
             <div class="social-links style-3">
                 <ul>
                     <li><a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
@@ -74,39 +138,77 @@
                 </ul>
             </div>
         </div>
+
     </div>
 </div>
-<!-- end: Hamburger Menu -->
 
-<!-- start: Header Area -->
+<!-- HEADER -->
 <header class="header-area header-2 header-absolute section-gap-x">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
+
                 <div class="header-wrapper">
-                    <!-- site logo -->
+
+                    <!-- LOGO -->
                     <div class="site_logo">
-                        <a class="logo" [routerLink]="['/uniform-home']"><img src="../images/logos/uniform-light.webp"
-                                alt=""></a>
+                        <a class="logo" [routerLink]="['/uniform-home']">
+                            <img src="../images/logos/uniform-light.webp" alt="">
+                        </a>
                     </div>
 
-                    <!-- navigation -->
+                    <!-- DESKTOP MENU -->
                     <div class="menu-area d-none d-lg-inline-flex align-items-center">
                         <nav id="mobile-menu" class="mainmenu">
                             <ul>
-                                <li><a [routerLink]="['/uniform-home']">Home</a></li>
-                                <li><a [routerLink]="['/uniform-services']">Services</a>
+
+                                <li>
+                                    <a [routerLink]="['/uniform-home']">
+                                        {{ currentLang === 'ar' ? 'الرئيسية' : 'Home' }}
+                                    </a>
                                 </li>
-                                <li><a [routerLink]="['/general-trading']">General</a></li>
-                                <li><a [routerLink]="['/fmcg-home']">FMCG</a></li>
-                                <li><a [routerLink]="['/mep-home']">MEP</a></li>
-                                <li><a [routerLink]="['/career']">Career</a></li>
-                                <li><a [routerLink]="['/contact-us']">Contact Us</a></li>
+
+                                <li>
+                                    <a [routerLink]="['/uniform-services']">
+                                        {{ currentLang === 'ar' ? 'فئات الزي الموحد' : 'Uniform Categories' }}
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a [routerLink]="['/general-trading']">
+                                        {{ currentLang === 'ar' ? 'التجارة العامة' : 'General' }}
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a [routerLink]="['/fmcg-home']">
+                                        {{ currentLang === 'ar' ? 'المنتجات الاستهلاكية' : 'FMCG' }}
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a [routerLink]="['/mep-home']">
+                                        {{ currentLang === 'ar' ? 'أنظمة MEP' : 'MEP' }}
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a [routerLink]="['/career']">
+                                        {{ currentLang === 'ar' ? 'الوظائف' : 'Career' }}
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a [routerLink]="['/contact-us']">
+                                        {{ currentLang === 'ar' ? 'اتصل بنا' : 'Contact Us' }}
+                                    </a>
+                                </li>
+
                             </ul>
                         </nav>
                     </div>
 
-                    <!-- header right info -->
+                    <!-- LANGUAGE BUTTON -->
                     <div class="header-right-item d-none d-lg-inline-flex">
                         <div class="header-button">
                             <a class="tj-primary-btn" href="javascript:void(0)"
@@ -114,11 +216,10 @@
 
                                 <span class="btn-text lang-btn d-flex align-items-center gap-2">
 
-                                    <!-- FLAG -->
-                                    <img [src]="currentLang === 'ar' ? '/images/flags/uk.png' : '/images/flags/saudi.png'"
-                                        width="18" height="12" alt="lang">
+                                    <img [src]="currentLang === 'ar'
+                                        ? '/images/flags/uk.png'
+                                        : '/images/flags/saudi.png'" width="18" height="12">
 
-                                    <!-- TEXT -->
                                     <span>
                                         {{ currentLang === 'ar' ? 'English' : 'العربية' }}
                                     </span>
@@ -126,20 +227,19 @@
                                 </span>
 
                             </a>
-
                         </div>
                     </div>
 
-                    <!-- menu bar -->
+                    <!-- MOBILE ICON -->
                     <div class="menu_bar mobile_menu_bar d-lg-none">
-
                         <span></span>
                         <span></span>
                         <span></span>
                     </div>
+
                 </div>
+
             </div>
         </div>
     </div>
 </header>
-<!-- end: Header Area -->

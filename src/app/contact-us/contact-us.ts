@@ -23,14 +23,15 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
   isArabic = false;
 
   contactInfo = {
-    location_en: '993 Renner Burg, West Rond, MT 94251-030',
-    location_ar: '993 رينر بورغ، ويست روند، MT 94251-030',
-    emails: ['support@bexon.com', 'info@bexon.com'],
-    phones: ['+1 (009) 544-7818', '+1 (009) 880-1810'],
-    livechatEmail: 'livechat@bexon.com',
+    location_en: 'Riyadh, Kingdom of Saudi Arabia',
+    location_ar: 'الرياض، المملكة العربية السعودية',
+    emails: ['info@ainsphere.com'],
+    phones: ['+966543612700'],
+    livechatEmail: 'info@ainsphere.com',
     mapEmbedUrl:
-      'https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d316440.5712687838!2d-74.01091796224334!3d40.67186885683901!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1745918398047!5m2!1sen!2sbd'
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3625.7672347667535!2d46.747780399999996!3d24.6661391!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e2f0716c4690827%3A0xa167ec492f8c241a!2sAINSPHERE%20Ventures!5e0!3m2!1sen!2ssa!4v1774895314664!5m2!1sen!2ssa'
   };
+
 
   mapUrl!: SafeResourceUrl;
 

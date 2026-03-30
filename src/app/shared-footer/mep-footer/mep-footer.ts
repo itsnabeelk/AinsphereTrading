@@ -8,5 +8,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './mep-footer.css',
 })
 export class MEPFooter {
+  currentLang: 'en' | 'ar' = 'en';
 
+  ngOnInit() {
+    const saved = localStorage.getItem('lang');
+    this.currentLang = (saved as 'en' | 'ar') || 'en';
+  }
 }

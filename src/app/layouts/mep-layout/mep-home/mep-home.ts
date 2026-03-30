@@ -144,14 +144,15 @@ export class MepHome implements OnInit, AfterViewInit, OnDestroy {
       this.clientSwiper = null;
     }
 
-    const el = document.querySelector('.client-slider-2') as HTMLElement;
+    const el = document.querySelector('.h6-client-slider') as HTMLElement;
     if (!el || typeof Swiper === 'undefined') return;
 
     this.clientSwiper = new Swiper(el, {
-      slidesPerView: 2,
-      spaceBetween: 30,
+      slidesPerView: 'auto',
+      spaceBetween: 40,
       loop: true,
       speed: 4000,
+      allowTouchMove: false,
 
       autoplay: {
         delay: 0,
@@ -162,12 +163,8 @@ export class MepHome implements OnInit, AfterViewInit, OnDestroy {
       freeModeMomentum: false,
 
       breakpoints: {
-        768: {
-          slidesPerView: 3
-        },
-        1024: {
-          slidesPerView: 5
-        }
+        768: { spaceBetween: 60 },
+        1024: { spaceBetween: 80 }
       }
     });
   }

@@ -1,0 +1,36 @@
+.tj-footer-section {
+    background-color: #1c3532;
+    color: #fff;
+}
+
+.widget-nav-menu ul li a {
+    color: #ffffff;
+}
+
+.widget-nav-menu ul li a:hover {
+    color: #ffffff;
+}
+
+.footer-widget .title {
+    color: #fff;
+}
+
+.copyright-content-area .copyright-text a {
+    color: #ffffff;
+}
+
+.copyright-content-area .footer-contact ul li a .text {
+    color: #fff;
+}
+
+.award-logo-area .award-logo {
+    filter: invert(1);
+}
+
+.footer-logo {
+    filter: invert(1);
+}
+
+.copyright-content-area .footer-contact ul li a .icon {
+    background-color: #182e2d;
+}

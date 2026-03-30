@@ -1,5 +1,5 @@
 .h6-hero .banner-left-box {
-    background-color: #2085981f;
+    background-color: #1c3532;
 }
 
 .tj-primary-btn .btn-icon {
@@ -49,4 +49,12 @@
 
 .h6-hero-history {
     max-width: 80%;
+}
+
+.h6-hero .banner-content .banner-title {
+    color: #ffffff;
+}
+
+.h6-hero-history-desc {
+    color: #fff;
 }

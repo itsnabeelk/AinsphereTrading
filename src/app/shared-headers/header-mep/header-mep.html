@@ -31,14 +31,49 @@
             <div class="hamburger_menu">
                 <div class="mobile_menu">
                     <ul>
-                        <li><a [routerLink]="['/mep-home']" (click)="closeHamburger()">Home</a></li>
-                        <li><a [routerLink]="['/mep-services']" (click)="closeHamburger()">Services</a>
+
+                        <li>
+                            <a [routerLink]="['/mep-home']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'الرئيسية' : 'Home' }}
+                            </a>
                         </li>
-                        <li><a [routerLink]="['/general-trading']" (click)="closeHamburger()">General</a></li>
-                        <li><a [routerLink]="['/fmcg-home']" (click)="closeHamburger()">FMCG</a></li>
-                        <li><a [routerLink]="['/uniform-home']" (click)="closeHamburger()">Uniforms</a></li>
-                        <li><a [routerLink]="['/career']" (click)="closeHamburger()">Career</a></li>
-                        <li><a [routerLink]="['/contact-us']" (click)="closeHamburger()">Contact Us</a></li>
+
+                        <li>
+                            <a [routerLink]="['/mep-services']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'منتجاتنا' : 'Our Products' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/general-trading']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'التجارة العامة' : 'General' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/fmcg-home']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'المنتجات الاستهلاكية' : 'FMCG' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/uniform-home']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'الزي الموحد' : 'Uniforms' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/career']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'الوظائف' : 'Career' }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a [routerLink]="['/contact-us']" (click)="closeHamburger()">
+                                {{ currentLang === 'ar' ? 'اتصل بنا' : 'Contact Us' }}
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -94,14 +129,47 @@
                     <div class="menu-area d-none d-lg-inline-flex align-items-center">
                         <nav id="mobile-menu" class="mainmenu">
                             <ul>
-                                <li class="urrent-menu-ancestor"><a [routerLink]="['/mep-home']">Home</a></li>
-                                <li class="urrent-menu-ancestor"><a [routerLink]="['/mep-services']">Services</a>
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/mep-home']">
+                                        {{ currentLang === 'ar' ? 'الرئيسية' : 'Home' }}
+                                    </a>
                                 </li>
-                                <li class="urrent-menu-ancestor"><a [routerLink]="['/general-trading']">General</a></li>
-                                <li class="urrent-menu-ancestor"><a [routerLink]="['/fmcg-home']">FMCG</a></li>
-                                <li class="urrent-menu-ancestor"><a [routerLink]="['/uniform-home']">Uniforms</a></li>
-                                <li><a [routerLink]="['/career']">Career</a></li>
-                                <li><a [routerLink]="['/contact-us']">Contact Us</a></li>
+
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/mep-services']">
+                                        {{ currentLang === 'ar' ? 'منتجاتنا' : 'Our Products' }}
+                                    </a>
+                                </li>
+
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/general-trading']">
+                                        {{ currentLang === 'ar' ? 'التجارة العامة' : 'General' }}
+                                    </a>
+                                </li>
+
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/fmcg-home']">
+                                        {{ currentLang === 'ar' ? 'المنتجات الاستهلاكية' : 'FMCG' }}
+                                    </a>
+                                </li>
+
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/uniform-home']">
+                                        {{ currentLang === 'ar' ? 'الزي الموحد' : 'Uniforms' }}
+                                    </a>
+                                </li>
+
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/career']">
+                                        {{ currentLang === 'ar' ? 'الوظائف' : 'Career' }}
+                                    </a>
+                                </li>
+
+                                <li class="urrent-menu-ancestor">
+                                    <a [routerLink]="['/contact-us']">
+                                        {{ currentLang === 'ar' ? 'اتصل بنا' : 'Contact Us' }}
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
                     </div>

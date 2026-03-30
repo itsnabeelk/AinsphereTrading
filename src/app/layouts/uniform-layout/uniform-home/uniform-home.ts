@@ -45,10 +45,15 @@ export class UniformHome implements OnInit, AfterViewInit, OnDestroy {
 
   /* ================= INIT ================= */
 
+  currentLang: 'en' | 'ar' = 'en';
+
+
   ngOnInit(): void {
     this.detectLanguage();
     this.loadAllSections();
     this.loadUniformServices();
+    const saved = localStorage.getItem('lang');
+    this.currentLang = (saved as 'en' | 'ar') || 'en';
   }
 
   detectLanguage() {

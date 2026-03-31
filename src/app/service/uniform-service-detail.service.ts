@@ -34,7 +34,7 @@ export class UniformServiceDetailService {
         const normalizedPath = path.replace(/\\/g, '/');
         const cleanPath = normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`;
 
-        return `${API_BASE_URL.replace('/api', '')}${cleanPath}`;
+        return `${API_BASE_URL}${cleanPath}`;
     }
 
     /* ===================================================== */

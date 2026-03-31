@@ -17,9 +17,14 @@ export class MepServiceDetailService {
     /* ===================================================== */
 
     getImage(path: string | null): string {
-        return path
-            ? `${API_BASE_URL.replace('/api', '')}${path}`
-            : 'assets/img/placeholder-image.png';
+        if (!path) return 'assets/img/placeholder-image.png';
+
+        if (path.startsWith('http')) return path;
+
+        const normalizedPath = path.replace(/\\/g, '/');
+        const cleanPath = normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`;
+
+        return `${API_BASE_URL}${cleanPath}`;
     }
 
     /* ===================================================== */

@@ -152,3 +152,18 @@ html[dir="rtl"] input {
 html[dir="rtl"] #applyJobModal .modal-header {
     direction: ltr !important;
 }
+
+html[dir="rtl"] .bg-shape-2 {
+    transform: rotate(180deg) !important;
+}
+
+html[dir="rtl"] .bg-shape-1 {
+    transform: rotate(180deg) !important;
+}
+
+
+@media (max-width: 1025px) {
+    .hamburger-area {
+        top: 0 !important
+    }
+}

@@ -65,20 +65,13 @@ function manJs() {
 
 		////////////////////////////////////////////////////
 		// Sticky Nav Js
-		var lastScrollTop = "";
 		function stickyMenu($targetMenu, $toggleClass) {
 			var st = $(window).scrollTop();
-			if ($(window).scrollTop() > 500) {
-				if (st > lastScrollTop) {
-					$targetMenu.removeClass($toggleClass);
-				} else {
-					$targetMenu.addClass($toggleClass);
-				}
+			if (st > 20) {
+				$targetMenu.addClass($toggleClass);
 			} else {
 				$targetMenu.removeClass($toggleClass);
 			}
-
-			lastScrollTop = st;
 		}
 
 		$(window).on("scroll", function () {

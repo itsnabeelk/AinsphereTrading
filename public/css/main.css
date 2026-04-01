@@ -4858,9 +4858,9 @@ START: Preloader CSS
   inset-inline-start: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--tj-color-theme-dark);
+  background-color: #fff;
   z-index: 100000000;
-  color: #fdfdf9;
+  color: #000;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -4883,7 +4883,7 @@ START: Preloader CSS
   inset-inline-start: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--tj-color-theme-dark);
+  background-color: #fff;
   z-index: 99999999;
   opacity: 1;
   -webkit-animation: tj-fade-out 2s forwards;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -11,6 +11,7 @@ import { RouterLink } from '@angular/router';
 export class HeaderGeneral implements OnInit {
 
   currentLang: 'en' | 'ar' = 'en';
+  isSticky = false;
 
   ngOnInit(): void {
     const lang = localStorage.getItem('lang');
@@ -18,6 +19,16 @@ export class HeaderGeneral implements OnInit {
 
     // ensure correct direction on load
     document.documentElement.dir = this.currentLang === 'ar' ? 'rtl' : 'ltr';
+    this.updateStickyState();
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll(): void {
+    this.updateStickyState();
+  }
+
+  private updateStickyState(): void {
+    this.isSticky = window.scrollY > 20;
   }
 
   closeHamburger(): void {

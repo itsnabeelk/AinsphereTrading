@@ -15,3 +15,25 @@
 <ng-template #dashboardView>
     <router-outlet></router-outlet>
 </ng-template>
+
+<div class="whatsapp-widget" [ngClass]="'theme-' + whatsappTheme" *ngIf="!isDashboardRoute"
+    (click)="$event.stopPropagation()">
+    <button type="button" class="whatsapp-btn" aria-label="Open WhatsApp Chat" (click)="toggleWhatsAppBubble($event)">
+        <i class="fab fa-whatsapp"></i>
+    </button>
+
+    <div class="whatsapp-bubble" *ngIf="showWhatsAppBubble">
+        <div class="bubble-header">
+            <span>{{ currentLang === 'ar' ? 'دردشة واتساب' : 'WhatsApp Chat' }}</span>
+            <button class="close-btn" type="button" (click)="closeWhatsAppBubble($event)">×</button>
+        </div>
+
+        <p>
+            {{ currentLang === 'ar' ? 'تواصل معنا مباشرة عبر واتساب' : 'Talk to us directly on WhatsApp' }}
+        </p>
+
+        <a class="start-chat-btn" [href]="whatsappLink" target="_blank" rel="noopener noreferrer">
+            {{ currentLang === 'ar' ? 'ابدأ المحادثة' : 'Start Chat' }}
+        </a>
+    </div>
+</div>

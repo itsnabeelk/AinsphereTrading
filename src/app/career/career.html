@@ -106,6 +106,27 @@
 
 <app-general-footer></app-general-footer>
 
+<div class="whatsapp-widget theme-general" (click)="$event.stopPropagation()">
+    <button type="button" class="whatsapp-btn" aria-label="Open WhatsApp Chat" (click)="toggleWhatsAppBubble($event)">
+        <i class="fab fa-whatsapp"></i>
+    </button>
+
+    <div class="whatsapp-bubble" *ngIf="showWhatsAppBubble">
+        <div class="bubble-header">
+            <span>{{ isArabic ? 'دردشة واتساب' : 'WhatsApp Chat' }}</span>
+            <button class="close-btn" type="button" (click)="closeWhatsAppBubble($event)">×</button>
+        </div>
+
+        <p>
+            {{ isArabic ? 'تواصل معنا مباشرة عبر واتساب' : 'Talk to us directly on WhatsApp' }}
+        </p>
+
+        <a class="start-chat-btn" [href]="whatsappLink" target="_blank" rel="noopener noreferrer">
+            {{ isArabic ? 'ابدأ المحادثة' : 'Start Chat' }}
+        </a>
+    </div>
+</div>
+
 <!-- ================= MODAL ================= -->
 <div class="modal fade" id="applyJobModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">

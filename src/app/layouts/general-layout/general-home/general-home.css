@@ -6,3 +6,28 @@
 .rtl .h9-about-area {
     flex-direction: row-reverse;
 }
+
+
+@media (max-width:780px) {
+
+    .tj-slider-item .slider-content {
+        max-width: 95%;
+        margin: 0 auto;
+    }
+
+    .hero-thumb .swiper-wrapper {
+        display: none;
+    }
+
+    .circle-text-wrap {
+        display: none;
+    }
+
+    .tj-slider-item .slider-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+}

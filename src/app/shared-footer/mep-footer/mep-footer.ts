@@ -14,4 +14,5 @@ export class MEPFooter {
     const saved = localStorage.getItem('lang');
     this.currentLang = (saved as 'en' | 'ar') || 'en';
   }
+
 }

@@ -58,3 +58,11 @@
 .h6-hero-history-desc {
     color: #fff;
 }
+
+@media (max-width:780px) {
+    .h6-hero-bottom {
+        padding-top: 0;
+        font-size: 12px;
+    }
+
+}

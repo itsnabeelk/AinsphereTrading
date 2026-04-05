@@ -6,3 +6,129 @@
     background-color: #020e1c;
     border-color: #020e1c;
 }
+
+
+.whatsapp-widget {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 99999;
+    --wa-theme: #1f1f1f;
+}
+
+.whatsapp-widget.theme-general {
+    --wa-theme: #020e1c;
+}
+
+.whatsapp-widget.theme-fmcg {
+    --wa-theme: #669966;
+}
+
+.whatsapp-widget.theme-mep {
+    --wa-theme: #ea5825;
+}
+
+.whatsapp-widget.theme-uniform {
+    --wa-theme: #208598;
+}
+
+.whatsapp-btn {
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: #25d366;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
+    transition: transform 0.25s ease;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.08);
+}
+
+.whatsapp-bubble {
+    position: absolute;
+    right: 0;
+    bottom: 72px;
+    width: 260px;
+    padding: 14px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.2);
+    animation: whatsappFadeUp 0.25s ease;
+}
+
+.bubble-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    background: var(--wa-theme);
+}
+
+.close-btn {
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.whatsapp-bubble p {
+    margin: 12px 0;
+    color: #303030;
+    font-size: 14px;
+}
+
+.start-chat-btn {
+    display: block;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    background: var(--wa-theme);
+}
+
+@keyframes whatsappFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .whatsapp-widget {
+        right: 16px;
+        bottom: 16px;
+    }
+
+    .whatsapp-bubble {
+        width: 230px;
+    }
+}
+
+html[dir="rtl"] .whatsapp-widget {
+    right: auto;
+    left: 24px;
+}
+
+html[dir="rtl"] .whatsapp-bubble {
+    right: auto;
+    left: 0;
+}

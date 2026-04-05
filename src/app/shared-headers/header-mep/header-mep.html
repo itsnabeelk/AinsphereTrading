@@ -19,15 +19,6 @@
                         <i class="fa-thin fa-times"></i></button>
                 </div>
             </div>
-            <div class="hamburger-search-area">
-                <h5 class="hamburger-title">Search Now!</h5>
-                <div class="hamburger_search">
-                    <form>
-                        <button type="submit"><i class="tji-search"></i></button>
-                        <input type="search" autocomplete="off" name="s" value="" placeholder="Search here...">
-                    </form>
-                </div>
-            </div>
             <div class="hamburger_menu">
                 <div class="mobile_menu">
                     <ul>
@@ -77,6 +68,20 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="hamburger-lang-switch">
+                <a class="tj-primary-btn" href="javascript:void(0)"
+                    (click)="setLanguage(currentLang === 'ar' ? 'en' : 'ar')">
+                    <span class="btn-text lang-btn d-flex align-items-center gap-2">
+                        <img [src]="currentLang === 'ar' ? '/images/flags/uk.png' : '/images/flags/saudi.png'"
+                            width="18" height="12" alt="lang">
+                        <span>
+                            {{ currentLang === 'ar' ? 'English' : 'العربية' }}
+                        </span>
+                    </span>
+                </a>
+            </div>
+
             <div class="hamburger-infos">
                 <h5 class="hamburger-title">Contact Info</h5>
                 <div class="contact-info">
@@ -175,7 +180,7 @@
                     </div>
 
                     <!-- header right info -->
-                    <div class="header-right-item  d-lg-inline-flex">
+                    <div class="header-right-item d-none d-lg-inline-flex">
                         <div class="header-button">
                             <a class="tj-primary-btn" href="javascript:void(0)"
                                 (click)="setLanguage(currentLang === 'ar' ? 'en' : 'ar')">

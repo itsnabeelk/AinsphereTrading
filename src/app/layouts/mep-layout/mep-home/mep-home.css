@@ -168,3 +168,23 @@
     max-height: 320px !important;
     overflow: hidden;
 }
+
+@media (max-width:780px) {
+    .banner-left-box {
+        padding: 150px 0;
+    }
+
+    .banner-content .banner-link {
+        display: none;
+    }
+
+    .banner-content .banner-desc-area .banner-desc {
+        -webkit-padding-start: 35px;
+        padding-inline-start: 0;
+    }
+
+    .h6-hero-bottom {
+        padding-top: 0;
+        font-size: 12px;
+    }
+}

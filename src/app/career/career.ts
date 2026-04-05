@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { CareerService, CareerJob } from '../service/career.service';
 import { HeaderGeneral } from "../shared-headers/header-general/header-general";
 import { GeneralFooter } from "../shared-footer/general-footer/general-footer";
@@ -38,6 +38,8 @@ export class Career implements OnInit, AfterViewInit, OnDestroy {
   selectedFile: File | null = null;
   selectedFileName: string = '';
   isSubmitting = false;
+  showWhatsAppBubble = false;
+  readonly whatsappLink = 'https://wa.me/+966543612700';
 
   constructor(private careerService: CareerService) { }
 
@@ -228,5 +230,23 @@ export class Career implements OnInit, AfterViewInit, OnDestroy {
     document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
     document.body.classList.remove('modal-open');
     document.body.style.removeProperty('padding-right');
+  }
+
+  toggleWhatsAppBubble(event?: Event): void {
+    event?.stopPropagation();
+    this.showWhatsAppBubble = !this.showWhatsAppBubble;
+  }
+
+  closeWhatsAppBubble(event?: Event): void {
+    event?.stopPropagation();
+    this.showWhatsAppBubble = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.whatsapp-widget')) {
+      this.showWhatsAppBubble = false;
+    }
   }
 }

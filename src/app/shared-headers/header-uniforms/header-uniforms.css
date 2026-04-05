@@ -14,3 +14,22 @@
 .mobile_menu ul li {
     padding-bottom: 12px;
 }
+
+.hamburger-lang-switch {
+    margin-bottom: 24px;
+}
+
+.hamburger-lang-switch .tj-primary-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.hamburger-lang-switch .btn-text {
+    width: 100%;
+    justify-content: center;
+}
+
+html[dir='rtl'] .hamburger-lang-switch .btn-text {
+    flex-direction: row-reverse;
+}

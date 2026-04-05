@@ -14,7 +14,7 @@
     max-width: 100%;
 }
 
-@media (max-wdith:980px) {
+@media (max-width: 980px) {
     .h6-hero .banner-left-box {
         width: auto !important;
     }
@@ -44,6 +44,11 @@
 
     .banner-area {
         height: auto;
+        min-height: auto;
+    }
+
+    .h10-about.section-gap {
+        padding-top: 40px;
     }
 }
 

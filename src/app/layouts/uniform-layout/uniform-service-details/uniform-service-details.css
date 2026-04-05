@@ -1,5 +1,5 @@
 .tj-page-header {
-    background-color: #208598;
+    background-color: #054e5b;
 }
 
 .tj-page-link span i {
@@ -116,21 +116,21 @@
 /* HOVER */
 #service-products .blog-item:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 40px #208598;
+    box-shadow: 0 20px 40px #054e5b;
 }
 
 .service-categories ul li a:hover,
 .service-categories ul li a.active {
     color: var(--tj-color-common-white);
-    background-color: #208598;
+    background-color: #054e5b;
 }
 
 .tj-sidebar-widget {
-    background-color: #2085980a;
+    background-color: #054e5b0a;
 }
 
 .tj-page-header {
-    background-color: #208598;
+    background-color: #054e5b;
 }
 
 .tj-page-link span i {

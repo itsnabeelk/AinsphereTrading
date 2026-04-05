@@ -2,6 +2,10 @@
     color: #669966 !important;
 }
 
+.menu_bar.mobile_menu_bar {
+    background-color: #669966 !important;
+}
+
 .tj-primary-btn {
     background-color: #669966;
 }

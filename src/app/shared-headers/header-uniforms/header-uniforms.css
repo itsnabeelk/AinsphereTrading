@@ -1,5 +1,17 @@
 .tj-primary-btn {
-    background-color: #208598 !important;
+    background-color: #ffffff1a !important;
+}
+
+.menu_bar.mobile_menu_bar {
+    background-color: #054e5b !important;
+}
+
+.hamburger_bg {
+    background-color: #054e5b;
+}
+
+.hamburger_wrapper::before {
+    background: #054e5b;
 }
 
 .mobile_menu ul li a {

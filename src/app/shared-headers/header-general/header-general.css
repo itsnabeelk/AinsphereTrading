@@ -1,3 +1,15 @@
+.menu_bar.mobile_menu_bar {
+    background-color: #020e1c !important;
+}
+
+.hamburger_bg {
+    background-color: #020e1c;
+}
+
+.hamburger_wrapper::before {
+    background: #020e1c;
+}
+
 .mobile_menu ul li a {
     color: #fff;
 }

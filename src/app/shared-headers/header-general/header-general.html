@@ -130,7 +130,7 @@
 <!-- end: Hamburger Menu -->
 
 <!-- start: Header Area -->
-<header class="header-area header-2 header-absolute header-sticky section-gap-x" [class.sticky]="isSticky">
+<header class="header-area header-2 header-absolute header-scroll-fix section-gap-x">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -141,7 +141,7 @@
                     </div>
 
                     <!-- navigation -->
-                    <div class="menu-area d-none d-lg-inline-flex align-items-center">
+                    <div class="menu-area  d-lg-inline-flex align-items-center">
                         <nav id="mobile-menu" class="mainmenu">
                             <ul>
 
@@ -192,7 +192,7 @@
                     </div>
 
                     <!-- header right info -->
-                    <div class="header-right-item d-none d-lg-inline-flex">
+                    <div class="header-right-item  d-lg-inline-flex">
                         <div class="header-button">
                             <a class="tj-primary-btn" href="javascript:void(0)"
                                 (click)="setLanguage(currentLang === 'ar' ? 'en' : 'ar')">

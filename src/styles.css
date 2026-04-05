@@ -2,11 +2,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Droid+Arabic+Kufi:wght@400;700&display=swap');
 
 html[dir="ltr"] * {
-    font-family: "Raleway", "Font Awesome 5 Brands", ;
+    font-family: "Raleway", "Font Awesome 5 Brands", "Font Awesome 6 Pro";
 }
 
 html[dir="rtl"] * {
-    font-family: "cairo", "Font Awesome 5 Brands", "Font Awesome 6 Pro";
+    font-family: "Raleway", "Droid Arabic Kufi", "Font Awesome 5 Brands", "Font Awesome 6 Pro";
 }
 
 .service-item.style-4 .title {
@@ -116,7 +116,19 @@ html[dir="rtl"] .lang-btn {
 }
 
 html[dir="ltr"] .lang-btn {
-    font-family: "Droid Arabic Kufi", "Font Awesome 5 Brands" !important;
+    font-family: "Raleway", "Font Awesome 5 Brands" !important;
+}
+
+*:lang(en),
+*:lang(en-US),
+*:lang(en-GB) {
+    font-family: "Raleway", "Font Awesome 5 Brands", "Font Awesome 6 Pro";
+}
+
+*:lang(ar),
+*:lang(ar-SA),
+*:lang(ar-AE) {
+    font-family: "Raleway", "Droid Arabic Kufi", "Font Awesome 5 Brands", "Font Awesome 6 Pro";
 }
 
 
@@ -162,8 +174,16 @@ html[dir="rtl"] .bg-shape-1 {
 }
 
 
-@media (max-width: 1025px) {
+@media (max-width: 992px) {
     .hamburger-area {
         top: 0 !important
+    }
+
+    #mobile-menu {
+        display: none !important;
+    }
+
+    .header-right-item {
+        display: block !important;
     }
 }

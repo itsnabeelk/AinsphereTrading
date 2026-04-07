@@ -29,7 +29,13 @@ export class App implements OnInit {
 
   ngOnInit(): void {
 
-    manJs();
+    if (typeof manJs === 'function') {
+      try {
+        manJs();
+      } catch {
+        // Avoid blocking app bootstrap if theme JS fails in production.
+      }
+    }
     this.authService.initializeUser();
 
     // 🔥 Detect dashboard route

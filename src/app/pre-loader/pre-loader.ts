@@ -11,9 +11,14 @@ import { CommonModule } from '@angular/common';
 })
 export class PreLoader {
 
-  loading = false;
+  loading = true;
 
   constructor(private router: Router) {
+    // Hard fallback so the preloader never blocks the app forever.
+    setTimeout(() => {
+      this.loading = false;
+    }, 6000);
+
     this.router.events.subscribe(event => {
 
       if (event instanceof NavigationStart) {

@@ -104,11 +104,21 @@
                             <div class="col-sm-6">
                                 <div class="form-input">
                                     <input type="text" name="conName" [(ngModel)]="form.name" #conName="ngModel"
-                                        [placeholder]="t('Full Name*', 'الاسم الكامل*')" required
+                                        [placeholder]="t('Full Name*', 'الاسم الكامل*')"
+                                        required minlength="2" maxlength="100"
+                                        [pattern]="namePattern"
                                         (input)="clearFieldError('name')" />
                                     <small class="text-danger"
                                         *ngIf="(conName.touched || submitted) && conName.invalid">
-                                        {{ t('Full name is required.', 'الاسم مطلوب.') }}
+                                        <span *ngIf="conName.errors?.['required']">
+                                            {{ t('Full name is required.', 'الاسم مطلوب.') }}
+                                        </span>
+                                        <span *ngIf="conName.errors?.['minlength']">
+                                            {{ t('Name must be at least 2 characters.', 'يجب أن يكون الاسم حرفين على الأقل.') }}
+                                        </span>
+                                        <span *ngIf="conName.errors?.['pattern'] && !conName.errors?.['minlength']">
+                                            {{ t('Name must contain letters only.', 'يجب أن يحتوي الاسم على حروف فقط.') }}
+                                        </span>
                                     </small>
                                     <small class="text-danger" *ngIf="fieldErrors.name">
                                         {{ fieldErrors.name }}
@@ -120,7 +130,8 @@
                             <div class="col-sm-6">
                                 <div class="form-input">
                                     <input type="email" name="conEmail" [(ngModel)]="form.email" #conEmail="ngModel"
-                                        [placeholder]="t('Email Address*', 'البريد الإلكتروني*')" required email
+                                        [placeholder]="t('Email Address*', 'البريد الإلكتروني*')"
+                                        required email maxlength="254"
                                         (input)="clearFieldError('email')" />
                                     <small class="text-danger"
                                         *ngIf="(conEmail.touched || submitted) && conEmail.invalid">
@@ -128,7 +139,7 @@
                                             {{ t('Email is required.', 'البريد الإلكتروني مطلوب.') }}
                                         </span>
                                         <span *ngIf="conEmail.errors?.['email']">
-                                            {{ t('Please enter a valid email.', 'يرجى إدخال بريد إلكتروني صحيح.') }}
+                                            {{ t('Please enter a valid email address.', 'يرجى إدخال بريد إلكتروني صحيح.') }}
                                         </span>
                                     </small>
                                     <small class="text-danger" *ngIf="fieldErrors.email">
@@ -141,11 +152,22 @@
                             <div class="col-sm-6">
                                 <div class="form-input">
                                     <input type="tel" name="conPhone" [(ngModel)]="form.phone" #conPhone="ngModel"
-                                        [placeholder]="t('Phone number*', 'رقم الهاتف*')" required
+                                        [placeholder]="t('Phone number*', 'رقم الهاتف*')"
+                                        required minlength="7" maxlength="20"
+                                        [pattern]="phonePattern"
+                                        (keypress)="onPhoneKeyPress($event)"
                                         (input)="clearFieldError('phone')" />
                                     <small class="text-danger"
                                         *ngIf="(conPhone.touched || submitted) && conPhone.invalid">
-                                        {{ t('Phone number is required.', 'رقم الهاتف مطلوب.') }}
+                                        <span *ngIf="conPhone.errors?.['required']">
+                                            {{ t('Phone number is required.', 'رقم الهاتف مطلوب.') }}
+                                        </span>
+                                        <span *ngIf="conPhone.errors?.['pattern'] && !conPhone.errors?.['required']">
+                                            {{ t('Phone must contain digits only (+ - spaces allowed).', 'يجب أن يحتوي رقم الهاتف على أرقام فقط.') }}
+                                        </span>
+                                        <span *ngIf="conPhone.errors?.['minlength']">
+                                            {{ t('Phone must be at least 7 digits.', 'يجب أن يكون رقم الهاتف 7 أرقام على الأقل.') }}
+                                        </span>
                                     </small>
                                     <small class="text-danger" *ngIf="fieldErrors.phone">
                                         {{ fieldErrors.phone }}
@@ -187,7 +209,7 @@
                                 <div class="form-input message-input">
                                     <textarea name="conMessage" id="message" [(ngModel)]="form.message"
                                         #conMessage="ngModel" [placeholder]="t('Type message*', 'اكتب رسالتك*')"
-                                        required minlength="3" maxlength="4000"
+                                        required minlength="10" maxlength="4000"
                                         (input)="clearFieldError('message')"></textarea>
 
                                     <small class="text-danger"
@@ -196,7 +218,7 @@
                                             {{ t('Message is required.', 'الرسالة مطلوبة.') }}
                                         </span>
                                         <span *ngIf="conMessage.errors?.['minlength']">
-                                            {{ t('Message is too short.', 'الرسالة قصيرة جداً.') }}
+                                            {{ t('Message must be at least 10 characters.', 'يجب أن تكون الرسالة 10 أحرف على الأقل.') }}
                                         </span>
                                         <span *ngIf="conMessage.errors?.['maxlength']">
                                             {{ t('Message is too long (max 4000).', 'الرسالة طويلة جداً (الحد 4000).')

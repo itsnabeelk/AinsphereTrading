@@ -56,6 +56,11 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
     message: ''
   };
 
+  /** Allows letters, spaces, hyphens, apostrophes, periods (Unicode-aware via Angular pattern) */
+  readonly namePattern = "^[\\p{L}\\s'\\-.]+$";
+  /** Phone: digits, +, -, spaces, parentheses */
+  readonly phonePattern = '^[0-9+\\-\\s().]{7,20}$';
+
   private storageListener?: () => void;
 
   constructor(
@@ -113,6 +118,11 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
   // ✅ Clear backend error for a field (called from HTML on input/change)
   clearFieldError(field: ContactField) {
     this.fieldErrors[field] = '';
+  }
+
+  /** Allow only digits, +, -, (, ), space in phone fields */
+  onPhoneKeyPress(event: KeyboardEvent): boolean {
+    return /[0-9+\-\s().]/.test(event.key);
   }
 
   submit(f: NgForm) {

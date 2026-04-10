@@ -101,25 +101,26 @@ export class Career implements OnInit, AfterViewInit, OnDestroy {
 
   /* ================= FILE ================= */
   onFileChange(event: any) {
-    const file = event.target.files[0];
+    const file: File = event.target.files[0];
     if (!file) return;
 
-    const allowedTypes = [
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ];
-
-    if (!allowedTypes.includes(file.type)) {
-      this.showToast(this.t('Only PDF, DOC, DOCX allowed', 'يسمح فقط PDF و DOC و DOCX'), true);
+    if (file.type !== 'application/pdf') {
+      this.errors.cv = this.t('Only PDF files are allowed', 'يسمح فقط بملفات PDF');
+      this.selectedFile = null;
+      this.selectedFileName = '';
+      event.target.value = '';
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      this.showToast(this.t('Max file size is 5MB', 'الحد الأقصى 5MB'), true);
+      this.errors.cv = this.t('Max file size is 5MB', 'الحد الأقصى للحجم هو 5 ميجابايت');
+      this.selectedFile = null;
+      this.selectedFileName = '';
+      event.target.value = '';
       return;
     }
 
+    this.errors.cv = '';
     this.selectedFile = file;
     this.selectedFileName = file.name;
   }
@@ -142,19 +143,50 @@ export class Career implements OnInit, AfterViewInit, OnDestroy {
   /* ================= VALIDATION ================= */
   validateForm(): boolean {
     this.errors = {};
+    const namePattern = /^[\p{L}\s'\-.]+$/u;
+    const phonePattern = /^[0-9+\-\s().]{7,20}$/;
 
-    if (!this.form.name) this.errors.name = this.t('Name required', 'الاسم مطلوب');
-
-    if (!this.form.email) {
-      this.errors.email = this.t('Email required', 'البريد الإلكتروني مطلوب');
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.form.email)) {
-      this.errors.email = this.t('Invalid email', 'بريد إلكتروني غير صالح');
+    // Name
+    if (!this.form.name || !this.form.name.trim()) {
+      this.errors.name = this.t('Full name is required', 'الاسم الكامل مطلوب');
+    } else if (this.form.name.trim().length < 2) {
+      this.errors.name = this.t('Name must be at least 2 characters', 'يجب أن يكون الاسم حرفين على الأقل');
+    } else if (!namePattern.test(this.form.name.trim())) {
+      this.errors.name = this.t('Name must contain letters only', 'يجب أن يحتوي الاسم على حروف فقط');
     }
 
-    if (!this.form.phone) this.errors.phone = this.t('Phone required', 'رقم الهاتف مطلوب');
-    if (!this.selectedFile) this.errors.cv = this.t('CV required', 'السيرة الذاتية مطلوبة');
+    // Email
+    if (!this.form.email || !this.form.email.trim()) {
+      this.errors.email = this.t('Email is required', 'البريد الإلكتروني مطلوب');
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(this.form.email.trim())) {
+      this.errors.email = this.t('Please enter a valid email address', 'يرجى إدخال بريد إلكتروني صحيح');
+    }
+
+    // Phone
+    if (!this.form.phone || !this.form.phone.trim()) {
+      this.errors.phone = this.t('Phone number is required', 'رقم الهاتف مطلوب');
+    } else if (!phonePattern.test(this.form.phone.trim())) {
+      this.errors.phone = this.t('Phone must be 7–20 digits (+ - spaces allowed)', 'يجب أن يكون رقم الهاتف 7-20 رقماً');
+    }
+
+    // CV
+    if (!this.selectedFile) {
+      this.errors.cv = this.t('CV file is required (PDF only)', 'السيرة الذاتية مطلوبة (PDF فقط)');
+    }
 
     return Object.keys(this.errors).length === 0;
+  }
+
+  /** Allow only digits, +, -, (, ), space in phone fields */
+  onPhoneKeyPress(event: KeyboardEvent): boolean {
+    return /[0-9+\-\s().]/.test(event.key);
+  }
+
+  /** Clear a single field error when user starts typing */
+  clearError(field: string) {
+    if (this.errors[field]) {
+      this.errors[field] = '';
+    }
   }
 
   /* ================= SUBMIT ================= */
@@ -194,9 +226,10 @@ export class Career implements OnInit, AfterViewInit, OnDestroy {
       error: (err) => {
         console.error(err);
 
-        if (err?.error?.errors) {
-          this.errors = err.error.errors;
-          this.showToast(this.t('Validation error', 'خطأ في التحقق'), true);
+        if (err?.error?.errors && typeof err.error.errors === 'object') {
+          // Map backend field errors directly onto the errors object
+          this.errors = { ...err.error.errors };
+          this.showToast(this.t('Please correct the highlighted fields', 'يرجى تصحيح الحقول المشار إليها'), true);
         } else {
           this.showToast(
             err?.error?.message ||

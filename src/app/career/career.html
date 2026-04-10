@@ -151,28 +151,38 @@
 
                         <!-- NAME -->
                         <div class="col-md-6">
-                            <label>{{ t('Full Name *', 'الاسم الكامل *') }}</label>
-                            <input class="form-control" [(ngModel)]="form.name" name="name">
-                            <small class="text-danger" *ngIf="errors.name">{{ errors.name }}</small>
+                            <label class="form-label">{{ t('Full Name *', 'الاسم الكامل *') }}</label>
+                            <input class="form-control" [(ngModel)]="form.name" name="name"
+                                type="text" required maxlength="100"
+                                (input)="clearError('name')"
+                                [class.is-invalid]="errors.name" />
+                            <div class="invalid-feedback" *ngIf="errors.name">{{ errors.name }}</div>
                         </div>
 
                         <!-- EMAIL -->
                         <div class="col-md-6">
-                            <label>{{ t('Email *', 'البريد الإلكتروني *') }}</label>
-                            <input class="form-control" [(ngModel)]="form.email" name="email">
-                            <small class="text-danger" *ngIf="errors.email">{{ errors.email }}</small>
+                            <label class="form-label">{{ t('Email *', 'البريد الإلكتروني *') }}</label>
+                            <input class="form-control" [(ngModel)]="form.email" name="email"
+                                type="email" required maxlength="254"
+                                (input)="clearError('email')"
+                                [class.is-invalid]="errors.email" />
+                            <div class="invalid-feedback" *ngIf="errors.email">{{ errors.email }}</div>
                         </div>
 
                         <!-- PHONE -->
                         <div class="col-md-6">
-                            <label>{{ t('Phone *', 'رقم الهاتف *') }}</label>
-                            <input class="form-control" [(ngModel)]="form.phone" name="phone">
-                            <small class="text-danger" *ngIf="errors.phone">{{ errors.phone }}</small>
+                            <label class="form-label">{{ t('Phone *', 'رقم الهاتف *') }}</label>
+                            <input class="form-control" [(ngModel)]="form.phone" name="phone"
+                                type="tel" required maxlength="20"
+                                (keypress)="onPhoneKeyPress($event)"
+                                (input)="clearError('phone')"
+                                [class.is-invalid]="errors.phone" />
+                            <div class="invalid-feedback" *ngIf="errors.phone">{{ errors.phone }}</div>
                         </div>
 
                         <!-- POSITION -->
                         <div class="col-md-6">
-                            <label>
+                            <label class="form-label">
                                 {{ selectedJob
                                 ? t('Position', 'الوظيفة')
                                 : t('Application Type', 'نوع الطلب') }}
@@ -185,22 +195,27 @@
 
                         <!-- FILE -->
                         <div class="col-12">
-                            <label>{{ t('Upload CV *', 'رفع السيرة الذاتية *') }}</label>
+                            <label class="form-label">{{ t('Upload CV * (PDF only)', 'رفع السيرة الذاتية * (PDF فقط)') }}</label>
 
-                            <input type="file" class="form-control" accept=".pdf,.doc,.docx"
-                                (change)="onFileChange($event)">
+                            <input type="file" class="form-control" accept=".pdf"
+                                (change)="onFileChange($event)"
+                                [class.is-invalid]="errors.cv">
 
-                            <small class="text-danger" *ngIf="errors.cv">{{ errors.cv }}</small>
+                            <div class="invalid-feedback" *ngIf="errors.cv">{{ errors.cv }}</div>
 
-                            <div *ngIf="selectedFileName" class="mt-2 text-success">
-                                {{ selectedFileName }}
+                            <div *ngIf="selectedFileName" class="mt-2 text-success small">
+                                <i class="fas fa-check-circle"></i> {{ selectedFileName }}
                             </div>
                         </div>
 
                         <!-- MESSAGE -->
                         <div class="col-12">
-                            <label>{{ t('Message', 'رسالة') }}</label>
-                            <textarea class="form-control" [(ngModel)]="form.message" name="message"></textarea>
+                            <label class="form-label">{{ t('Message (optional)', 'رسالة (اختياري)') }}</label>
+                            <textarea class="form-control" [(ngModel)]="form.message" name="message"
+                                rows="3" maxlength="2000"
+                                (input)="clearError('message')"
+                                [class.is-invalid]="errors.message"></textarea>
+                            <div class="invalid-feedback" *ngIf="errors.message">{{ errors.message }}</div>
                         </div>
 
                     </div>

@@ -56,8 +56,8 @@ export class ContactUs implements OnInit, AfterViewInit, OnDestroy {
     message: ''
   };
 
-  /** Allows letters, spaces, hyphens, apostrophes, periods (Unicode-aware via Angular pattern) */
-  readonly namePattern = "^[\\p{L}\\s'\\-.]+$";
+  /** Allows Latin & Arabic letters, spaces, hyphens, apostrophes, periods */
+  readonly namePattern = "^[A-Za-z\\u0600-\\u06FF\\s'\\-.]+$";
   /** Phone: digits, +, -, spaces, parentheses */
   readonly phonePattern = '^[0-9+\\-\\s().]{7,20}$';
 

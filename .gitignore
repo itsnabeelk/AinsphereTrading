@@ -44,4 +44,13 @@ Thumbs.db
 
 # Environment files
 .env
-.env.*
+
+# Backend app
+/backend/node_modules/
+/backend/uploads/
+/backend/.env
+/backend/Backend.zip
+/Backend/node_modules/
+/Backend/uploads/
+/Backend/.env
+/Backend/Backend.zip

@@ -1,0 +1,218 @@
+<div class="container-fluid py-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-semibold mb-0">Inbox & Form Submissions</h4>
+            </div>
+
+            <!-- ================= TABS ================= -->
+            <ul class="nav nav-tabs mb-4" id="inboxTabs">
+                <li class="nav-item">
+                    <button class="nav-link" [class.active]="activeTab === 'contacts'" (click)="changeTab('contacts')">
+                        Contact Inquiries <span class="badge bg-secondary ms-1">{{ contacts.length }}</span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" [class.active]="activeTab === 'careers'" (click)="changeTab('careers')">
+                        Career Applications <span class="badge bg-secondary ms-1">{{ careers.length }}</span>
+                    </button>
+                </li>
+            </ul>
+
+            <!-- ================= TAB CONTENT ================= -->
+            <div class="tab-content">
+
+                <!-- ================= CONTACT INQUIRIES ================= -->
+                <div class="tab-pane fade show active" *ngIf="activeTab === 'contacts'">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle border-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 20%;">Sender Name</th>
+                                    <th style="width: 20%;">Email</th>
+                                    <th style="width: 15%;">Phone</th>
+                                    <th style="width: 15%;">Subject</th>
+                                    <th style="width: 15%;">Date</th>
+                                    <th style="width: 15%; text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of contacts" (click)="openContactModal(item)" style="cursor: pointer;">
+                                    <td class="fw-semibold">{{ item.name }}</td>
+                                    <td>{{ item.email }}</td>
+                                    <td>{{ item.phone }}</td>
+                                    <td>
+                                        <span class="badge bg-light text-dark border">{{ item.subject }}</span>
+                                    </td>
+                                    <td class="text-muted">{{ item.created_at | date:'mediumDate' }}</td>
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-sm btn-outline-primary me-2" (click)="openContactModal(item)">
+                                            View
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" (click)="deleteContact(item.id, $event)">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="contacts.length === 0">
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        No contact inquiries found.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ================= CAREER APPLICATIONS ================= -->
+                <div class="tab-pane fade show active" *ngIf="activeTab === 'careers'">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle border-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th style="width: 20%;">Applicant Name</th>
+                                    <th style="width: 20%;">Email</th>
+                                    <th style="width: 15%;">Phone</th>
+                                    <th style="width: 15%;">Position</th>
+                                    <th style="width: 15%;">CV Attachment</th>
+                                    <th style="width: 15%; text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of careers" (click)="openCareerModal(item)" style="cursor: pointer;">
+                                    <td class="fw-semibold">{{ item.name }}</td>
+                                    <td>{{ item.email }}</td>
+                                    <td>{{ item.phone }}</td>
+                                    <td>
+                                        <span class="badge bg-light text-dark border">{{ item.job_title }}</span>
+                                    </td>
+                                    <td>
+                                        <a *ngIf="item.cv_path" [href]="getCvUrl(item.cv_path)" target="_blank" class="btn btn-xs btn-outline-success py-1 px-2 font-size-12" (click)="$event.stopPropagation()">
+                                            <i class="fa-solid fa-file-pdf me-1"></i> Download PDF
+                                        </a>
+                                        <span *ngIf="!item.cv_path" class="text-muted">No Attachment</span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <button class="btn btn-sm btn-outline-primary me-2" (click)="openCareerModal(item)">
+                                            View
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-danger" (click)="deleteCareer(item.id, $event)">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="careers.length === 0">
+                                    <td colspan="6" class="text-center py-4 text-muted">
+                                        No career applications found.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ================= CONTACT INQUIRY DETAILS MODAL ================= -->
+<div class="modal fade" id="contactMailModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-semibold">Inquiry Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" *ngIf="selectedContact">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="text-muted font-size-13 mb-1">Sender Name</label>
+                        <div class="p-2 border rounded bg-light fw-medium">{{ selectedContact.name }}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted font-size-13 mb-1">Submission Date</label>
+                        <div class="p-2 border rounded bg-light">{{ selectedContact.created_at | date:'medium' }}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted font-size-13 mb-1">Email Address</label>
+                        <div class="p-2 border rounded bg-light">
+                            <a href="mailto:{{ selectedContact.email }}" class="text-decoration-none">{{ selectedContact.email }}</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted font-size-13 mb-1">Phone Number</label>
+                        <div class="p-2 border rounded bg-light">{{ selectedContact.phone }}</div>
+                    </div>
+                    <div class="col-12">
+                        <label class="text-muted font-size-13 mb-1">Subject / Trade Area</label>
+                        <div class="p-2 border rounded bg-light fw-semibold">{{ selectedContact.subject }}</div>
+                    </div>
+                    <div class="col-12">
+                        <label class="text-muted font-size-13 mb-1">Message Content</label>
+                        <div class="p-3 border rounded bg-light" style="white-space: pre-wrap; line-height: 1.6;">{{ selectedContact.message }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= CAREER APPLICATION DETAILS MODAL ================= -->
+<div class="modal fade" id="careerMailModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-semibold">Application Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" *ngIf="selectedCareer">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="text-muted font-size-13 mb-1">Applicant Name</label>
+                        <div class="p-2 border rounded bg-light fw-medium">{{ selectedCareer.name }}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted font-size-13 mb-1">Submission Date</label>
+                        <div class="p-2 border rounded bg-light">{{ selectedCareer.created_at | date:'medium' }}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted font-size-13 mb-1">Email Address</label>
+                        <div class="p-2 border rounded bg-light">
+                            <a href="mailto:{{ selectedCareer.email }}" class="text-decoration-none">{{ selectedCareer.email }}</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted font-size-13 mb-1">Phone Number</label>
+                        <div class="p-2 border rounded bg-light">{{ selectedCareer.phone }}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted font-size-13 mb-1">Target Position</label>
+                        <div class="p-2 border rounded bg-light fw-semibold">{{ selectedCareer.job_title }}</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="text-muted font-size-13 mb-1">CV Attachment</label>
+                        <div class="p-2 border rounded bg-light">
+                            <a *ngIf="selectedCareer.cv_path" [href]="getCvUrl(selectedCareer.cv_path)" target="_blank" class="text-success text-decoration-none fw-medium">
+                                <i class="fa-solid fa-file-pdf me-1"></i> Open Resume PDF
+                            </a>
+                            <span *ngIf="!selectedCareer.cv_path" class="text-muted">No Attachment</span>
+                        </div>
+                    </div>
+                    <div class="col-12" *ngIf="selectedCareer.message">
+                        <label class="text-muted font-size-13 mb-1">Cover Message</label>
+                        <div class="p-3 border rounded bg-light" style="white-space: pre-wrap; line-height: 1.6;">{{ selectedCareer.message }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

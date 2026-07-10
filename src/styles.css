@@ -187,3 +187,187 @@ html[dir="rtl"] .bg-shape-1 {
         display: block !important;
     }
 }
+
+/* Footer Contact Info & Socials */
+.footer-contact-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-contact-info ul li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    color: var(--tj-color-text-body);
+}
+
+.footer-contact-info ul li a {
+    color: var(--tj-color-text-body) !important;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-contact-info ul li a:hover {
+    color: var(--tj-color-theme-primary) !important;
+}
+
+.footer-contact-info ul li .icon {
+    color: var(--tj-color-theme-primary);
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.footer-social-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 12px;
+}
+
+.footer-social-links ul li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--tj-color-text-body);
+    transition: all 0.3s ease;
+}
+
+.footer-social-links ul li a:hover {
+    background-color: var(--tj-color-theme-primary);
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+/* Footer Icon Circles & Color Matching */
+.footer-icon-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #ffffff !important;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-inline-end: 10px;
+}
+
+.footer-icon-circle i {
+    color: #ffffff !important;
+    font-size: 14px;
+}
+
+.bg-general-brand {
+    background-color: #031b37 !important;
+}
+
+.bg-fmcg-brand {
+    background-color: #1e421d !important;
+}
+
+.bg-mep-brand {
+    background-color: #af1e30 !important;
+}
+
+.bg-uniforms-brand {
+    background-color: #054e5b !important;
+}
+
+/* Footer heading color alignment */
+.footer-widget .title {
+    color: #000000 !important;
+}
+
+app-uniforms-footer .footer-widget .title {
+    color: #ffffff !important;
+}
+
+/* Uniforms footer specific overrides for text & dark circle backgrounds */
+app-uniforms-footer .footer-contact-info ul li .text,
+app-uniforms-footer .footer-contact-info ul li a,
+app-uniforms-footer .footer-contact-info ul li a .text,
+app-uniforms-footer .tj-copyright-area p,
+app-uniforms-footer .tj-copyright-area p a {
+    color: #ffffff !important;
+}
+
+app-uniforms-footer .footer-icon-circle.bg-uniforms-brand,
+app-uniforms-footer .footer-social-icon.bg-uniforms-brand {
+    background-color: #032d35 !important; /* Darker than #054e5b background */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Simplified copyright link style matching surrounding muted color */
+.tj-copyright-area p a {
+    color: inherit !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.tj-copyright-area p a:hover {
+    color: var(--tj-color-theme-primary) !important;
+}
+
+/* Footer Social Icons inside Round shape & Dividers */
+.footer-social-icon {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.footer-social-icon i {
+    color: #ffffff !important;
+    font-size: 14px;
+}
+
+.footer-social-icon:hover {
+    transform: translateY(-3px);
+    opacity: 0.9;
+}
+
+.footer-divider {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+    margin: 20px 0 15px 0;
+}
+
+/* Light backgrounds override for FMCG and MEP footers */
+app-fmcg-footer .footer-divider,
+app-mep-footer .footer-divider {
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+/* FMCG & MEP Mobile Side Menu background colors */
+app-header-fmcg .hamburger_bg {
+    background-color: #102804 !important;
+}
+
+app-header-mep .hamburger_bg {
+    background-color: #6d1920 !important;
+}
+
+/* Hide background shape / decorative element inside hamburger menu wrapper for FMCG and MEP */
+app-header-fmcg .hamburger_wrapper::before,
+app-header-mep .hamburger_wrapper::before {
+    display: none !important;
+    content: none !important;
+}

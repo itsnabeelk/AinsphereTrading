@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MepHomeService } from '../../../service/mep-home.service';
 import { MepServicesService } from '../../../service/mep-services.service';
+import { FooterSettingsService } from '../../../service/footer-settings.service';
 
 declare var bootstrap: any;
 
@@ -17,6 +18,7 @@ declare var bootstrap: any;
 export class MepDashboardHome implements OnInit {
 
   loading = true;
+  footerData: any = { facebook_url: '', instagram_url: '', twitter_url: '', linkedin_url: '', email: '', phone: '', location_en: '', location_ar: '' };
 
   /* ================= TOAST ================= */
 
@@ -121,11 +123,26 @@ export class MepDashboardHome implements OnInit {
   constructor(
     private api: MepHomeService,
     private serviceApi: MepServicesService,
-    private router: Router
+    private router: Router,
+    private footerSettingsService: FooterSettingsService
   ) { }
 
   ngOnInit(): void {
     this.loadAll();
+    this.loadFooterSettings();
+  }
+
+  loadFooterSettings() {
+    this.footerSettingsService.getFooterSettings('mep').subscribe(res => {
+      this.footerData = res;
+    });
+  }
+
+  saveFooterSettings() {
+    this.footerSettingsService.updateFooterSettings('mep', this.footerData).subscribe({
+      next: () => this.showToast('Footer settings updated successfully', 'success'),
+      error: err => this.showToast(err?.error?.message || 'Update failed', 'danger')
+    });
   }
 
   goBack() {

@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UniformHomeService } from '../../../service/uniform-home.service';
 import { UniformServicesService } from '../../../service/uniform-services.service';
+import { FooterSettingsService } from '../../../service/footer-settings.service';
+
 declare var bootstrap: any;
 
 @Component({
@@ -18,6 +20,7 @@ export class UniformDashboardHome implements OnInit {
   loading = true;
   MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
   ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+  footerData: any = { facebook_url: '', instagram_url: '', twitter_url: '', linkedin_url: '', email: '', phone: '', location_en: '', location_ar: '' };
 
   /* ================= HERO ================= */
 
@@ -128,12 +131,27 @@ export class UniformDashboardHome implements OnInit {
   constructor(
     private router: Router,
     private api: UniformHomeService,
-    private serviceApi: UniformServicesService
+    private serviceApi: UniformServicesService,
+    private footerSettingsService: FooterSettingsService
   ) { }
 
   ngOnInit(): void {
     this.loadAll();
     this.loadServices();
+    this.loadFooterSettings();
+  }
+
+  loadFooterSettings() {
+    this.footerSettingsService.getFooterSettings('uniform').subscribe(res => {
+      this.footerData = res;
+    });
+  }
+
+  saveFooterSettings() {
+    this.footerSettingsService.updateFooterSettings('uniform', this.footerData).subscribe({
+      next: () => this.showToast('Footer settings updated successfully', 'success'),
+      error: err => this.showToast(err?.error?.message || 'Update failed', 'danger')
+    });
   }
 
   loadAll() {

@@ -58,6 +58,11 @@
                         Services
                     </button>
                 </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#footerTab">
+                        Footer Settings
+                    </button>
+                </li>
 
             </ul>
 
@@ -445,6 +450,53 @@
                     </div>
 
                 </div>
+
+                <!-- ================= FOOTER TAB ================= -->
+                <div class="tab-pane fade" id="footerTab">
+                    <h5 class="mb-3 fw-semibold">Footer Settings</h5>
+                    <form (ngSubmit)="saveFooterSettings()" #footerForm="ngForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Email</label>
+                                <input type="email" class="form-control" name="email" [(ngModel)]="footerData.email" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Phone</label>
+                                <input type="text" class="form-control" name="phone" [(ngModel)]="footerData.phone" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Location (English)</label>
+                                <input type="text" class="form-control" name="location_en" [(ngModel)]="footerData.location_en" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Location (Arabic)</label>
+                                <input type="text" class="form-control" name="location_ar" [(ngModel)]="footerData.location_ar" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Facebook URL</label>
+                                <input type="url" class="form-control" name="facebook_url" [(ngModel)]="footerData.facebook_url">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Instagram URL</label>
+                                <input type="url" class="form-control" name="instagram_url" [(ngModel)]="footerData.instagram_url">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">Twitter / X URL</label>
+                                <input type="url" class="form-control" name="twitter_url" [(ngModel)]="footerData.twitter_url">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-medium">LinkedIn URL</label>
+                                <input type="url" class="form-control" name="linkedin_url" [(ngModel)]="footerData.linkedin_url">
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-primary" [disabled]="!footerForm.form.valid">
+                                    Save Footer Settings
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

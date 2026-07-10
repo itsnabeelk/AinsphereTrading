@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FmcgHomeService } from '../../../service/fmcg-home.service';
 import { FmcgServicesService, FmcgService } from '../../../service/fmcg-services.service';
-
+import { FooterSettingsService } from '../../../service/footer-settings.service';
 
 declare var bootstrap: any;
 
@@ -18,6 +18,7 @@ declare var bootstrap: any;
 export class FmcgDashboardHome implements OnInit {
 
   loading = true;
+  footerData: any = { facebook_url: '', instagram_url: '', twitter_url: '', linkedin_url: '', email: '', phone: '', location_en: '', location_ar: '' };
 
   /* ================= HERO ================= */
 
@@ -115,12 +116,27 @@ export class FmcgDashboardHome implements OnInit {
   constructor(
     private router: Router,
     private api: FmcgHomeService,
-    private servicesApi: FmcgServicesService
+    private servicesApi: FmcgServicesService,
+    private footerSettingsService: FooterSettingsService
   ) { }
 
   ngOnInit(): void {
     this.loadAll();
     this.loadServices();
+    this.loadFooterSettings();
+  }
+
+  loadFooterSettings() {
+    this.footerSettingsService.getFooterSettings('fmcg').subscribe(res => {
+      this.footerData = res;
+    });
+  }
+
+  saveFooterSettings() {
+    this.footerSettingsService.updateFooterSettings('fmcg', this.footerData).subscribe({
+      next: () => this.showToast('Footer settings updated successfully', 'success'),
+      error: err => this.showToast(err?.error?.message || 'Update failed', 'danger')
+    });
   }
 
   /* ================= LOAD ALL ================= */

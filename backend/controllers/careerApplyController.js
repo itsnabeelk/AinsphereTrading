@@ -1,6 +1,7 @@
 const sendEmail = require('../utils/sendEmail');
 const path = require('path');
 const fs = require('fs');
+const db = require('../config/db');
 
 /* ================= SAFE DELETE ================= */
 const safeDelete = (filePath) => {
@@ -108,8 +109,12 @@ exports.apply = async (req, res) => {
             ]
         });
 
-        /* ================= CLEANUP AFTER SUCCESS ================= */
-        safeDelete(file.path);
+        /* ================= SAVE TO DB ================= */
+        const cvPath = `/uploads/cv/${file.filename}`;
+        await db.query(`
+            INSERT INTO career_applications (name, email, phone, job_title, message, cv_path)
+            VALUES (?, ?, ?, ?, ?, ?)
+        `, [n, e, p, j, m, cvPath]);
 
         res.json({ message: 'Application sent successfully' });
 

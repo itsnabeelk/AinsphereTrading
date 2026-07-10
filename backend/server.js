@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
-
 const app = express();
 
 app.use(
@@ -60,6 +59,8 @@ app.use('/uniform-service-detail', require('./routes/uniformServiceDetail.routes
 
 app.use('/contact', contactRoutes);
 app.use('/careers', require('./routes/career.routes'));
+app.use('/footer-settings', require('./routes/footerSettings.routes'));
+app.use('/mails', require('./routes/mails.routes'));
 // HEALTH
 app.get('/health', (req, res) => {
     res.json({ status: 'API Running' });

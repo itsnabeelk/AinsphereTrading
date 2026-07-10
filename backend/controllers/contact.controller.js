@@ -1,4 +1,5 @@
 const sendEmail = require('../utils/sendEmail');
+const db = require('../config/db');
 
 const ALLOWED_SUBJECTS = [
   'General Trading',
@@ -70,6 +71,12 @@ exports.send = async (req, res) => {
         errors
       });
     }
+
+    /* ================= SAVE TO DB ================= */
+    await db.query(`
+      INSERT INTO contact_submissions (name, email, phone, subject, message)
+      VALUES (?, ?, ?, ?, ?)
+    `, [n, e, p, s, m]);
 
     /* ================= EMAIL ================= */
     const logoUrl = process.env.COMPANY_LOGO_URL || 'https://ainspheretrading.com/images/logos/logo-dark.png';

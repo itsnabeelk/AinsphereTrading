@@ -114,6 +114,12 @@ export const routes: Routes = [
                             import('./dashboard-layout/pages/dashboard-career/dashboard-career')
                                 .then(m => m.DashboardCareer)
                     },
+                    {
+                        path: 'dashboard-mails',
+                        loadComponent: () =>
+                            import('./dashboard-layout/pages/dashboard-mails/dashboard-mails')
+                                .then(m => m.DashboardMails)
+                    },
 
                 ]
             }

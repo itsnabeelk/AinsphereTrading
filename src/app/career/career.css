@@ -132,3 +132,70 @@ html[dir="rtl"] .whatsapp-bubble {
     right: auto;
     left: 0;
 }
+
+/* Button group and text formatting for Careers page */
+.tj-careers-btn-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.tj-careers-desc {
+    margin-top: 15px;
+    height: 48px;
+    overflow: hidden;
+}
+
+.tj-careers-desc p {
+    color: var(--tj-color-text-body);
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.3s ease-in-out;
+}
+
+.tj-careers:hover .tj-careers-desc p {
+    color: #ffffff;
+}
+
+.job-description-content {
+    padding: 10px 15px;
+}
+
+.job-desc-para {
+    margin-bottom: 15px;
+    line-height: 1.6;
+    color: #4a5568;
+    font-size: 16px;
+}
+
+.job-desc-list {
+    margin-bottom: 20px;
+    padding-inline-start: 24px;
+    padding-inline-end: 15px;
+    list-style-type: disc;
+}
+
+.job-desc-list li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+    color: #4a5568;
+    font-size: 16px;
+}
+
+/* Modal details layout styling */
+.job-details-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.job-details-meta .badge {
+    font-size: 14px;
+    border-radius: 6px;
+    padding: 8px 12px;
+}

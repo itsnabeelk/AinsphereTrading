@@ -21,6 +21,8 @@ export class Career implements OnInit, AfterViewInit, OnDestroy {
   jobs: CareerJob[] = [];
   selectedJob: CareerJob | null = null;
   private modalInstance: any;
+  formattedJobDescription = '';
+  private viewModalInstance: any;
 
   /* ================= LANGUAGE ================= */
   isArabic = false;
@@ -55,6 +57,16 @@ export class Career implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.storageListener) {
       window.removeEventListener('storage', this.storageListener as any);
+    }
+    
+    // Clean up modals from body to prevent memory / DOM leaks
+    const applyModalEl = document.getElementById('applyJobModal');
+    if (applyModalEl && applyModalEl.parentNode === document.body) {
+      document.body.removeChild(applyModalEl);
+    }
+    const viewModalEl = document.getElementById('viewJobModal');
+    if (viewModalEl && viewModalEl.parentNode === document.body) {
+      document.body.removeChild(viewModalEl);
     }
   }
 
@@ -134,10 +146,95 @@ export class Career implements OnInit, AfterViewInit, OnDestroy {
       const modalEl = document.getElementById('applyJobModal');
       if (!modalEl) return;
 
+      // Move modal to body to prevent GSAP ScrollSmoother transform issues
+      document.body.appendChild(modalEl);
+
       this.modalInstance?.dispose();
       this.modalInstance = new bootstrap.Modal(modalEl);
       this.modalInstance.show();
     }, 50);
+  }
+
+  openReadMoreModal(job: CareerJob): void {
+    this.selectedJob = job;
+    this.formattedJobDescription = this.formatDescription(this.isArabic ? job.description_ar : job.description_en);
+
+    setTimeout(() => {
+      const modalEl = document.getElementById('viewJobModal');
+      if (!modalEl) return;
+
+      // Move modal to body to prevent GSAP ScrollSmoother transform issues
+      document.body.appendChild(modalEl);
+
+      this.viewModalInstance?.dispose();
+      this.viewModalInstance = new bootstrap.Modal(modalEl);
+      this.viewModalInstance.show();
+    }, 50);
+  }
+
+  closeReadMoreModal() {
+    this.viewModalInstance?.hide();
+
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('padding-right');
+  }
+
+  applyFromReadMore() {
+    const job = this.selectedJob;
+    this.closeReadMoreModal();
+    setTimeout(() => {
+      this.openApplyModal(job);
+    }, 300);
+  }
+
+  formatDescription(text: string): string {
+    if (!text) return '';
+    
+    const lines = text.split('\n');
+    let html = '';
+    let inList = false;
+
+    for (let line of lines) {
+      line = line.trim();
+      if (!line) {
+        if (inList) {
+          html += '</ul>';
+          inList = false;
+        }
+        continue;
+      }
+
+      if (line.startsWith('-') || line.startsWith('*') || line.startsWith('•')) {
+        if (!inList) {
+          html += '<ul class="job-desc-list">';
+          inList = true;
+        }
+        const content = line.substring(1).trim();
+        html += `<li>${content}</li>`;
+      } else {
+        if (inList) {
+          html += '</ul>';
+          inList = false;
+        }
+        html += `<p class="job-desc-para">${line}</p>`;
+      }
+    }
+
+    if (inList) {
+      html += '</ul>';
+    }
+
+    return html;
+  }
+
+  getPreviewDescription(text: string): string {
+    if (!text) return '';
+    let cleanText = text.replace(/[-*•]/g, '').replace(/\n+/g, ' ').trim();
+    if (cleanText.length > 120) {
+      return cleanText.substring(0, 120) + '...';
+    }
+    return cleanText;
   }
 
   /* ================= VALIDATION ================= */

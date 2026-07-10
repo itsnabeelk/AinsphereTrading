@@ -35,9 +35,9 @@
                         {{ isArabic ? job.title_ar : job.title_en }}
                     </h4>
 
-                    <div class="tj-careers-salary">
+                    <div class="tj-careers-desc">
                         <p>
-                            {{ isArabic ? job.description_ar : job.description_en }}
+                            {{ getPreviewDescription(isArabic ? job.description_ar : job.description_en) }}
                         </p>
                     </div>
 
@@ -47,9 +47,24 @@
                             {{ job.location || t('Saudi Arabia', 'السعودية') }}
                         </span>
 
-                        <a href="javascript:void(0)" class="tj-careers-btn" (click)="openApplyModal(job)">
-                            <span>{{ t('Apply Now', 'قدم الآن') }}</span>
-                        </a>
+                        <div class="tj-careers-btn-group">
+                            <a href="javascript:void(0)" class="tj-careers-btn" (click)="openReadMoreModal(job)">
+                                <span class="btn-text">
+                                    <span>{{ t('Read More', 'اقرأ المزيد') }}</span>
+                                </span>
+                                <span class="btn-icon">
+                                    <i class="tji-arrow-right-long"></i>
+                                </span>
+                            </a>
+                            <a href="javascript:void(0)" class="tj-careers-btn" (click)="openApplyModal(job)">
+                                <span class="btn-text">
+                                    <span>{{ t('Apply Now', 'قدم الآن') }}</span>
+                                </span>
+                                <span class="btn-icon">
+                                    <i class="tji-arrow-right-long"></i>
+                                </span>
+                            </a>
+                        </div>
                     </div>
 
                 </div>
@@ -243,6 +258,51 @@
                     </div>
 
                 </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ================= VIEW JOB DESCRIPTION MODAL ================= -->
+<div class="modal fade" id="viewJobModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- HEADER -->
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {{ isArabic ? selectedJob?.title_ar : selectedJob?.title_en }}
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeReadMoreModal()"></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                <div class="job-details-meta mb-3">
+                    <span class="badge bg-light text-dark p-2 me-2">
+                        <i class="fas fa-briefcase me-1"></i>
+                        {{ selectedJob?.job_type || t('Full time job', 'دوام كامل') }}
+                    </span>
+                    <span class="badge bg-light text-dark p-2">
+                        <i class="fas fa-map-marker-alt me-1"></i>
+                        {{ selectedJob?.location || t('Saudi Arabia', 'السعودية') }}
+                    </span>
+                </div>
+                
+                <hr>
+
+                <div class="job-description-content" [innerHTML]="formattedJobDescription"></div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="closeReadMoreModal()">
+                    {{ t('Close', 'إغلاق') }}
+                </button>
+                <button type="button" class="btn btn-primary" (click)="applyFromReadMore()">
+                    {{ t('Apply Now', 'قدم الآن') }}
+                </button>
             </div>
 
         </div>

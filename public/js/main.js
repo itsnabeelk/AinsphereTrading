@@ -22,30 +22,50 @@ function manJs() {
 			}
 		}
 		splitTextToSpans(target);
-		// Preloader js
-		$(window).on("load", function () {
+		// Preloader js and Controller Initializer
+		const initializeLoaderAndControllers = () => {
 			const tjPreloader = $(".tj-preloader");
 			if (tjPreloader?.length) {
+				// Initialize controllers immediately so content is visible as soon as the preloader goes away
+				wowController();
+				gsapController();
+
 				setTimeout(function () {
 					tjPreloader.removeClass("is-loading").addClass("is-loaded");
 					setTimeout(function () {
 						tjPreloader.fadeOut(400);
-						wowController();
-						gsapController();
 					}, 700);
-				}, 2000);
+				}, 1000);
 			} else {
 				wowController();
 				gsapController();
 			}
-		});
+		};
+
+		if (document.readyState === "complete" || document.readyState === "interactive") {
+			initializeLoaderAndControllers();
+		} else {
+			$(window).on("load", initializeLoaderAndControllers);
+		}
 
 		/* ------------- Gsap registration Js -------------*/
 		gsap.registerPlugin(ScrollTrigger, ScrollSmoother, ScrollToPlugin);
+
+		// Clean up existing ScrollTriggers to prevent duplicate triggers and memory leaks on route navigation
+		if (typeof ScrollTrigger !== "undefined") {
+			ScrollTrigger.getAll().forEach(t => t.kill());
+		}
+
 		if ($("#smooth-wrapper").length && $("#smooth-content").length) {
 			gsap.config({
 				nullTargetWarn: false,
 			});
+
+			// Clean up existing ScrollSmoother if it exists
+			let oldSmoother = ScrollSmoother.get();
+			if (oldSmoother) {
+				oldSmoother.kill();
+			}
 
 			let smoother = ScrollSmoother.create({
 				smooth: 1.5,
@@ -985,7 +1005,14 @@ function manJs() {
 		// wow js
 		function wowController() {
 			if ($(".wow").length > 0) {
-				new WOW({ callback: odometerController }).init();
+				if (typeof WOW !== "undefined") {
+					if (!window.wowInstance) {
+						window.wowInstance = new WOW({ callback: odometerController });
+						window.wowInstance.init();
+					} else {
+						window.wowInstance.sync();
+					}
+				}
 			}
 		}
 
@@ -1927,6 +1954,30 @@ function manJs() {
 				},
 			});
 		}
+
+		// Auto-refresh ScrollTrigger and sync WOW on DOM changes (e.g., Angular dynamic API rendering)
+		if (window.tjDomObserver) {
+			window.tjDomObserver.disconnect();
+		}
+		
+		let mutationTimeout;
+		window.tjDomObserver = new MutationObserver(() => {
+			clearTimeout(mutationTimeout);
+			mutationTimeout = setTimeout(() => {
+				if (typeof ScrollTrigger !== "undefined") {
+					ScrollTrigger.refresh();
+				}
+				if (window.wowInstance && typeof window.wowInstance.sync === "function") {
+					window.wowInstance.sync();
+					window.dispatchEvent(new Event('scroll'));
+				}
+			}, 200);
+		});
+
+		window.tjDomObserver.observe(document.body, {
+			childList: true,
+			subtree: true,
+		});
 	})(jQuery);
 
 }

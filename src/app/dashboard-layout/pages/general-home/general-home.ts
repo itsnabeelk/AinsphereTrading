@@ -7,6 +7,7 @@ import { GeneralAboutService } from '../../../service/general-about.service';
 import { GeneralWorkingService, GeneralWorking } from '../../../service/general-working.service';
 import { GeneralTeamService, GeneralTeam } from '../../../service/general-team.service';
 import { GeneralServicesService, GeneralService } from '../../../service/general-services.service';
+import { FooterSettingsService } from '../../../service/footer-settings.service';
 import { API_BASE_URL } from '../../../core/api.config';
 import { Router } from '@angular/router';
 declare var bootstrap: any;
@@ -22,6 +23,7 @@ export class GeneralHome implements OnInit {
 
   heroes: GeneralHero[] = [];
   clients: any[] = [];
+  footerData: any = { facebook_url: '', instagram_url: '', twitter_url: '', linkedin_url: '', email: '', phone: '', location_en: '', location_ar: '' };
 
   /* ================= HERO ================= */
   form: any = { id: null, title_en: '', title_ar: '' };
@@ -110,6 +112,7 @@ export class GeneralHome implements OnInit {
     private workingService: GeneralWorkingService,
     private teamService: GeneralTeamService,
     private servicesService: GeneralServicesService,
+    private footerSettingsService: FooterSettingsService,
     private router: Router
   ) { }
 
@@ -129,6 +132,20 @@ export class GeneralHome implements OnInit {
     this.loadWorking();
     this.loadTeam();
     this.loadServices();
+    this.loadFooterSettings();
+  }
+
+  loadFooterSettings() {
+    this.footerSettingsService.getFooterSettings('general').subscribe(res => {
+      this.footerData = res;
+    });
+  }
+
+  saveFooterSettings() {
+    this.footerSettingsService.updateFooterSettings('general', this.footerData).subscribe({
+      next: () => this.showToast('Footer settings updated successfully', false),
+      error: err => this.showToast(err?.error?.message || 'Update failed', true)
+    });
   }
 
   /* =====================================================

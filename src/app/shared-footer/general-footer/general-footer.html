@@ -105,27 +105,35 @@
                     </div>
                 </div>
 
-                <!-- NEWSLETTER -->
+                <!-- CONTACT INFO & SOCIALS -->
                 <div class="col-xl-4 col-lg-5 col-md-6">
-                    <div class="footer-widget widget-subscribe wow fadeInUp" data-wow-delay=".7s">
+                    <div class="footer-widget widget-contact wow fadeInUp" data-wow-delay=".7s">
 
-                        <h3 class="title">
-                            {{ currentLang === 'ar'
-                            ? 'اشترك في نشرتنا الإخبارية'
-                            : 'Subscribe to Our Newsletter.' }}
-                        </h3>
+                        <h5 class="title">
+                            {{ currentLang === 'ar' ? 'تواصل معنا' : 'Get in Touch' }}
+                        </h5>
 
-                        <div class="subscribe-form">
-                            <form action="#">
-
-                                <input type="email" name="email"
-                                    [placeholder]="currentLang === 'ar' ? 'أدخل بريدك الإلكتروني' : 'Enter email'">
-
-                                <button type="submit">
-                                    <i class="tji-plane"></i>
-                                </button>
-
-                            </form>
+                        <div class="footer-contact-info" *ngIf="settings">
+                            <ul>
+                                <li *ngIf="settings.location_en || settings.location_ar">
+                                    <span class="footer-icon-circle bg-general-brand"><i class="tji-location"></i></span>
+                                    <span class="text">
+                                        {{ currentLang === 'ar' ? settings.location_ar : settings.location_en }}
+                                    </span>
+                                </li>
+                                <li *ngIf="settings.phone">
+                                    <a href="tel:{{settings.phone}}">
+                                        <span class="footer-icon-circle bg-general-brand"><i class="tji-phone-2"></i></span>
+                                        <span class="text">{{settings.phone}}</span>
+                                    </a>
+                                </li>
+                                <li *ngIf="settings.email">
+                                    <a href="mailto:{{settings.email}}">
+                                        <span class="footer-icon-circle bg-general-brand"><i class="tji-envelop-2"></i></span>
+                                        <span class="text">{{settings.email}}</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
 
                     </div>
@@ -138,54 +146,21 @@
     <!-- COPYRIGHT -->
     <div class="tj-copyright-area h7-footer-copyright">
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-
-                    <div class="copyright-content-area">
-
-                        <div class="footer-contact">
-                            <ul>
-
-                                <li>
-                                    <a href="tel:+966543612700">
-                                        <span class="icon"><i class="tji-phone-2"></i></span>
-                                        <span class="text">+966 543612700</span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="mailto:info@ainsphere.com">
-                                        <span class="icon"><i class="tji-envelop-2"></i></span>
-                                        <span class="text">info@ainsphere.com</span>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </div>
-
-                        <div class="social-links">
-                            <ul>
-                                <li><a href="https://www.facebook.com/" target="_blank"><i
-                                            class="fa-brands fa-facebook-f"></i></a></li>
-                                <li><a href="https://www.instagram.com/" target="_blank"><i
-                                            class="fa-brands fa-instagram"></i></a></li>
-                                <li><a href="https://x.com/" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-                                </li>
-                                <li><a href="https://www.linkedin.com/" target="_blank"><i
-                                            class="fa-brands fa-linkedin-in"></i></a></li>
-                            </ul>
-                        </div>
-
-                        <div class="copyright-text">
-                            <p>
-                                &copy; 2026
-                                <a href="#" target="_blank">Ainsphere Trading Co.</a>
-                                {{ currentLang === 'ar' ? 'جميع الحقوق محفوظة' : 'All rights reserved' }}
-                            </p>
-                        </div>
-
+            <div class="row align-items-center py-3">
+                <div class="col-md-6 col-12 d-flex justify-content-center justify-content-md-start mb-2 mb-md-0">
+                    <div class="footer-social-links" *ngIf="settings">
+                        <ul>
+                            <li *ngIf="settings.facebook_url"><a [href]="settings.facebook_url" target="_blank" class="footer-social-icon bg-general-brand"><i class="fa-brands fa-facebook-f"></i></a></li>
+                            <li *ngIf="settings.instagram_url"><a [href]="settings.instagram_url" target="_blank" class="footer-social-icon bg-general-brand"><i class="fa-brands fa-instagram"></i></a></li>
+                            <li *ngIf="settings.twitter_url"><a [href]="settings.twitter_url" target="_blank" class="footer-social-icon bg-general-brand"><i class="fa-brands fa-x-twitter"></i></a></li>
+                            <li *ngIf="settings.linkedin_url"><a [href]="settings.linkedin_url" target="_blank" class="footer-social-icon bg-general-brand"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                        </ul>
                     </div>
-
+                </div>
+                <div class="col-md-6 col-12 text-center text-md-end">
+                    <p class="mb-0 text-muted">
+                        &copy; 2026 <a href="javascript:void(0)">Ainsphere Trading Co.</a> {{ currentLang === 'ar' ? 'جميع الحقوق محفوظة' : 'All rights reserved' }}
+                    </p>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -8,10 +8,12 @@ import { RouterLink } from '@angular/router';
   templateUrl: './header-fmcg.html',
   styleUrl: './header-fmcg.css',
 })
-export class HeaderFMCG implements OnInit {
+export class HeaderFMCG implements OnInit, OnDestroy {
 
   currentLang: 'en' | 'ar' = 'en';
   isSticky = false;
+
+  constructor(private el: ElementRef) {}
 
   ngOnInit(): void {
     const lang = localStorage.getItem('lang');
@@ -20,6 +22,15 @@ export class HeaderFMCG implements OnInit {
     // ensure correct direction on load
     document.documentElement.dir = this.currentLang === 'ar' ? 'rtl' : 'ltr';
     this.updateStickyState();
+
+    // Relocate header to body for ScrollSmoother fixed compatibility
+    document.body.appendChild(this.el.nativeElement);
+  }
+
+  ngOnDestroy(): void {
+    if (this.el.nativeElement.parentNode) {
+      this.el.nativeElement.parentNode.removeChild(this.el.nativeElement);
+    }
   }
 
   @HostListener('window:scroll')

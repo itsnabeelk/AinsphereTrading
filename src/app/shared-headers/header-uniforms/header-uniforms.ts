@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -8,10 +8,12 @@ import { RouterLink } from '@angular/router';
   templateUrl: './header-uniforms.html',
   styleUrl: './header-uniforms.css',
 })
-export class HeaderUNIFORMS implements OnInit {
+export class HeaderUNIFORMS implements OnInit, OnDestroy {
 
   currentLang: 'en' | 'ar' = 'en';
   isSticky = false;
+
+  constructor(private el: ElementRef) {}
 
   ngOnInit(): void {
     const lang = localStorage.getItem('lang');
@@ -20,6 +22,15 @@ export class HeaderUNIFORMS implements OnInit {
     // optional: ensure dir is correct on first load
     document.documentElement.dir = this.currentLang === 'ar' ? 'rtl' : 'ltr';
     this.updateStickyState();
+
+    // Relocate header to body for ScrollSmoother fixed compatibility
+    document.body.appendChild(this.el.nativeElement);
+  }
+
+  ngOnDestroy(): void {
+    if (this.el.nativeElement.parentNode) {
+      this.el.nativeElement.parentNode.removeChild(this.el.nativeElement);
+    }
   }
 
   @HostListener('window:scroll')

@@ -306,7 +306,8 @@ app-uniforms-footer .tj-copyright-area p a {
 
 app-uniforms-footer .footer-icon-circle.bg-uniforms-brand,
 app-uniforms-footer .footer-social-icon.bg-uniforms-brand {
-    background-color: #032d35 !important; /* Darker than #054e5b background */
+    background-color: #032d35 !important;
+    /* Darker than #054e5b background */
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -370,4 +371,36 @@ app-header-fmcg .hamburger_wrapper::before,
 app-header-mep .hamburger_wrapper::before {
     display: none !important;
     content: none !important;
+}
+
+/* Sticky Header specificity overrides and brand background colors */
+.header-area.header-absolute.sticky {
+    position: fixed !important;
+    top: 0 !important;
+    inset-inline-start: 0 !important;
+    width: 100% !important;
+    z-index: 1002 !important;
+    border-radius: 0 !important;
+    transition: all 0.3s ease-in-out !important;
+    margin: 0;
+}
+
+app-header-general .header-area.sticky {
+    background-color: #031b37 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+app-header-fmcg .header-area.sticky {
+    background-color: #102804 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+app-header-mep .header-area.sticky {
+    background-color: #6d1920 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+app-header-uniforms .header-area.sticky {
+    background-color: #032d35 !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
 }
